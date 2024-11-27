@@ -44,13 +44,13 @@ CREATE SCHEMA embeddings;
 
 ```ini
 [DB]
-database=master
-host=localhost
-user=master
-password=master
-port=5432
+database=<database>
+host=<host>
+user=<user>
+password=<password>
+port=<port>
 
 [MODEL]
-path_generation = <path_to_transformed_llama_model>
-path_embeddings = intfloat/e5-base-v2
+path_generation=<path_to_transformed_llama_model>
+path_embeddings=intfloat/e5-base-v2
 ```
