@@ -1,4 +1,4 @@
-# Softening Structured Query Answering with Large Language Models 🦙🖥️🎓
+# Softening Structured Query Evaluation using Large Language Models 🦙🖥️🎓
 
 ## Model Download
 In this project, we work with LLama by Meta. 
