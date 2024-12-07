@@ -2,6 +2,8 @@ import requests
 import re
 import bz2
 import os
+import gzip
+import shutil
 
 from typing import List
 from tqdm import tqdm
@@ -11,8 +13,60 @@ from xml.etree import ElementTree
 from torch.utils.data import DataLoader
 from datasets import Dataset
 
+from utils import TColor
 from utils.Model import EmbeddingModel
 from utils.DB import DBConnector
+
+def streamed_download(url, path_file):
+    print(f"Downloading file {url} to {path_file}", end=" ")
+
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+
+        with open(path_file, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+    print(f"{TColor.OKGREEN}Done{TColor.ENDC}")
+
+class IMDBDataGenerator:
+    _url = "https://datasets.imdbws.com"
+    _files = ["name.basics.tsv.gz", "title.akas.tsv.gz", "title.basics.tsv.gz", "title.crew.tsv.gz",
+              "title.episode.tsv.gz", "title.principals.tsv.gz", "title.ratings.tsv.gz"]
+
+    @staticmethod
+    def get_imdb_data(path="../data/imdb"):
+        if not os.path.isdir(path):
+            os.makedirs(path)
+
+        for file in IMDBDataGenerator._files:
+            streamed_download(f"{IMDBDataGenerator._url}/{file}", f"{path}/{file}")
+
+    @staticmethod
+    def decompress(path_src: str = "../data/imdb/", path_dest: str = "../data/imdb/decompressed"):
+        assert os.path.exists(path_src), f"Source path '{path_src}' does not exist"
+
+        if not os.path.isdir(path_dest):
+            os.makedirs(path_dest)
+
+        for filename in os.listdir(path_src):
+            file_src = os.path.join(path_src, filename)
+            file_dest = os.path.join(path_dest, filename.replace(".gz", ""))
+
+            if not os.path.isfile(file_src) or ".gz" not in filename:
+                continue
+
+            print("Decompressing file", file_src, "to", file_dest, end=" ")
+
+            with gzip.open(file_src, 'rb') as f_in:
+                with open(file_dest, 'wb') as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+
+            print(f"{TColor.OKGREEN}Done{TColor.ENDC}")
+
+    @staticmethod
+    def save_to_db(path: str = "../data/imdb/decompressed"):
+        pass
 
 
 class WikiDataGenerator:
@@ -162,13 +216,16 @@ class VectorDB:
         self.db_connector.conn.commit()
 
 
-def process_wiki_data(path="../data/wikipedia/decompressed"):
+def process_wiki_data(path="../data/wikipedia/decompressed", remove_files=False, max_files = 5):
     model = EmbeddingModel("../config.ini")
     vector_db = VectorDB("../config.ini")
 
     vector_db.create_documents_vector_db(vec_size=768, reset=True)
 
-    for filename in os.listdir(path):
+    for i, filename in enumerate(sorted(os.listdir(path))):
+        if i >= max_files:
+            break
+
         print("Reading file", filename)
         file_path = os.path.join(path, filename)
         data = WikiDataGenerator.parse_wiki_file(file_path)
@@ -190,8 +247,9 @@ def process_wiki_data(path="../data/wikipedia/decompressed"):
             for row in zip(batch["revision_id"], batch["title"], batch["text"], title_embeddings, text_embeddings):
                 vector_db.insert_document(*row)
 
-        print("Removing file", filename)
-        os.remove(file_path)
+        if remove_files:
+            print("Removing file", filename)
+            os.remove(file_path)
 
 
 def test_embeddings(query, column):
@@ -209,12 +267,13 @@ def test_embeddings(query, column):
                 FROM embeddings.documents 
                 ORDER BY l2_distance({column}_embedding, %(embedding)s) LIMIT 10
             """, {"embedding": embedding})
-        for row in cur.fetchall():
-            print(row)
+        return cur.fetchall()
 
 
 if __name__ == '__main__':
     # WikiDataGenerator.get_wikipedia_data(max_files=100)
     # WikiDataGenerator.decompress_wiki_data()
-    # process_wiki_data()
-    print(test_embeddings("swedish band from the 70s", "title"))
+    # process_wiki_data(remove_files=False, max_files=100)
+    # res = test_embeddings("swedish bands from the 70s", "text")
+    # print("\n".join(map(str, res)))
+    pass

@@ -30,9 +30,12 @@ GRANT ALL PRIVILEGES ON DATABASE <db> TO <user>;
 Then, activate the [pgvector](https://github.com/pgvector/pgvector) extension and create the schema for the embeddings
 
 ```sql
+/* String Similarity */
+CREATE EXTENSION pg_trgm;
+
 /* Activate pgvector */
 CREATE EXTENSION IF NOT EXISTS vector;
---CREATE EXTENSION IF NOT EXISTS vectorscale CASCADE;
+CREATE EXTENSION IF NOT EXISTS vectorscale CASCADE;
 
 /* create schema */
 CREATE SCHEMA embeddings;
@@ -44,11 +47,11 @@ CREATE SCHEMA embeddings;
 
 ```ini
 [DB]
-database=master
-host=localhost
-user=master
-password=master
-port=5432
+database=...
+host=...
+user=...
+password=...
+port=...
 
 [MODEL]
 path_generation = <path_to_transformed_llama_model>

@@ -1,9 +1,8 @@
 import os
 import configparser
-from enum import Enum
 
 
-class TColor(Enum):
+class TColor:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'

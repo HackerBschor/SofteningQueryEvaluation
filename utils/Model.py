@@ -5,10 +5,15 @@ from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 
 from utils import get_config, TColor
 
+from huggingface_hub import login
+
 
 class Model:
     def __init__(self, config: str, model_type: str = None):
         config: configparser.ConfigParser = get_config(config)
+
+        if config["MODEL"]["huggingface_token"] is not None:
+            login(config["MODEL"]["huggingface_token"])
 
         self._model_path: str = config['MODEL'][f"path_{model_type}"]
 
@@ -68,7 +73,8 @@ class EmbeddingModel(Model):
 class GenerationModel(Model):
     def __init__(self, config):
         super().__init__(config, 'generation')
-        self._tokenizer.pad_token = self._tokenizer.eos_token
+        # self._tokenizer.pad_token = self._tokenizer.eos_token
+        # self._tokenizer.pad_token_id = self._tokenizer.eos_token_id
 
     def _load_model(self):
         model = AutoModelForCausalLM.from_pretrained(
@@ -78,7 +84,7 @@ class GenerationModel(Model):
             torch_dtype=torch.float16
         )
 
-        model.generation_config.pad_token_id = self._tokenizer.pad_token_id
+        # model.generation_config.pad_token_id = self._tokenizer.pad_token_id
 
         model.eval()
 
@@ -87,14 +93,15 @@ class GenerationModel(Model):
 
         return model
 
-    def generate(self, prompt: str, max_length: int = 100, temperature: float = 1.0, top_p: float = 0.9):
+    def generate(self, prompt: str, temperature: float = 1.0, top_p: float = 0.9):
         inputs = self._tokenize(prompt, return_tensors="pt")
 
         with torch.no_grad():
             outputs = self._model.generate(
                 inputs["input_ids"],
                 attention_mask=inputs["attention_mask"],
-                max_length=max_length,
+                pad_token_id=self._tokenizer.eos_token_id,
+                max_length=self._tokenizer.model_max_length,
                 temperature=temperature,
                 top_p=top_p,
                 do_sample=True
@@ -106,5 +113,7 @@ class GenerationModel(Model):
 
 
 if __name__ == '__main__':
-    # print(GenerationModel(config_file="../config.ini").generate("Hallo Welt"))
-    print(EmbeddingModel("../config.ini").embedd(["Hallo", "Embeddings?"]).shape)
+    # print(GenerationModel("../config.ini").generate("Hallo Welt"))
+    # print(EmbeddingModel("../config.ini").embedd(["Hallo", "Embeddings?"]).shape)
+    pass
+
