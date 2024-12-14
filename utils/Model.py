@@ -93,18 +93,30 @@ class GenerationModel(Model):
 
         return model
 
-    def generate(self, prompt: str, temperature: float = 1.0, top_p: float = 0.9):
+    def generate(self,
+                 prompt: str,
+                 max_length: int | None = None,
+                 max_new_tokens: int | None = None,
+                 temperature: float = 0.7,
+                 top_p: float = 0.0,
+                 top_k: float = 40,
+                 do_sample: bool = True):
         inputs = self._tokenize(prompt, return_tensors="pt")
+
+        if max_length is None and max_new_tokens is None:
+            max_length = self._tokenizer.model_max_length
 
         with torch.no_grad():
             outputs = self._model.generate(
                 inputs["input_ids"],
                 attention_mask=inputs["attention_mask"],
                 pad_token_id=self._tokenizer.eos_token_id,
-                max_length=self._tokenizer.model_max_length,
-                temperature=temperature,
-                top_p=top_p,
-                do_sample=True
+                max_length=max_length,
+                max_new_tokens=max_new_tokens,
+                temperature = temperature,
+                top_p = top_p,
+                top_k = top_k,
+                do_sample=do_sample
             )
 
         answer = self._tokenizer.decode(outputs[0], skip_special_tokens=True)

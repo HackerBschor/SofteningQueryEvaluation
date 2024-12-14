@@ -14,6 +14,14 @@ python convert_llama_weights_to_hf.py --model_size <size> --llama_version <versi
 # python convert_llama_weights_to_hf.py --model_size 3B --llama_version 3.2 --input_dir Llama3.2-3B  --output_dir Llama3.2-3B_compile 
 ```
 
+## Installation
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install -r requirements.txt
+```
+
 ## Database Configuration
 
 As backbone of this project, we chose [PostgreSQL](https://www.postgresql.org/) together with the 
@@ -42,7 +50,6 @@ CREATE SCHEMA embeddings;
 ```
 
 
-
 ## Configuration
 
 ```ini
@@ -57,3 +64,11 @@ port=<port>
 path_generation=<path_to_transformed_llama_model>
 path_embeddings=intfloat/e5-base-v2
 ```
+
+## Execution Plan Visualizations (Optional) 
+
+To create visualizations of the execution plan, we use [Graphviz](https://graphviz.org/download/). 
+Installation as stated on their Website, then use the [Visualizator](utils/Visualizator.py#L13) 
+to create an image of the execution plan.
+
+![exec_plan.png](img/exec_plan.png)
