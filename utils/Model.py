@@ -12,7 +12,7 @@ class Model:
     def __init__(self, config: str, model_type: str = None):
         config: configparser.ConfigParser = get_config(config)
 
-        if config["MODEL"]["huggingface_token"] is not None:
+        if "huggingface_token" in config["MODEL"]:
             login(config["MODEL"]["huggingface_token"])
 
         self._model_path: str = config['MODEL'][f"path_{model_type}"]

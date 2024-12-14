@@ -3,11 +3,12 @@ from typing import List
 from graphviz import Digraph
 
 from operators import Operator, Column, Constant
-from operators.Dummy import Dummy
-from operators.Join import InnerHashJoin, SoftInnerJoin
+from operators.Join import SoftInnerJoin
 from operators.Project import Project
-from operators.Select import Select, HardEqual
-from operators.Transform import Transform
+from operators.Scan import Scan
+from operators.Select import Select, HardEqual, DisjunctiveCriteria, SoftEqualEmbedding
+from utils.DB import DBConnector
+from utils.Model import GenerationModel, EmbeddingModel
 
 
 def visualize(operator: Operator, filename: str):
@@ -31,18 +32,18 @@ def parse_nodes(node: tuple[str, List] | str, dot: Digraph) -> str:
         dot.node(node_id, node_description)
         return node_id
 
+
 if __name__ == '__main__':
-    def x(r: dict) -> dict:
-        r["a"] = 2
-        return r
+    db = DBConnector("../config.ini", use_vector=True)
+    em = EmbeddingModel("../config.ini")
+    gm = GenerationModel("../config.ini")
+    i = Scan("institutions", db, embedding_model=em, generation_model=gm)
+    r = Scan("reports", db, embedding_model=em, generation_model=gm)
+    sel_i = Select(i, HardEqual(Column("type"), Constant("finance")))
+    sel_r = Select(r, DisjunctiveCriteria(
+        SoftEqualEmbedding(Column("text"), Constant("is about Google"), em),
+        SoftEqualEmbedding(Column("text"), Constant("is about Amazon"), em)))
+    join = SoftInnerJoin(sel_i, sel_r, Column("institutions.name"), Column("reports.issued_by"), em, gm)
+    p = Project(join, ["institutions.name"])
 
-    exec_plan = Project(
-        SoftInnerJoin(
-            Transform(Dummy("d1", ["a", "b", "c"], [(1, 2, 3), (2, 3, 4)]), x),
-            Select(
-                Dummy("d2", ["a", "d", "e"], [(1, 2, 3), (2, 3, 4)]),
-                HardEqual(Column("a"), Constant(2))), Column("a"), Column("a"),
-            None, None),
-        ["d1.a", "d1.b"])
-
-    visualize(exec_plan, '../img/exec_plan')
+    visualize(p, '../img/exec_plan')
