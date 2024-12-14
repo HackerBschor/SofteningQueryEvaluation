@@ -40,7 +40,7 @@ class Constant:
         self.value: Any = value
 
     def __str__(self) -> str:
-        return str(self.value)
+        return f"'{self.value}'" if isinstance(self.value, str) else str(self.value)
 
     def get(self, _: Any) -> Any:
         return self.value

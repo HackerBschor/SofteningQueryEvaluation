@@ -39,7 +39,12 @@ class DisjunctiveCriteria(Criteria):
         return self.left.eval(record) or self.right.eval(record)
 
     def __str__(self):
-        return f"({self.left})∨({self.right})"
+        left_str = str(self.left)
+        right_srt = str(self.right)
+        if len(left_str) + len(right_srt) > 30:
+            return f"({left_str})∨\n({right_srt})"
+        else:
+            return f"({left_str})∨({right_srt})"
 
 
 class HardEqual(Criteria):
@@ -87,8 +92,7 @@ class SoftEqualEmbedding(Criteria):
 class SoftEqualGeneration(Criteria):
     PROMPT_TEMPLATE = "Would you consider '{}' to be '{}'. Answer with 'yes' or 'no' only!"
 
-    def __init__(self, left: Column | Constant, right: Column | Constant,
-                 generation_model: GenerationModel):
+    def __init__(self, left: Column | Constant, right: Column | Constant, generation_model: GenerationModel):
         super().__init__(left, right)
         self.generation_model: GenerationModel = generation_model
 
@@ -110,6 +114,21 @@ class SoftEqualGeneration(Criteria):
 
     def __str__(self):
         return f"{self.left} ≈ {self.right}"
+
+class Validate(Criteria):
+    def __init__(self, left: Column | Constant, right: Column | Constant, generation_model: GenerationModel):
+        super().__init__(left, right)
+        self.generation_model: GenerationModel = generation_model
+
+    def eval(self, t) -> bool:
+        if self.left.get(t) is None or self.right.get(t) is None:
+            return False
+
+        raise NotImplementedError()
+
+    def __str__(self):
+        return f"Validate({self.left}, {self.right})"
+
 
 
 class Select(Operator):

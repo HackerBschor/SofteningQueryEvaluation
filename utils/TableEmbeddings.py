@@ -11,8 +11,13 @@ def create_table_embeddings(vec_size=768):
     m = EmbeddingModel("../config.ini")
 
     with db.get_cursor() as cursor:
-        cursor.execute("""CREATE TABLE IF NOT EXISTS embeddings.tables (
-            schemaname TEXT, tablename TEXT, embedding VECTOR(%(vec_size)s))""", {"vec_size": vec_size})
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS embeddings.tables (
+                schemaname TEXT, tablename TEXT, embedding VECTOR(%(vec_size)s)
+            );
+            DELETE FROM embeddings.tables;
+            """, {"vec_size": vec_size})
 
         cursor.execute("""SELECT schemaname, tablename FROM pg_tables 
             WHERE schemaname NOT IN ('pg_catalog', 'embeddings', 'information_schema')""")

@@ -105,7 +105,7 @@ class SoftInnerJoin(Join):
 
 
     def __str__(self):
-        return f"⋈({self.child_left.name}.{self.column_left.name}≈{self.child_right.name}.{self.column_right.name})"
+        return f"⋈({self.column_left.name}≈{self.column_right.name})"
 
 
     def __next__(self) -> dict:
