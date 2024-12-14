@@ -61,8 +61,9 @@ password=<password>
 port=<port>
 
 [MODEL]
-path_generation=<path_to_transformed_llama_model>
-path_embeddings=intfloat/e5-base-v2
+huggingface_token = <token>
+path_generation = meta-llama/Llama-3.2-3B-Instruct
+path_embeddings = intfloat/e5-base-v2
 ```
 
 ## Execution Plan Visualizations (Optional) 
