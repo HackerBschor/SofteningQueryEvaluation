@@ -14,10 +14,13 @@ class Join(Operator):
         name = f"{self.child_left.name}+{self.child_right.name}"
         columns = [f"{self.child_left.name}.{col}" for col in self.child_left.columns]
         columns += [f"{self.child_right.name}.{col}" for col in self.child_right.columns]
-        super().__init__(name, columns)
+        super().__init__(name, columns, min(self.child_right.num_tuples, self.child_right.num_tuples))
 
     def __next__(self) -> dict:
         raise NotImplemented()
+
+    def __str__(self):
+        return f"{self.get_description()}({self.child_left}, {self.child_right})"
 
     def get_structure(self) -> tuple[str, List] | str:
         structure_left = self.child_left.get_structure()
@@ -34,8 +37,8 @@ class InnerHashJoin(Join):
         self.index_left: None | int = None
         super().__init__(child_left, child_right)
 
-    def __str__(self):
-        return f"⋈({self.child_left.name}.{self.column_left.name}={self.child_right.name}.{self.column_right.name})"
+    def get_description(self) -> str:
+        return f"⋈_{{{self.child_left.name}.{self.column_left.name}={self.child_right.name}.{self.column_right.name}}}"
 
     def __next__(self) -> dict:
         if self.ht is None:
@@ -104,8 +107,8 @@ class SoftInnerJoin(Join):
         super().__init__(child_left, child_right)
 
 
-    def __str__(self):
-        return f"⋈({self.column_left.name}≈{self.column_right.name})"
+    def get_description(self) -> str:
+        return f"⋈_{{{self.child_left.name}.{self.column_left.name}≈{self.child_right.name}.{self.column_right.name}}}"
 
 
     def __next__(self) -> dict:

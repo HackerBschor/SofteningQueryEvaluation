@@ -49,3 +49,4 @@ if __name__ == '__main__':
 
     visualize(p, '../img/exec_plan', 'pdf')
     visualize(p, '../img/exec_plan', 'png')
+    print(p)

@@ -1,3 +1,8 @@
+import json
+from importlib.metadata import files
+
+import numpy as np
+import pandas as pd
 import requests
 import re
 import bz2
@@ -12,6 +17,8 @@ from xml.etree import ElementTree
 
 from torch.utils.data import DataLoader
 from datasets import Dataset
+
+from psycopg2.extras import Json
 
 from utils import TColor
 from utils.Model import EmbeddingModel
@@ -252,6 +259,86 @@ def process_wiki_data(path="../data/wikipedia/decompressed", remove_files=False,
             os.remove(file_path)
 
 
+def insert_companies(reset_db=True):
+    db = DBConnector("../config.ini", use_vector=True)
+    df = pd.read_csv("../data/companies_sorted.csv")
+
+    with db.get_cursor() as cur:
+        cur.execute(
+            """
+            create table IF NOT EXISTS people_data_labs.companies (
+                id INTEGER PRIMARY KEY ,
+                name                        TEXT,
+                domain                      TEXT,
+                year_founded              INTEGER,
+                industry                    TEXT,
+                size_range                TEXT,
+                locality                    TEXT,
+                country                     TEXT,
+                linkedin_url              TEXT,
+                current_employee_estimate INTEGER,
+                total_employee_estimate   INTEGER
+            );
+            """)
+
+        if reset_db:
+            cur.execute("DELETE FROM people_data_labs.companies")
+
+        for row in tqdm(df.itertuples(index=False)):
+            row = [None if pd.isna(x) else x for x in tuple(row)]
+
+            cur.execute(
+                """INSERT INTO people_data_labs.companies 
+                    (id, name, domain, year_founded, industry, size_range, locality, country, linkedin_url, current_employee_estimate, total_employee_estimate) 
+                    VALUES 
+                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""", row)
+
+    db.conn.commit()
+    db.conn.close()
+
+
+def insert_sanctions(reset_db=True):
+    db = DBConnector("../config.ini", use_vector=True)
+
+    with db.get_cursor() as cur:
+        if reset_db:
+            cur.execute("DROP TABLE IF EXISTS opensanctions.entity")
+
+        cur.execute(
+            """
+            CREATE TABLE opensanctions.entity (
+                id VARCHAR(255) PRIMARY KEY,
+                caption TEXT,
+                schema VARCHAR(50),
+                properties JSON,
+                referents JSON,
+                datasets JSON,
+                first_seen TIMESTAMP,
+                last_seen TIMESTAMP,
+                last_change TIMESTAMP,
+                target BOOLEAN
+            );
+            """)
+
+        with open("../data/entities.ftm.json", encoding="utf-8") as file:
+            for row in tqdm(file):
+                data = json.loads(row)
+
+                for key in data:
+                    if isinstance(data[key], dict) or isinstance(data[key], list):
+                        data[key] = Json(data[key])
+
+                cur.execute(
+                    """
+                        INSERT INTO opensanctions.entity (id, caption, schema, properties, referents, datasets, first_seen, last_seen, last_change, target)
+                        VALUES (%(id)s, %(caption)s, %(schema)s, %(properties)s, %(referents)s, %(datasets)s, %(first_seen)s, %(last_seen)s, %(last_change)s, %(target)s);
+                    """, data)
+    db.conn.commit()
+    db.conn.close()
+
+
+
+
 def test_embeddings(query, column):
     assert column in ["text", "title"], "Column must be title/ text"
 
@@ -276,4 +363,4 @@ if __name__ == '__main__':
     # process_wiki_data(remove_files=False, max_files=100)
     # res = test_embeddings("swedish bands from the 70s", "text")
     # print("\n".join(map(str, res)))
-    pass
+    insert_sanctions()

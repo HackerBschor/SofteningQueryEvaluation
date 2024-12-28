@@ -3,7 +3,8 @@ from utils.Model import EmbeddingModel, GenerationModel
 
 
 class Scan(Operator):
-    def __init__(self, name, db_connector, embedding_model, generation_model, cosine_similarity_threshold=1):
+    def __init__(self, name, db_connector, embedding_model, generation_model, num_tuples: int,
+                 cosine_similarity_threshold: float = 1.0):
         self.name = name
         self.cosine_similarity_threshold = cosine_similarity_threshold
         self.db_connector = db_connector
@@ -18,7 +19,7 @@ class Scan(Operator):
         self.cursor = self.db_connector.get_cursor()
         self.cursor.execute(f"SELECT * FROM {self.schema_name}.{self.table_name}")
 
-        super().__init__(name, [desc[0] for desc in self.cursor.description])
+        super().__init__(name, [desc[0] for desc in self.cursor.description], num_tuples)
 
     def __str__(self):
         return self.name

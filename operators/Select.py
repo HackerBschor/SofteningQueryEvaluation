@@ -82,7 +82,6 @@ class SoftEqualEmbedding(Criteria):
         embedding_left = self.embedding_model.embedd(self.left.get(t))
         embedding_right = self.embedding_model.embedd(self.right.get(t))
         cs = cosine_similarity(embedding_left[0], embedding_right[0])
-        print(self.left.get(t), self.right.get(t), cs)
         return cs > self.threshold
 
     def __str__(self):
@@ -137,10 +136,10 @@ class Select(Operator):
     def __init__(self, child_operator: Operator, criteria: Criteria):
         self.child_operator: Operator = child_operator
         self.criteria: Criteria = criteria
-        super().__init__(self.child_operator.name, self.child_operator.columns)
+        super().__init__(self.child_operator.name, self.child_operator.columns, self.child_operator.num_tuples)
 
-    def __str__(self):
-        return f"σ({self.criteria})"
+    def __str__(self)  -> str:
+        return f"{self.get_description()} ({self.child_operator})"
 
     def __next__(self) -> dict:
         for t in self.child_operator:
@@ -148,6 +147,13 @@ class Select(Operator):
                 return t
 
         raise StopIteration
+
+    def next(self) -> List[dict]:
+        data = self.child_operator.next()
+        return None if data is None else [t for t in data if self.criteria.eval(t)]
+
+    def get_description(self) -> str:
+        return f"σ_{{{self.criteria}}}"
 
     def get_structure(self) -> tuple[str, List] | str:
         return super().get_structure(), [self.child_operator.get_structure()]

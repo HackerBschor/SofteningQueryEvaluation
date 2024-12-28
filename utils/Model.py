@@ -18,6 +18,8 @@ class Model:
         self._model_path: str = config['MODEL'][f"path_{model_type}"]
 
         self._tokenizer = AutoTokenizer.from_pretrained(self._model_path)
+        # Uncomment for Llama
+        # self._tokenizer.pad_token = self._tokenizer.eos_token
 
         print(f"Load model {self._model_path}", end=" ")
         self._model = self._load_model()

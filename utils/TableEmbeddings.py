@@ -19,13 +19,13 @@ def create_table_embeddings(vec_size=768):
             DELETE FROM embeddings.tables;
             """, {"vec_size": vec_size})
 
-        cursor.execute("""SELECT schemaname, tablename FROM pg_tables 
+        cursor.execute("""SELECT schemaname, tablename, CONCAT(schemaname, '.', tablename) AS name FROM pg_tables 
             WHERE schemaname NOT IN ('pg_catalog', 'embeddings', 'information_schema')""")
 
         tables = cursor.fetchall()
 
         for batch in tqdm(DataLoader(Dataset.from_list(tables), batch_size=512)):
-            embeddings = m.embedd(batch["tablename"])
+            embeddings = m.embedd(batch["name"])
             for schema, table, embedding in zip(batch["schemaname"], batch["tablename"], embeddings):
                 cursor.execute(
                     "INSERT INTO embeddings.tables (schemaname, tablename, embedding) VALUES (%s, %s, %s)",

@@ -11,9 +11,10 @@ class ColumnNotFoundException(Exception):
 
 
 class Operator(Iterator):
-    def __init__(self, name: str, columns: List[str]) -> None:
+    def __init__(self, name: str, columns: List[str], num_tuples: int) -> None:
         self.name: str = name
         self.columns: List[str] = columns
+        self.num_tuples: int = num_tuples
 
     def __next__(self) -> dict:
         raise NotImplementedError()
@@ -21,8 +22,14 @@ class Operator(Iterator):
     def __str__(self) -> str:
         raise NotImplementedError()
 
+    def get_description(self) -> str:
+        return str(self)
+
+    def next(self) -> List[dict]:
+        raise NotImplementedError()
+
     def get_structure(self) -> tuple[str, List] | str:
-        return f"{id(self)}:{self}"
+        return f"{id(self)}:{self.get_description()}"
 
 
 class Column:
