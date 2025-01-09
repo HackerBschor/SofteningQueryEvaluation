@@ -1,11 +1,14 @@
 import configparser
 
+import numpy as np
 import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 
 from utils import get_config, TColor
 
 from huggingface_hub import login
+
+from openai import OpenAI
 
 
 class Model:
@@ -40,6 +43,7 @@ class Model:
 class EmbeddingModel(Model):
     def __init__(self, config):
         super().__init__(config, 'embeddings')
+        self.embeddings_size = self._model.config.hidden_size
 
     def _load_model(self):
         model = AutoModel.from_pretrained(
@@ -52,11 +56,11 @@ class EmbeddingModel(Model):
         model.eval()
 
         if torch.cuda.is_available():
-            model.cuda()
+            model = model.cuda()
 
         return model
 
-    def embedd(self, text):
+    def embedd(self, text: str | list[str]) -> np.array:
         with torch.no_grad():
             inputs = self._tokenize(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
             outputs = self._model(**inputs)
@@ -70,6 +74,16 @@ class EmbeddingModel(Model):
             torch.cuda.empty_cache()
 
         return embeddings
+
+    def embedd_batch(self, texts: list[str], batch_size: int = 64) -> np.ndarray:
+        embeddings = []
+        for i in range(0, len(texts), batch_size):
+            embeddings.extend(self.embedd(texts[i: max(len(texts), i + batch_size)]))
+
+        return np.array(embeddings)
+
+    def get_embedding_shape(self):
+        return self._model.config.hidden_size
 
 
 class GenerationModel(Model):
@@ -125,9 +139,22 @@ class GenerationModel(Model):
 
         return answer
 
+class OpenAiModel():
+    def __init__(self, config):
+        self._config: configparser.ConfigParser = get_config(config)
+
+    def generate(self):
+        client = OpenAI(api_key=self._config['MODEL']['open_ai_key'])
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[{"role": "user", "content": "Say this is a test"}],
+            stream=True,
+        )
+        print(completion)
+
 
 if __name__ == '__main__':
     # print(GenerationModel("../config.ini").generate("Hallo Welt"))
     # print(EmbeddingModel("../config.ini").embedd(["Hallo", "Embeddings?"]).shape)
-    pass
+    OpenAiModel("../config.ini").generate()
 

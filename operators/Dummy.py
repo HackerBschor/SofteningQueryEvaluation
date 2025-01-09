@@ -1,35 +1,45 @@
-from typing import List, Iterator
+import copy
+
+from typing import Iterator
 
 from operators import Operator
 
 
 class Dummy(Operator):
-    def __init__(self, name: str, columns: List[str], data: List[dict | tuple], num_tuples = 10):
+    def __init__(self, name: str, columns: list[str], data: list[dict | tuple], num_tuples = 10):
+        convert_function = lambda r: r if isinstance(r, dict) else {columns[i]: value for i, value in enumerate(r)}
+        self.data: list[dict] = list(map(convert_function, copy.deepcopy(data)))
+
+        self.idx: int | None = None
+        self.iter: Iterator[dict] | None = None
         super().__init__(name, columns, num_tuples)
-        self.data: Iterator = map(self._convert, data)
 
 
     def __str__(self) -> str:
         return f'Dummy({self.name})'
 
     def __next__(self) -> dict:
-        return next(self.data)
-
-    def next(self) -> List[dict]:
-        idx = 0
-        data = []
-
         try:
-            while idx < self.num_tuples:
-                data.append(next(self.data))
-                idx += 1
+            return next(self.iter)
         except StopIteration:
-            pass
+            self.close()
+            raise StopIteration
 
-        return None if len(data) == 0 else data
+    def open(self) -> None:
+        self.iter: Iterator[dict] | None = iter(self.data) # Reset Iterator
+        self.idx: int | None = 0
 
-    def _convert(self, r: dict | tuple):
-        if isinstance(r, dict):
-            return r
-        else:
-            return {self.columns[i]: value for i, value in enumerate(r)}
+    def next_vectorized(self) -> list[dict]:
+        if self.idx is None:
+            raise StopIteration
+
+        idx: int = self.idx
+        self.idx += 1
+
+        # Return next "slice"
+        return self.data[idx * self.num_tuples : min((idx + 1) * self.num_tuples, len(self.data))]
+
+
+    def close(self) -> None:
+        self.iter: Iterator[dict] | None = None
+        self.idx: int | None = None

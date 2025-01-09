@@ -1,10 +1,12 @@
-from typing import Callable, List
+from typing import Callable, List, Any
 
-from operators import Operator
+from operators import Operator, Column
 
 
 class Transform(Operator):
-    """ Applies a transform function (fun(dict) -> dict) for all tuples """
+    """
+    Applies a transform function (fun(dict) -> dict) for all tuples
+    """
 
     def __init__(self, child_operator: Operator, function: Callable[[dict], dict]):
         self.child_operator: Operator = child_operator
@@ -14,12 +16,22 @@ class Transform(Operator):
     def __next__(self) -> dict:
         return self.function(next(self.child_operator))
 
-    def get_description(self) -> str:
-        doc = (" " + self.function.__doc__) if self.function.__doc__ is not None else ""
-        return f"✨ {self.function.__name__}{doc} ✨"
-
     def __str__(self) -> str:
         return f"{self.get_description()} ({self.child_operator})"
+
+    def open(self) -> None:
+        self.child_operator.open()
+
+    def next_vectorized(self) -> List[dict]:
+        data: List[dict] = self.child_operator.next_vectorized()
+        return list(map(self.function, data))
+
+    def close(self) -> None:
+        raise self.child_operator.close()
+
+    def get_description(self) -> str:
+        doc: str = (" " + self.function.__doc__) if self.function.__doc__ is not None else ""
+        return f"✨ {self.function.__name__}{doc} ✨"
 
     def get_structure(self) -> tuple[str, List] | str:
         return super().get_structure(), [self.child_operator.get_structure()]
