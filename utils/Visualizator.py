@@ -40,9 +40,10 @@ def to_latex_pdf(dot: Digraph, path: str, filename: str):
 
     os.system(f"dot2tex {path_tmp}/{filename}.dot -f tikz --autosize > {path_tmp}/{filename}.tex")
     os.system(f"pdflatex --output-directory={path_tmp} {path_tmp}/{filename}.tex")
+    # os.system(f"mv {path_tmp}/{filename}.pdf {path}/")
 
-    with open(f"{path_tmp}/{filename}.pdf", 'rb') as f:
-        image = convert_from_bytes(f.read(), use_cropbox=True)[0]
+    with open(f"{path}/{filename}.pdf", 'rb') as f:
+        image = convert_from_bytes(f.read(), dpi=600)[0]
 
     cropped_img = trim_image(image)
     cropped_img.save(os.path.join(path, f"{filename}.png"))
