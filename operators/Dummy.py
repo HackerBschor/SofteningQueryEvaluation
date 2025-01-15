@@ -14,9 +14,8 @@ class Dummy(Operator):
         self.iter: Iterator[dict] | None = None
         super().__init__(name, columns, num_tuples)
 
-
     def __str__(self) -> str:
-        return f'Dummy({self.name})'
+        return self.name
 
     def __next__(self) -> dict:
         try:

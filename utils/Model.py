@@ -71,7 +71,8 @@ class EmbeddingModel(Model):
             embeddings = doc_embeds.detach().cpu().numpy()
 
             del inputs, outputs, last_hidden, doc_embeds
-            torch.cuda.empty_cache()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
 
         return embeddings
 

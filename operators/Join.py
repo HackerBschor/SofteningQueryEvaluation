@@ -154,12 +154,15 @@ class SoftInnerJoin(Join):
         super().__init__(child_left, child_right, None)
 
     def open(self) -> None:
+        self.child_left.open()
         self.vector_store = self.vector_store_type(self.embedding_mode.get_embedding_shape())
         self.records_left = [self._remap_record("left", rec) for rec in self.child_left]
         keys_left = list(map(lambda x: self.column_left.get(x), self.records_left))
         embeddings_left = self.embedding_mode.embedd_batch(keys_left)
         # noinspection PyArgumentList
         self.vector_store.add(embeddings_left)
+        self.child_left.close()
+        self.child_right.open()
 
     def __next__(self) -> dict:
         while True:
