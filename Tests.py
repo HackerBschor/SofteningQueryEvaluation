@@ -7,7 +7,7 @@ from operators.Scan import Scan
 from operators.Transform import Transform
 from operators.Select import Select
 from operators.Project import Project
-from operators.Join import Join, InnerHashJoin, SoftInnerJoin
+from operators.Join import Join, InnerHashJoin, InnerSoftJoin
 
 from collections import Counter
 
@@ -213,7 +213,7 @@ def test_join(embedding_model):
     # Test Specialized Soft Hash Join
     c1 = Dummy("c1", ["companies"], [(c[0], ) for c in set(test_data_companies + test_data_noise)])
     c2 = Dummy("c2", ["companies"], [(c[1], ) for c in set(test_data_companies + test_data_noise)])
-    join = SoftInnerJoin(c1, c2, Column("c1.companies"), Column("c2.companies"), embedding_model, threshold=50, debug=True)
+    join = InnerSoftJoin(c1, c2, Column("c1.companies"), Column("c2.companies"), embedding_model, threshold=50, debug=True)
     # TODO: Validate [rec for rec in join]
 
 

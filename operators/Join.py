@@ -121,10 +121,10 @@ class InnerHashJoin(Join):
         raise NotImplementedError()
 
     def get_description(self) -> str:
-        return f"⋈_{{{self.column_left.name}={self.column_right.name}}}"
+        return f"⋈_{{{self.column_left.name} = {self.column_right.name}}}"
 
 
-class SoftInnerJoin(Join):
+class InnerSoftJoin(Join):
     def __init__(
             self,
             child_left: Operator,
@@ -194,4 +194,4 @@ class SoftInnerJoin(Join):
         raise NotImplementedError()
 
     def get_description(self) -> str:
-        return f"⋈_{{{self.column_left.name}≈{self.column_right.name}}}"
+        return f"⋈_{{{self.column_left.name} ≈ {self.column_right.name}}}"

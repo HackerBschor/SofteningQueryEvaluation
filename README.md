@@ -68,8 +68,12 @@ path_embeddings = intfloat/e5-base-v2
 
 ## Execution Plan Visualizations (Optional) 
 
-To create visualizations of the execution plan, we use [Graphviz](https://graphviz.org/download/). 
-Installation as stated on their Website, then use the [Visualizator](utils/Visualizator.py#L13) 
-to create an image of the execution plan.
+To create visualizations of the execution plan, we use:
+ * [dot2tex](https://dot2tex.readthedocs.io) (Installation as stated on their Website)
+ * Latex (`sudo apt-get install texlive-pictures texlive-science texlive-latex-extra latexmk`)
 
-![exec_plan.png](img/exec_plan.png)
+To create the graphs, we use the [Visualizator](utils/Visualizator.py#L13)
+
+|              Hard Query              |              Soft Query              |
+|:------------------------------------:|:------------------------------------:|
+| ![exec_plan.png](img/hard_query.png) | ![exec_plan.png](img/soft_query.png) |
