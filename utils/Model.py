@@ -2,9 +2,9 @@ import configparser
 
 import numpy as np
 import torch
-from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM, AutoConfig
 
-from utils import get_config, TColor
+from utils import get_config, TColor, CosineSimilarity
 
 from huggingface_hub import login
 
@@ -19,10 +19,10 @@ class Model:
             login(config["MODEL"]["huggingface_token"])
 
         self._model_path: str = config['MODEL'][f"path_{model_type}"]
+        self._use_cuda = torch.cuda.is_available() and config['MODEL'][f"use_cuda"] == "True"
+        self._device = "cuda:0" if self._use_cuda else "cpu"
 
-        self._tokenizer = AutoTokenizer.from_pretrained(self._model_path)
-        # Uncomment for Llama
-        # self._tokenizer.pad_token = self._tokenizer.eos_token
+        self._tokenizer = self._load_tokenizer()
 
         print(f"Load model {self._model_path}", end=" ")
         self._model = self._load_model()
@@ -39,10 +39,18 @@ class Model:
     def _load_model(self):
         pass
 
+    def _load_tokenizer(self):
+        tokenizer = AutoTokenizer.from_pretrained(self._model_path)
+
+        if "llama" in self._model_path.lower():
+            tokenizer.pad_token = tokenizer.eos_token
+
+        return tokenizer
+
 
 class EmbeddingModel(Model):
-    def __init__(self, config):
-        super().__init__(config, 'embeddings')
+    def __init__(self, config, model_type: str = 'embeddings'):
+        super().__init__(config, model_type)
         self.embeddings_size = self._model.config.hidden_size
 
     def _load_model(self):
@@ -85,6 +93,51 @@ class EmbeddingModel(Model):
 
     def get_embedding_shape(self):
         return self._model.config.hidden_size
+
+
+class LLaMAModel(EmbeddingModel):
+    def __init__(self, config):
+        super().__init__(config, "llama")
+
+    def _load_model(self):
+        config_kwargs = {
+            "trust_remote_code": True,
+            "cache_dir": None,
+            "revision": 'main',
+            "use_auth_token": None,
+            "output_hidden_states": True,
+            "return_dict_in_generate": True,
+        }
+        model_config = AutoConfig.from_pretrained(self._model_path, **config_kwargs)
+        model = AutoModelForCausalLM.from_pretrained(
+            self._model_path,
+            trust_remote_code=True,
+            config=model_config,
+            device_map=self._device,
+            torch_dtype=torch.float16)
+
+        model.eval()
+
+        return model
+
+    def _load_tokenizer(self):
+        tokenizer = AutoTokenizer.from_pretrained(self._model_path)
+        #tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+        # tokenizer.pad_token = "[PAD]"
+        #tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids(tokenizer.pad_token)
+        tokenizer.padding_side = "right"
+        tokenizer.pad_token = tokenizer.eos_token
+        return tokenizer
+
+    def embedd(self, text: str | list[str], max_len: int = 128) -> np.array:
+        tokens = self._tokenizer(text, return_tensors='pt', max_length=max_len, padding="max_length", truncation=True)
+        tokens = tokens.to(self._device)
+
+        with torch.no_grad():
+            batch_outputs = self._model(**tokens)
+            embeddings = torch.mean(batch_outputs.hidden_states[-1], axis=1)
+
+        return embeddings.cpu().detach().numpy()
 
 
 class GenerationModel(Model):
@@ -152,10 +205,3 @@ class OpenAiModel():
             stream=True,
         )
         print(completion)
-
-
-if __name__ == '__main__':
-    # print(GenerationModel("../config.ini").generate("Hallo Welt"))
-    # print(EmbeddingModel("../config.ini").embedd(["Hallo", "Embeddings?"]).shape)
-    OpenAiModel("../config.ini").generate()
-
