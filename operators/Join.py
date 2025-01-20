@@ -3,8 +3,10 @@ import numpy as np
 
 from typing import Any, Type, Optional
 
-from operators import Operator, Column, Criteria
-from utils.Model import EmbeddingModel
+from operators import Operator, Column, Criteria, HardEqual, Constant
+from operators.Project import Project
+from utils.DB import DBConnector
+from utils.Model import EmbeddingModel, LLaMAModel
 
 
 class Join(Operator):
@@ -129,22 +131,24 @@ class InnerSoftJoin(Join):
             self,
             child_left: Operator,
             child_right: Operator,
-            column_left: Column,
-            column_right: Column,
+            column_left: Column | None | list[str],
+            column_right: Column | None | list[str],
             embedding_mode: EmbeddingModel,
-            vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatL2,
-            threshold: float = 100,
+            vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
+            threshold: float = 0,
             debug = False):
 
-        self.column_left: Column = column_left
-        self.column_right: Column = column_right
+        # TODO: Soft Search For Join Columns
+
+        self.column_left: Column | None | list[str] = column_left
+        self.column_right: Column | None | list[str] = column_right
         self.embedding_mode: EmbeddingModel = embedding_mode
         self.vector_store_type = vector_store_type
         self.threshold: float = threshold
         self.debug: bool = debug
 
         self.vector_store: Optional[Type[faiss.IndexFlat]] = None
-        self.records_left: Optional[list[dict]] = None
+        self.records_left: Optional[list[dict]] = []
         self.record_right: Optional[dict] = None
 
         self.distances: Optional[np.ndarray] = None
@@ -156,30 +160,44 @@ class InnerSoftJoin(Join):
     def open(self) -> None:
         self.child_left.open()
         self.vector_store = self.vector_store_type(self.embedding_mode.get_embedding_shape())
-        self.records_left = [self._remap_record("left", rec) for rec in self.child_left]
-        keys_left = list(map(lambda x: self.column_left.get(x), self.records_left))
-        embeddings_left = self.embedding_mode.embedd_batch(keys_left)
-        # noinspection PyArgumentList
-        self.vector_store.add(embeddings_left)
+
+        logging.debug("Loading & embedd records")
+        embeddings = []
+        for row in self.child_left:
+            row = self._remap_record("left", row)
+            self.records_left.append(row)
+            embeddings.append(self._create_embedding(row, "left"))
+
+        if embeddings:
+            logging.debug("Save to vector store")
+            # noinspection PyArgumentList
+            self.vector_store.add(np.array(embeddings))
+
         self.child_left.close()
         self.child_right.open()
 
     def __next__(self) -> dict:
+        if not self.records_left:
+            self.close()
+            raise StopIteration
+
         while True:
             if self.record_right is None:
                 self.record_right = self._remap_record("right", next(self.child_right))
-                embedding_right = self.embedding_mode.embedd(self.column_right.get(self.record_right))
+                embedding_right = self._create_embedding(self.record_right, "right")
 
                 # noinspection PyArgumentList
-                self.distances, self.indices = self.vector_store.search(embedding_right, len(self.records_left))
+                _, distances, indices = self.vector_store.range_search(x=np.array([embedding_right]), thresh=self.threshold)
+                self.indices = list(indices)
+                self.distances = list(distances)
                 self.index_left = 0
 
             try:
-                idx = self.indices[0][self.index_left]
-                distance = self.distances[0][self.index_left]
+                idx = self.indices[self.index_left]
+                distance = self.distances[self.index_left]
 
-                if idx < 0 or distance > self.threshold:
-                    raise IndexError
+                # if idx < 0 or distance > self.threshold:
+                #     raise IndexError
 
                 self.index_left += 1
 
@@ -195,3 +213,37 @@ class InnerSoftJoin(Join):
 
     def get_description(self) -> str:
         return f"⋈_{{{self.column_left.name} ≈ {self.column_right.name}}}"
+
+    def _create_embedding(self, rec, side):
+        column = self.column_left if side == "left" else self.column_right
+
+        if column is None:
+            key = str(rec)
+        elif isinstance(column, Column):
+            key = column.get(rec)
+        else:
+            key = ", ".join((str(rec[col]) for col in column))
+
+        return self.embedding_mode.embedd(key)[0]
+
+if __name__ == '__main__':
+    from utils.Model import SentenceTransformers
+    from operators.Scan import Scan
+    from operators.Select import Select
+    import pandas as pd
+    import logging
+
+    logging.basicConfig(level=logging.DEBUG)
+
+    config = "../config.ini"
+    em1 = SentenceTransformers(config)
+    # em2 = LLaMAModel(config)
+    db = DBConnector(config)
+
+    s_companies = Scan("companies", db, em1, sql_annex="WHERE size_range = '10001+'")
+    s_sanctions = Scan("sanctions", db, em1, sql_annex="WHERE (properties->'country')::jsonb @> '[\"at\"]' AND schema = 'Company'")
+    join = InnerSoftJoin(s_companies, s_sanctions, ["name", "locality", "country"], ["caption", "properties"], em1, threshold=0.5, debug=True)
+
+    pd.DataFrame(
+        [(row["name"], row["caption"], row["distance"]) for row in join],
+        columns=["name", "caption", "distance"]).to_csv("../data/export.csv")

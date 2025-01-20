@@ -44,17 +44,6 @@ class EuclidianDistance(Measure):
         return np.linalg.norm(u - v)
 
 
-def get_idx_closes_vector(distance: Measure, threshold: float, embeddings: np.ndarray, target: np.array) -> int | None:
-    distances = [distance(vec, target) for vec in embeddings]
-    if distance.is_distance:
-        closest_idx = np.argmin(distances)
-        return closest_idx if distances[closest_idx] <= threshold else None
-    else:
-        closest_idx = np.argmax(distances)
-        return closest_idx if distances[closest_idx] >= threshold else None
-
-
-
 def get_config(config: str) -> configparser.ConfigParser:
     assert config is not None, "No configuration provided... See README.md"
 

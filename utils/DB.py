@@ -1,3 +1,5 @@
+import logging
+
 import psycopg2
 import psycopg2.extras
 
@@ -12,7 +14,7 @@ class DBConnector:
     def __init__(self, config: str, use_vector: bool = False):
         config: configparser.ConfigParser = get_config(config)
 
-        print("Connecting to database", end=" ")
+        logging.debug("Connecting to database")
 
         self.conn = psycopg2.connect(
             database=config["DB"].get("database"),
@@ -23,8 +25,6 @@ class DBConnector:
 
         if not self.conn:
             raise Exception("Could not connect to database.")
-
-        print(f"{TColor.OKGREEN}Done{TColor.ENDC}")
 
         self.conn.autocommit = False
 

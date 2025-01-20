@@ -1,10 +1,13 @@
 import configparser
+import logging
 
 import numpy as np
 import torch
+import torch.nn.functional as F
+
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM, AutoConfig
 
-from utils import get_config, TColor, CosineSimilarity
+from utils import get_config, TColor
 
 from huggingface_hub import login
 
@@ -24,9 +27,9 @@ class Model:
 
         self._tokenizer = self._load_tokenizer()
 
-        print(f"Load model {self._model_path}", end=" ")
+
+        logging.debug(f"Load model {self._model_path}")
         self._model = self._load_model()
-        print(f"{TColor.OKGREEN}Done{TColor.ENDC}")
 
     def _tokenize(self, text: str, **kwargs) -> dict[str, torch.Tensor]:
         inputs: dict[str, torch.Tensor] = self._tokenizer(text, **kwargs)
@@ -138,6 +141,40 @@ class LLaMAModel(EmbeddingModel):
             embeddings = torch.mean(batch_outputs.hidden_states[-1], axis=1)
 
         return embeddings.cpu().detach().numpy()
+
+
+class SentenceTransformers(EmbeddingModel):
+    def __init__(self, config):
+        super().__init__(config, "sentence_transformers")
+
+    def _load_model(self):
+        model = AutoModel.from_pretrained('sentence-transformers/all-mpnet-base-v2')
+
+        if self._use_cuda:
+            model = model.cuda()
+
+        return model
+
+    def _load_tokenizer(self):
+        return AutoTokenizer.from_pretrained(self._model_path)
+
+    def embedd(self, text: str | list[str], max_len: int = 128) -> np.array:
+        encoded_input = self._tokenizer(text, padding=True, truncation=True, return_tensors='pt')
+
+        if self._use_cuda:
+            encoded_input = {k: v.cuda() for k,v in encoded_input.items()}
+
+        with torch.no_grad():
+            model_output = self._model(**encoded_input)
+            sentence_embeddings = self._mean_pooling(model_output, encoded_input['attention_mask'])
+            return F.normalize(sentence_embeddings, p=2, dim=1).detach().cpu().numpy()
+
+    @staticmethod
+    def _mean_pooling(model_output, attention_mask):
+        token_embeddings = model_output[0] #First element of model_output contains all token embeddings
+        input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+        return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+
 
 
 class GenerationModel(Model):

@@ -1,33 +1,72 @@
-from typing import Callable
+import logging
+from typing import Type
 
+import faiss
 import numpy as np
 
-from operators import Operator
-from utils import get_idx_closes_vector, Measure, EuclidianDistance
+from operators import Operator, SQLTable
 from utils.DB import DBConnector
 from utils.Model import EmbeddingModel
 
-
 class Scan(Operator):
-    def __init__(self, name: str, db_connector: DBConnector, embedding_model: EmbeddingModel,
-                 num_tuples: int = 10,  batch_size: int = 100,
-                 threshold: float = 100.0,
-                 distance: Measure = EuclidianDistance()) -> None:
+    SQL_FETCH_TABLES = """
+            WITH primary_keys AS (
+                SELECT tc.table_name, tc.table_schema, kcu.column_name, ':PRIMARY_KEY' AS prim
+                FROM information_schema.table_constraints tc
+                JOIN information_schema.key_column_usage kcu USING (constraint_name, table_schema)
+                WHERE tc.constraint_type = 'PRIMARY KEY'
+            ), foregin_keys AS (
+                SELECT tc.table_schema, tc.table_name, kcu.column_name,
+                       CONCAT(':FOREIGN_KEY(', ccu.table_schema, '.', ccu.table_name, '.', ccu.column_name, ')') AS foreign_table
+                FROM information_schema.table_constraints AS tc
+                JOIN information_schema.key_column_usage AS kcu USING (constraint_name, table_schema)
+                JOIN information_schema.constraint_column_usage AS ccu USING (constraint_name)
+                WHERE tc.constraint_type = 'FOREIGN KEY'
+            )
+            SELECT
+                table_schema, table_name, STRING_AGG(CONCAT(
+                    c.column_name, ':', c.data_type, COALESCE(p.prim, ''), COALESCE(f.foreign_table, '')
+                ), ', ') AS table_structure
+            FROM information_schema.tables t
+            JOIN information_schema.columns c USING (table_schema, table_name)
+            LEFT JOIN primary_keys p USING (table_schema, table_name, column_name)
+            LEFT JOIN foregin_keys f USING (table_schema, table_name, column_name)
+            WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
+            GROUP BY table_schema, table_name
+            ORDER BY table_schema, table_name
+    """
 
+    def __init__(
+            self, name: str, db_connector: DBConnector, embedding_model: EmbeddingModel,
+            num_tuples: int = 10, batch_size: int = 100, threshold: float = .8,
+            vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP, limit: int = None,
+            sql_annex: str | None = None,
+    ) -> None:
         self.name: str = name
         self.threshold: float = threshold
         self.batch_size: int = batch_size
-        self.distance: Measure = distance
+        self.limit = limit
         self.db_connector: DBConnector = db_connector
         self.embedding_model: EmbeddingModel = embedding_model
-        # self.generation_model: GenerationModel = generation_model
-        self.schema_name, self.table_name = self._get_table()
+        self.vector_store = vector_store_type(self.embedding_model.get_embedding_shape())
+        self.sql_table, confidence = self._get_table()
+        self.cursor = None
+        columns = list(map(lambda col: col.column_name, self.sql_table.table_structure))
 
-        assert self.schema_name is not None, f"No table found for '{name}'"
+        self.query = f"SELECT * FROM {self.sql_table.table_schema}.{self.sql_table.table_name}"
 
-        self.cursor = self.db_connector.get_cursor()
-        self.cursor.execute(f"SELECT * FROM {self.schema_name}.{self.table_name}")
-        super().__init__(name, [desc[0] for desc in self.cursor.description], num_tuples)
+        if sql_annex is not None:
+            self.query += f" {sql_annex}"
+
+        if limit is not None:
+            self.query += f" LIMIT {limit}"
+
+
+        logging.debug(f"Selected Table (confidence {confidence:.02}): {self.sql_table}")
+
+        assert self.sql_table is not None, f"No table found for '{name}'"
+
+        super().__init__(name, columns, num_tuples)
 
 
     def __str__(self) -> str:
@@ -38,7 +77,7 @@ class Scan(Operator):
             self.cursor.close()
 
         self.cursor = self.db_connector.get_cursor()
-        self.cursor.execute(f"SELECT * FROM {self.schema_name}.{self.table_name}")
+        self.cursor.execute(self.query)
 
 
     def __next__(self) -> dict:
@@ -65,22 +104,28 @@ class Scan(Operator):
     def close(self):
         self.cursor.close()
 
-    def _get_table(self) -> (str, str):
+    def _get_table(self) -> (SQLTable | None, float):
         """
         Searches through all schemas and tables to find the closest match for the init name
         :return: schema name and table name
         """
+        sql_tables = []
         with self.db_connector.get_cursor() as cursor:
-            cursor.execute("""
-            SELECT table_schema, table_name
-            FROM information_schema.tables
-            WHERE table_schema NOT IN ('pg_catalog', 'information_schema')
-            ORDER BY table_schema, table_name;
-            """)
-            res = cursor.fetchall()
+            cursor.execute(self.SQL_FETCH_TABLES)
+            for row in cursor.fetchall():
+                sql_tables.append(SQLTable(row["table_schema"], row["table_name"], row["table_structure"]))
 
-        embeddings = self.embedding_model.embedd_batch([self.name] + list(map(lambda x: x["table_name"], res)))
+        name_input = f"SQL Table for '{self.name}' (structure: <schame>.<name>: [<column>(<type>[, PRIMARY_KEY])])"
+        table_inputs = list(map(str, sql_tables))
 
-        idx: int | None = get_idx_closes_vector(self.distance, self.threshold, embeddings[1:], embeddings[0])
+        embeddings = self.embedding_model.embedd_batch([name_input] + table_inputs)
 
-        return res[idx]["table_schema"], res[idx]["table_name"] if idx is not None else None
+        # noinspection PyArgumentList
+        self.vector_store.add(embeddings[1:])
+
+        # noinspection PyArgumentList
+        distances, idxs = self.vector_store.search(np.array([embeddings[0]]), 1)
+
+        distance, idx = distances[0][0], idxs[0][0]
+
+        return sql_tables[idx], distance
