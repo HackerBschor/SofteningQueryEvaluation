@@ -1,5 +1,10 @@
 import copy
+import logging
 import random
+import pandas as pd
+from tqdm import tqdm
+from collections import Counter
+from sklearn.metrics import classification_report
 
 from operators import Negation, HardEqual, Column, Constant, SoftEqual
 from operators.Dummy import Dummy
@@ -9,17 +14,17 @@ from operators.Select import Select
 from operators.Project import Project
 from operators.Join import Join, InnerHashJoin, InnerSoftJoin
 
-from collections import Counter
-
 from utils import CosineSimilarity
 from utils.DB import DBConnector
 from utils.Model import SentenceTransformers
 
+from semantic_validation import SemanticValidation
 
 def set_compare(a: list[dict], b: list[dict]):
     a_comparable = Counter(tuple(sorted(d.items())) for d in a)
     b_comparable = Counter(tuple(sorted(d.items())) for d in b)
     return a_comparable == b_comparable
+
 
 def build_vectorized_result(op):
     arr = []
@@ -86,7 +91,54 @@ test_data_noise = [
     ("Bumble Inc.", "Tinder"),
 ]
 
+template = "Is {a} the same person as {b}?"
 
+artists = [
+    ("Robyn Fenty", "Rihanna"),
+    ("Marshall Mather", "Eminem"),
+    ("Marshall Bruce Mathers III", "Eminem"),
+    ("Stefani Germanotta", "Lady Gaga"),
+    ("Stefani Joanne Angelina Germanotta", "Lady Gaga"),
+    ("Stefano Germanotta", None),  # Trick the LLM with Lady Gaga
+    ("Adele Laurie Blue Adkins MBE", "Adele"),
+    ("Katheryn Elizabeth Hudson", "Katy Perry"),
+    ("Taylor Swift", None),
+    ("Onika Maraj", "Nicki Minaj"),
+    ("Volkan Yaman", "Apache 207"),
+    ("Johann Hölzel", "Falco"),
+    ("Franz Bibiza", "BIBIZA"),
+    ("Shawn Corey Carter", "Jay-Z"),
+    ("Aubrey Drake Graham", "Drake"),
+    ("Belcalis Marlenis Almánzar", "Cardi B"),
+    ("Calvin Cordozar Broadus Jr.", "Snoop Dogg"),
+    ("Jacques Berman Webster II", "Travis Scott"),
+    ("Ella Marija Lani Yelich-O'Connor", "Lorde"),
+    ("Peter Gene Hernandez", "Bruno Mars"),
+    ("Melissa Viviane Jefferson", "Lizzo"),
+    ("Abel Makkonen Tesfaye", "The Weeknd"),
+    ("Alecia Beth Moore", "Pink"),
+    ("P!nk", "Pink"),
+    ("Austin Richard Post", "Post Malone"),
+    ("Claire Elise Boucher", "Grimes"),
+    ("Paul David Hewson", "Bono"),
+    ("Reginald Kenneth Dwight", "Elton John"),
+]
+
+statements = []
+for name, alias in artists:
+    if alias is not None:
+        statements.append((template.format(a=name, b=alias), True))
+
+for name1, alias1 in artists:
+    for name2, alias2 in artists:
+        if name1 == name2:
+            continue
+
+        statements.append((template.format(a=name1, b=name2), False))
+        if alias2 is not None:
+            statements.append((template.format(a=name1, b=alias2), False))
+
+random.shuffle(statements)
 
 
 def test_dummy():
@@ -214,11 +266,39 @@ def test_join(embedding_model):
     # TODO: Validate [rec for rec in join]
 
 
+def test_semantic_validation(validator):
+    print("Evaluation on class [cars/ plants] membership")
+    test_data = [(x , "car") for x in test_data_cars] + [(x, "plant") for x in test_data_plants]
+    df_test_data = pd.DataFrame(test_data, columns=["object", "type"]).sample(frac=1)
+    df_test_data["is_car"] = df_test_data["object"].apply(lambda x: validator(f"Is {x} a car?"))
+    df_test_data["is_plant"] = df_test_data["object"].apply(lambda x: validator(f"Is {x} a plant?"))
+
+    df_test_data["prediction"] = df_test_data.apply(
+        lambda x: "car" if x["is_car"] and not x["is_plant"] else ("plant" if not x["is_car"] and x["is_plant"] else "-"),
+        axis=1)
+
+    print("Quantitative Evaluation")
+    print(classification_report(df_test_data["type"], df_test_data["prediction"]))
+
+    print("Qualitative Evaluation")
+    print(df_test_data["prediction"] == "-")
+
+    print("\nEvaluation on entity matching")
+    results = []
+    for statement, answer in tqdm(statements):
+        results.append((statement, answer, validator(statement)))
+
+    df = pd.DataFrame(results, columns=["statement", "answer", "prediction"])
+    print("Quantitative Evaluation")
+    print(classification_report(df["answer"], df["prediction"]))
+
+    print("Qualitative Evaluation")
+    print(df[df["prediction"] != df["answer"]])
+
+
 
 if __name__ == '__main__':
-    import logging
     logging.basicConfig(level=logging.DEBUG)
-
     db = DBConnector("./config.ini")
     em = SentenceTransformers("./config.ini")
     test_dummy()
@@ -227,3 +307,4 @@ if __name__ == '__main__':
     test_select(em)
     test_projection(em)
     test_join(em)
+    test_semantic_validation(SemanticValidation())
