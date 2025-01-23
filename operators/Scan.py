@@ -49,11 +49,10 @@ class Scan(Operator):
         self.db_connector: DBConnector = db_connector
         self.embedding_model: EmbeddingModel = embedding_model
         self.vector_store = vector_store_type(self.embedding_model.get_embedding_shape())
-        self.sql_table, confidence = self._get_table()
+        table, confidence = self._get_table()
         self.cursor = None
-        columns = list(map(lambda col: col.column_name, self.sql_table.table_structure))
 
-        self.query = f"SELECT * FROM {self.sql_table.table_schema}.{self.sql_table.table_name}"
+        self.query = f"SELECT * FROM {table.table_schema}.{table.table_name}"
 
         if sql_annex is not None:
             self.query += f" {sql_annex}"
@@ -62,11 +61,11 @@ class Scan(Operator):
             self.query += f" LIMIT {limit}"
 
 
-        logging.debug(f"Selected Table (confidence {confidence:.02}): {self.sql_table}")
+        logging.debug(f"Selected Table (confidence {confidence:.02}): {table}")
 
-        assert self.sql_table is not None, f"No table found for '{name}'"
+        assert table is not None, f"No table found for '{name}'"
 
-        super().__init__(name, columns, num_tuples)
+        super().__init__(table, num_tuples)
 
 
     def __str__(self) -> str:

@@ -2,7 +2,7 @@ import copy
 
 from typing import Iterator
 
-from operators import Operator
+from operators import Operator, SQLTable, SQLColumn
 
 
 class Dummy(Operator):
@@ -12,10 +12,11 @@ class Dummy(Operator):
 
         self.idx: int | None = None
         self.iter: Iterator[dict] | None = None
-        super().__init__(name, columns, num_tuples)
+        table = SQLTable(None, name, [SQLColumn(col, type(self.data[0][col])) for col in columns])
+        super().__init__(table, num_tuples)
 
     def __str__(self) -> str:
-        return self.name
+        return self.table.table_name
 
     def __next__(self) -> dict:
         try:

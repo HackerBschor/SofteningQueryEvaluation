@@ -10,7 +10,7 @@ class Select(Operator):
     def __init__(self, child_operator: Operator, criteria: Criteria) -> None:
         self.child_operator: Operator = child_operator
         self.criteria: Criteria = criteria
-        super().__init__(self.child_operator.name, self.child_operator.columns, self.child_operator.num_tuples)
+        super().__init__(self.child_operator.table, self.child_operator.num_tuples)
 
     def __next__(self) -> dict:
         for t in self.child_operator:

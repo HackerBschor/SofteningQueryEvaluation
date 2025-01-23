@@ -3,11 +3,9 @@ import numpy as np
 
 from typing import Any, Type, Optional
 
-from operators import Operator, Column, Criteria, HardEqual, Constant
-from operators.Project import Project
-from utils.DB import DBConnector
-from utils.Model import EmbeddingModel, LLaMAModel
-
+from operators import Operator, Column, Criteria, SQLColumn, SQLTable
+from utils.Model import EmbeddingModel
+import logging
 
 class Join(Operator):
     def __init__(self, child_left: Operator, child_right: Operator, criteria: Criteria | None):
@@ -16,10 +14,11 @@ class Join(Operator):
         self.criteria: Criteria = criteria
         self.current_tuple = None
 
-        name = f"{self.child_left.name}+{self.child_right.name}"
+        name = f"{self.child_left.table.table_name}+{self.child_left.table.table_name}"
 
         # builds columns map: a = {x, y} & b = {y, z} -> columns_map = {left: {x: x, y: a.y}, right: {z: z, y: b.y}}
-        columns_left, columns_right = set(self.child_left.columns), set(self.child_right.columns)
+        columns_left = {x.column_name for x in self.child_left.table.table_structure}
+        columns_right = {x.column_name for x in self.child_right.table.table_structure}
         columns_intersect = columns_left & columns_right
         # a = {x, y} & b = {y, z} -> columns_map = {left: {x: x}, right: {z: z}}
         self.columns_map = {
@@ -28,13 +27,19 @@ class Join(Operator):
         }
 
         for col in columns_intersect:
-            self.columns_map["left"][col] = f"{self.child_left.name}.{col}"
-            self.columns_map["right"][col] = f"{self.child_right.name}.{col}"
+            self.columns_map["left"][col] = f"{self.child_left.table.table_name}.{col}"
+            self.columns_map["right"][col] = f"{self.child_right.table.table_name}.{col}"
 
-        columns = (list(map(lambda c: self.columns_map["left"][c], self.child_left.columns)) +
-                   list(map(lambda c: self.columns_map["right"][c], self.child_right.columns)))
+        columns: list[SQLColumn] = []
+        for col in self.child_left.table.table_structure:
+            col_name_new = self.columns_map["left"][col.column_name]
+            columns.append(SQLColumn(col_name_new, col.column_type, col.primary_key, col.foreign_key))
 
-        super().__init__(name, list(columns), min(self.child_right.num_tuples, self.child_right.num_tuples))
+        for col in self.child_right.table.table_structure:
+            col_name_new = self.columns_map["right"][col.column_name]
+            columns.append(SQLColumn(col_name_new, col.column_type, col.primary_key, col.foreign_key))
+
+        super().__init__(SQLTable("", name, columns), min(self.child_right.num_tuples, self.child_right.num_tuples))
 
     def __next__(self) -> dict:
         while True:
@@ -225,25 +230,3 @@ class InnerSoftJoin(Join):
             key = ", ".join((str(rec[col]) for col in column))
 
         return self.embedding_mode.embedd(key)[0]
-
-if __name__ == '__main__':
-    from utils.Model import SentenceTransformers
-    from operators.Scan import Scan
-    from operators.Select import Select
-    import pandas as pd
-    import logging
-
-    logging.basicConfig(level=logging.DEBUG)
-
-    config = "../config.ini"
-    em1 = SentenceTransformers(config)
-    # em2 = LLaMAModel(config)
-    db = DBConnector(config)
-
-    s_companies = Scan("companies", db, em1, sql_annex="WHERE size_range = '10001+'")
-    s_sanctions = Scan("sanctions", db, em1, sql_annex="WHERE (properties->'country')::jsonb @> '[\"at\"]' AND schema = 'Company'")
-    join = InnerSoftJoin(s_companies, s_sanctions, ["name", "locality", "country"], ["caption", "properties"], em1, threshold=0.5, debug=True)
-
-    pd.DataFrame(
-        [(row["name"], row["caption"], row["distance"]) for row in join],
-        columns=["name", "caption", "distance"]).to_csv("../data/export.csv")

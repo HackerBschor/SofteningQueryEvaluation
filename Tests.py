@@ -11,8 +11,9 @@ from operators.Join import Join, InnerHashJoin, InnerSoftJoin
 
 from collections import Counter
 
-from utils import CosineSimilarity, EuclidianDistance
-from utils.Model import EmbeddingModel
+from utils import CosineSimilarity
+from utils.DB import DBConnector
+from utils.Model import SentenceTransformers
 
 
 def set_compare(a: list[dict], b: list[dict]):
@@ -98,12 +99,12 @@ def test_dummy():
     assert test_data == build_vectorized_result(dummy)
 
 def test_scan(db_connector, embedding_model):
-    scan1 = Scan("firms", db_connector, embedding_model, distance=CosineSimilarity(), threshold=0.8)
-    assert scan1.table_name == "companies"
+    scan1 = Scan("firms", db_connector, embedding_model)
+    assert scan1.table.table_name == "companies"
     scan1.close()
 
-    scan2 = Scan("actors", db_connector, embedding_model, distance=EuclidianDistance(), threshold=80)
-    assert scan2.schema_name == "imdb", scan2.table_name == "persons"
+    scan2 = Scan("actors", db_connector, embedding_model)
+    assert scan2.table.table_schema == "imdb", scan2.table.table_name == "persons"
     scan2.close()
 
     with db_connector.get_cursor() as cursor:
@@ -112,7 +113,7 @@ def test_scan(db_connector, embedding_model):
             cursor.execute("INSERT INTO tmp_table (a, b, c) VALUES (%(a)s, %(b)s, %(c)s);", row)
 
     scan3 = Scan("tmp_table", db_connector, embedding_model)
-    assert scan3.table_name == "tmp_table"
+    assert scan3.table.table_name == "tmp_table"
     compare_data = [dict(row) for row in scan3]
     assert set_compare(compare_data, test_data)
 
@@ -155,30 +156,26 @@ def test_select(embedding_model):
 
     dummy_advanced = Dummy("test", ["object"], test_data_advanced)
 
-    crit = SoftEqual(Column("object"), Constant("car manufacturers"), embedding_model, CosineSimilarity(), 0.75)
+    crit = SoftEqual(Column("object"), Constant("car brand"), embedding_model, CosineSimilarity(),.3)
     sel_advanced = Select(dummy_advanced, crit)
-    assert set(test_data_cars).issubset(set([x["object"] for x in sel_advanced]))
+    result = {x["object"] for x in sel_advanced}
+    assert set(test_data_cars).issubset(result) and len(result) < len(test_data_advanced)
 
     sel_advanced.open()
-    result = [x["object"] for x in build_vectorized_result(sel_advanced)]
+    result = {x["object"] for x in build_vectorized_result(sel_advanced)}
     # TODO: Add Sematic Validation -> Test for full equality
     assert set(test_data_cars).issubset(set(result)) and len(result) < len(test_data_advanced)
 
     # TODO: Add Sematic Validation -> Test for full equality
     crit = Negation(
-        SoftEqual(Column("object"), Constant("car manufacturers"), embedding_model, CosineSimilarity(), 0.8))
-    sel_advanced = Select(dummy_advanced, crit)
-    result = [x["object"] for x in sel_advanced]
+        SoftEqual(Column("object"), Constant("car brand"), embedding_model, CosineSimilarity(), 0.4))
+    result = {x["object"] for x in Select(dummy_advanced, crit)}
     assert set(test_data_plants).issubset(set(result)) and len(result) < len(test_data_advanced)
 
-def test_projection():
-    dummy = Project(Dummy("test", ["a", "b", "c"], test_data), Project.WILDCARD)
-    assert test_data == [x for x in dummy]
-
+def test_projection(em):
     reduced_test_data = list(map(lambda x: {"a": x["a"], "b": x["b"]}, copy.deepcopy(test_data)))
-    dummy = Project(Dummy("test", ["a", "b", "c"], test_data), ["a", "b"])
+    dummy = Project(Dummy("test", ["a", "b", "c"], test_data), ["a", "b"], em)
     assert reduced_test_data == [x for x in dummy]
-
     dummy.open()
     assert reduced_test_data == build_vectorized_result(dummy)
 
@@ -219,11 +216,14 @@ def test_join(embedding_model):
 
 
 if __name__ == '__main__':
-    #db = DBConnector("./config.ini")
-    em = EmbeddingModel("./config.ini")
-    #test_dummy()
-    #test_scan(db, em)
-    #test_transform()
-    #test_select(em)
-    # test_projection()
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+
+    db = DBConnector("./config.ini")
+    em = SentenceTransformers("./config.ini")
+    test_dummy()
+    test_scan(db, em)
+    test_transform()
+    test_select(em)
+    test_projection(em)
     test_join(em)
