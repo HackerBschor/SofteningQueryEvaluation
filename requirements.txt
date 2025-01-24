@@ -67,3 +67,4 @@ scikit-learn==1.6.1
 grpcio==1.67.1
 google-generativeai==0.8.4
 accelerate==1.3.0
+jupyter==1.1.1

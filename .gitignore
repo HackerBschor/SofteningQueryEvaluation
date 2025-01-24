@@ -162,4 +162,4 @@ data/
 
 config.ini
 
-experiments/
+experiments_ignored/
