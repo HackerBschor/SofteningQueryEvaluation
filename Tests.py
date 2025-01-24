@@ -1,3 +1,4 @@
+import configparser
 import copy
 import logging
 import random
@@ -6,6 +7,7 @@ from tqdm import tqdm
 from collections import Counter
 from sklearn.metrics import classification_report
 
+from models import ModelMgr
 from operators import Negation, HardEqual, Column, Constant, SoftEqual
 from operators.Dummy import Dummy
 from operators.Scan import Scan
@@ -14,11 +16,13 @@ from operators.Select import Select
 from operators.Project import Project
 from operators.Join import Join, InnerHashJoin, InnerSoftJoin
 
-from utils import CosineSimilarity
-from utils.DB import DBConnector
-from utils.Model import SentenceTransformers
+from utils import CosineSimilarity, get_config
 
-from semantic_validation import SemanticValidation
+from models.semantic_validation import GeminiValidationModel, LLaMAValidationModel
+from models.embedding import GenericEmbeddingModel, LLaMAEmbeddingModel, SentenceTransformerEmbeddingModel
+
+from utils.DB import DBConnector
+
 
 def set_compare(a: list[dict], b: list[dict]):
     a_comparable = Counter(tuple(sorted(d.items())) for d in a)
@@ -281,7 +285,7 @@ def test_semantic_validation(validator):
     print(classification_report(df_test_data["type"], df_test_data["prediction"]))
 
     print("Qualitative Evaluation")
-    print(df_test_data["prediction"] == "-")
+    print(df_test_data[df_test_data["prediction"] == "-"])
 
     print("\nEvaluation on entity matching")
     results = []
@@ -295,16 +299,45 @@ def test_semantic_validation(validator):
     print("Qualitative Evaluation")
     print(df[df["prediction"] != df["answer"]])
 
+def test_models(model_mgr: ModelMgr, config: configparser.ConfigParser):
+    # Validators
+    prompt = "Is Lady Gaga the same person as Stefani Joanne Angelina Germanotta"
+    llama_validation = LLaMAValidationModel(model_mgr)
+    gemini_validation = GeminiValidationModel(config["MODEL"]["google_aistudio_api_key"])
+
+    # Embeddings
+    text = "Lady Gaga"
+    llama_embedding = LLaMAEmbeddingModel(model_mgr)
+    generic_embedding = GenericEmbeddingModel(model_mgr)
+    st_embedding = SentenceTransformerEmbeddingModel(model_mgr)
+
+    print("LLaMAValidationModel", llama_validation(prompt))
+    print("GeminiValidationModel", gemini_validation(prompt))
+
+    print("LLaMAEmbeddingModel", llama_embedding(text).shape)
+    print("GenericEmbeddingModel", generic_embedding(text).shape)
+    print("SentenceTransformerEmbeddingModel", st_embedding(text).shape)
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    db = DBConnector("./config.ini")
-    em = SentenceTransformers("./config.ini")
+    config_file = "./config.ini"
+    config: configparser.ConfigParser = get_config(config_file)
+
+    m = ModelMgr()
+    db = DBConnector(config_file)
+    em = SentenceTransformerEmbeddingModel(m)
+    sv = LLaMAValidationModel(m)
+
+    test_models(m, config)
+
     test_dummy()
     test_scan(db, em)
     test_transform()
     test_select(em)
     test_projection(em)
     test_join(em)
-    test_semantic_validation(SemanticValidation())
+
+    test_semantic_validation(sv)
+    # gv = Gemini_Validator("./config.ini", model_name="gemini-2.0-flash-exp")
+    # test_semantic_validation(gv)

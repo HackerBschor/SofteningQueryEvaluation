@@ -6,7 +6,7 @@ import numpy as np
 
 from operators import Operator, SQLTable
 from utils.DB import DBConnector
-from utils.Model import EmbeddingModel
+from models.embedding.Model import EmbeddingModel
 
 class Scan(Operator):
     SQL_FETCH_TABLES = """
@@ -48,7 +48,7 @@ class Scan(Operator):
         self.limit = limit
         self.db_connector: DBConnector = db_connector
         self.embedding_model: EmbeddingModel = embedding_model
-        self.vector_store = vector_store_type(self.embedding_model.get_embedding_shape())
+        self.vector_store = vector_store_type(self.embedding_model.get_embedding_size())
         table, confidence = self._get_table()
         self.cursor = None
 
@@ -117,7 +117,7 @@ class Scan(Operator):
         name_input = f"SQL Table for '{self.name}' (structure: <schame>.<name>: [<column>(<type>[, PRIMARY_KEY])])"
         table_inputs = list(map(str, sql_tables))
 
-        embeddings = self.embedding_model.embedd_batch([name_input] + table_inputs)
+        embeddings = self.embedding_model([name_input] + table_inputs)
 
         # noinspection PyArgumentList
         self.vector_store.add(embeddings[1:])

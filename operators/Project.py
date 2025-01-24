@@ -5,7 +5,7 @@ import numpy as np
 
 from operators import Operator, SQLTable
 
-from utils.Model import EmbeddingModel
+from models.embedding.Model import EmbeddingModel
 
 class Project(Operator):
     def __init__(self, child_operator: Operator, columns: list[str], em: EmbeddingModel,
@@ -13,10 +13,10 @@ class Project(Operator):
 
         self.child_operator: Operator = child_operator
         self.columns = columns
-        vector_store = vector_store_type( em.get_embedding_shape())
+        vector_store = vector_store_type( em.get_embedding_size())
 
         columns_available = [col.column_name for col in self.child_operator.table.table_structure]
-        embeddings = em.embedd_batch(columns + columns_available)
+        embeddings = em(columns + columns_available)
 
         # noinspection PyArgumentList
         vector_store.add( embeddings[len(columns):])

@@ -1,5 +1,4 @@
-from models import Model
+from .Gemini import GeminiValidationModel
+from .LLaMA import LLaMAValidationModel
 
-
-class SemanticValidator(Model):
-    pass
+__all__ = ["GeminiValidationModel", "LLaMAValidationModel"]

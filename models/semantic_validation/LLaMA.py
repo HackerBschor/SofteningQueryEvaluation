@@ -3,10 +3,10 @@ import logging
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-from models.semantic_validation import SemanticValidator
+from models.semantic_validation.Model import SemanticValidationModel
 from models import ModelMgr
 
-class LLaMA_Validator(SemanticValidator):
+class LLaMAValidationModel(SemanticValidationModel):
     DEFAULT_SYSTEM_PROMPT = "You are a validator. You get a statement and need to validate it. Answer with \"yes\" and \"no\" only!"
     DEFAULT_MODEL = "meta-llama/Llama-3.2-3B-Instruct"
 
@@ -19,10 +19,10 @@ class LLaMA_Validator(SemanticValidator):
             output_hidden_states=True,
             return_dict_in_generate=True)
 
-        self._tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
-        self._tokenizer.pad_token = self._tokenizer.eos_token
+        tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
+        tokenizer.pad_token = tokenizer.eos_token
 
-        super().__init__(model, model_mgr)
+        super().__init__(model_mgr, model, tokenizer)
 
 
 

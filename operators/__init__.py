@@ -3,7 +3,7 @@ import re
 from typing import Iterator, List, Any
 
 from utils import Measure, CosineSimilarity
-from utils.Model import EmbeddingModel
+from models.embedding.Model import EmbeddingModel
 
 
 class ColumnNotFoundException(Exception):

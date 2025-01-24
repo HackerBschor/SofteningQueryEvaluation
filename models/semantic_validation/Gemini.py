@@ -4,20 +4,18 @@ import time
 import google.generativeai as genai
 from google.api_core.exceptions import ResourceExhausted
 
-from models.semantic_validation import SemanticValidator
+from models.semantic_validation.Model import SemanticValidationModel
 from utils import get_config
 
 
-class Gemini_Validator(SemanticValidator):
+class GeminiValidationModel(SemanticValidationModel):
     DEFAULT_SYSTEM_PROMPT = "You are a validator. You get a statement and need to validate it. Answer with \"yes\" and \"no\" only!"
     DEFAULT_MODEL = "gemini-1.5-flash"
 
-    def __init__(self, config: str, system_prompt=DEFAULT_SYSTEM_PROMPT, model_name=DEFAULT_MODEL):
-        config = get_config(config)
-        genai.configure(api_key=config["MODEL"]["google_aistudio_api_key"])
+    def __init__(self, api_key: str, system_prompt=DEFAULT_SYSTEM_PROMPT, model_name=DEFAULT_MODEL):
+        genai.configure(api_key=api_key)
         model = genai.GenerativeModel(model_name, system_instruction=system_prompt)
-        super().__init__(model, None)
-
+        super().__init__(None, model, None)
 
 
     def __call__(self, prompt: str) -> bool:

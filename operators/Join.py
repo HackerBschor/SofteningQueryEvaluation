@@ -1,11 +1,12 @@
 import faiss
 import numpy as np
+import logging
 
 from typing import Any, Type, Optional
 
 from operators import Operator, Column, Criteria, SQLColumn, SQLTable
-from utils.Model import EmbeddingModel
-import logging
+from models.embedding.Model import EmbeddingModel
+
 
 class Join(Operator):
     def __init__(self, child_left: Operator, child_right: Operator, criteria: Criteria | None):
@@ -164,7 +165,7 @@ class InnerSoftJoin(Join):
 
     def open(self) -> None:
         self.child_left.open()
-        self.vector_store = self.vector_store_type(self.embedding_mode.get_embedding_shape())
+        self.vector_store = self.vector_store_type(self.embedding_mode.get_embedding_size())
 
         logging.debug("Loading & embedd records")
         embeddings = []
