@@ -4,7 +4,8 @@ from typing import Type
 import faiss
 import numpy as np
 
-from operators import Operator, SQLTable
+from .Operator import Operator
+from ..structure import SQLTable
 from utils.DB import DBConnector
 from models.embedding.Model import EmbeddingModel
 

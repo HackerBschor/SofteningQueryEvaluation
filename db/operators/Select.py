@@ -1,6 +1,7 @@
 from typing import List
 
-from operators import Operator, Criteria
+from .Operator import Operator
+from ..criteria import Criteria
 
 class Select(Operator):
     """

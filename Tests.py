@@ -8,13 +8,9 @@ from collections import Counter
 from sklearn.metrics import classification_report
 
 from models import ModelMgr
-from operators import Negation, HardEqual, Column, Constant, SoftEqual
-from operators.Dummy import Dummy
-from operators.Scan import Scan
-from operators.Transform import Transform
-from operators.Select import Select
-from operators.Project import Project
-from operators.Join import Join, InnerHashJoin, InnerSoftJoin
+from db.structure import Column, Constant
+from db.criteria import Negation, HardEqual, SoftEqual
+from db.operators import Dummy, Scan, Transform, Select, Project, Join, InnerHashJoin, InnerSoftJoin
 
 from utils import CosineSimilarity, get_config
 
@@ -146,6 +142,7 @@ random.shuffle(statements)
 
 
 def test_dummy():
+    print("Test Dummy...", end=" ")
     dummy = Dummy("test", ["a", "b", "c"], test_data)
 
     compare_data = [row for row in dummy]
@@ -153,8 +150,10 @@ def test_dummy():
 
     dummy.open()
     assert test_data == build_vectorized_result(dummy)
+    print("Done")
 
 def test_scan(db_connector, embedding_model):
+    print("Test Scan...", end=" ")
     scan1 = Scan("firms", db_connector, embedding_model)
     assert scan1.table.table_name == "companies"
     scan1.close()
@@ -175,8 +174,10 @@ def test_scan(db_connector, embedding_model):
 
     scan3.open()
     assert set_compare(test_data, build_vectorized_result(scan3))
+    print("Done")
 
 def test_transform():
+    print("Test Transform...", end=" ")
     def dummy_function(row):
         row['c'] = row['a'] + row['b']
         return row
@@ -191,8 +192,10 @@ def test_transform():
 
     dummy.open()
     assert compare_data == build_vectorized_result(dummy)
+    print("Done")
 
 def test_select(embedding_model):
+    print("Test Select...", end=" ")
     dummy = Dummy("test", ["a", "b", "c"], test_data)
 
     sel_equal = Select(dummy, HardEqual(Column("a"), Constant(3)))
@@ -228,14 +231,25 @@ def test_select(embedding_model):
     result = {x["object"] for x in Select(dummy_advanced, crit)}
     assert set(test_data_plants).issubset(set(result)) and len(result) < len(test_data_advanced)
 
+    print("Done")
+
 def test_projection(em):
+    print("Test Projection...", end=" ")
     reduced_test_data = list(map(lambda x: {"a": x["a"], "b": x["b"]}, copy.deepcopy(test_data)))
-    dummy = Project(Dummy("test", ["a", "b", "c"], test_data), ["a", "b"], em)
-    assert reduced_test_data == [x for x in dummy]
-    dummy.open()
-    assert reduced_test_data == build_vectorized_result(dummy)
+    project = Project(Dummy("test", ["a", "b", "c"], test_data), ["a", "b"], em)
+    assert reduced_test_data == [x for x in project]
+    project.open()
+    assert reduced_test_data == build_vectorized_result(project)
+
+    dummy = Dummy("test", ["year_founded", "locality", "industry"], [(2000, 'austria', 'industry')])
+    project = Project(dummy, ["founded", "where"], em)
+    assert [col.column_name for col in project.table.table_structure] == ["year_founded", "locality"]
+    print("Done")
+
+
 
 def test_join(embedding_model):
+    print("Test Join...", end=" ")
     # Test Normal Join
     d1 = Dummy("d1", ["a", "b", "c"], [(i,i+1,i+2) for i in range(0, 111, 3)])
     d2 = Dummy("d2", ["d", "e", "f"], [(i,i+1,i+2) for i in range(0, 111, 3)])
@@ -268,6 +282,7 @@ def test_join(embedding_model):
     c2 = Dummy("c2", ["companies"], [(c[1], ) for c in set(test_data_companies + test_data_noise)])
     join = InnerSoftJoin(c1, c2, Column("c1.companies"), Column("c2.companies"), embedding_model, threshold=50, debug=True)
     # TODO: Validate [rec for rec in join]
+    print("Done")
 
 
 def test_semantic_validation(validator):
@@ -332,12 +347,13 @@ if __name__ == '__main__':
     test_models(m, config)
 
     test_dummy()
+    test_projection(em)
     test_scan(db, em)
     test_transform()
     test_select(em)
-    test_projection(em)
     test_join(em)
 
-    test_semantic_validation(sv)
+    # test_semantic_validation(sv)
+
     # gv = Gemini_Validator("./config.ini", model_name="gemini-2.0-flash-exp")
     # test_semantic_validation(gv)

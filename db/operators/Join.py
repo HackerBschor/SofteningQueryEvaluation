@@ -4,7 +4,9 @@ import logging
 
 from typing import Any, Type, Optional
 
-from operators import Operator, Column, Criteria, SQLColumn, SQLTable
+from .Operator import Operator
+from ..structure import SQLColumn, SQLTable, Column
+from ..criteria import Criteria
 from models.embedding.Model import EmbeddingModel
 
 

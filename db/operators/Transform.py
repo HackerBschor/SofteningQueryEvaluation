@@ -1,6 +1,6 @@
 from typing import Callable
 
-from operators import Operator
+from .Operator import Operator
 
 
 class Transform(Operator):

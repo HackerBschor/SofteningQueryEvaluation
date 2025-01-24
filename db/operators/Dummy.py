@@ -2,7 +2,8 @@ import copy
 
 from typing import Iterator
 
-from operators import Operator, SQLTable, SQLColumn
+from db.structure import SQLTable, SQLColumn
+from db.operators.Operator import Operator
 
 
 class Dummy(Operator):

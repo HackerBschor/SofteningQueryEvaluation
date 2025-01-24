@@ -3,7 +3,8 @@ from typing import List, Type
 import faiss
 import numpy as np
 
-from operators import Operator, SQLTable
+from .Operator import Operator
+from ..structure import SQLTable
 
 from models.embedding.Model import EmbeddingModel
 
