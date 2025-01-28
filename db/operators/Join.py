@@ -220,7 +220,9 @@ class InnerSoftJoin(Join):
         raise NotImplementedError()
 
     def get_description(self) -> str:
-        return f"⋈_{{{self.column_left.name} ≈ {self.column_right.name}}}"
+        left = ", ".join(self.column_left) if isinstance(self.column_left, list) else self.column_left.name
+        right = ", ".join(self.column_right) if isinstance(self.column_right, list) else self.column_right.name
+        return f"⋈_{{{left} ≈ {right}}}"
 
     def _create_embedding(self, rec, side):
         column = self.column_left if side == "left" else self.column_right
@@ -230,6 +232,6 @@ class InnerSoftJoin(Join):
         elif isinstance(column, Column):
             key = column.get(rec)
         else:
-            key = ", ".join((str(rec[col]) for col in column))
+            key = {col: rec[col] for col in column}
 
         return self.embedding_mode.embedd(key)[0]

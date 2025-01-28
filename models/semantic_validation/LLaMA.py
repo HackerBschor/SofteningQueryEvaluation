@@ -47,6 +47,7 @@ class LLaMAValidationModel(SemanticValidationModel):
             eos_token_id=self._tokenizer.eos_token_id,
             pad_token_id=self._tokenizer.eos_token_id,
             max_new_tokens=3,
+            temperature=0.0001
         )
 
         answer = self._tokenizer.decode( answer_tok[0][len(prompt_tok[0]):], skip_special_tokens=True ).lower()

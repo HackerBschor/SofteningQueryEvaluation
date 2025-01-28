@@ -68,3 +68,5 @@ grpcio==1.67.1
 google-generativeai==0.8.4
 accelerate==1.3.0
 jupyter==1.1.1
+pdf2image==1.17.0
+dot2tex==2.11.3

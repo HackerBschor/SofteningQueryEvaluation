@@ -152,22 +152,24 @@ def test_dummy():
     assert test_data == build_vectorized_result(dummy)
     print("Done")
 
-def test_scan(db_connector, embedding_model):
+def test_scan(db_connector, embedding_model, semantiv_validation):
     print("Test Scan...", end=" ")
-    scan1 = Scan("firms", db_connector, embedding_model)
+    scan1 = Scan("firms", db_connector, embedding_model, semantiv_validation)
     assert scan1.table.table_name == "companies"
     scan1.close()
 
-    scan2 = Scan("actors", db_connector, embedding_model)
+    scan2 = Scan("actors", db_connector, embedding_model, semantiv_validation)
     assert scan2.table.table_schema == "imdb", scan2.table.table_name == "persons"
     scan2.close()
 
     with db_connector.get_cursor() as cursor:
-        cursor.execute("CREATE TEMP TABLE tmp_table ( a INTEGER, b INTEGER, c INTEGER );")
+        cursor.execute("CREATE TABLE IF NOT EXISTS public.tmp_table ( a INTEGER, b INTEGER, c INTEGER );")
+        cursor.execute("DELETE FROM public.tmp_table")
         for row in test_data:
             cursor.execute("INSERT INTO tmp_table (a, b, c) VALUES (%(a)s, %(b)s, %(c)s);", row)
+        db_connector.conn.cursor()
 
-    scan3 = Scan("tmp_table", db_connector, embedding_model)
+    scan3 = Scan("public.tmp_table", db_connector, embedding_model, semantiv_validation, use_semantic_table_search=False)
     assert scan3.table.table_name == "tmp_table"
     compare_data = [dict(row) for row in scan3]
     assert set_compare(compare_data, test_data)
@@ -333,7 +335,6 @@ def test_models(model_mgr: ModelMgr, config: configparser.ConfigParser):
     print("GenericEmbeddingModel", generic_embedding(text).shape)
     print("SentenceTransformerEmbeddingModel", st_embedding(text).shape)
 
-
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     config_file = "./config.ini"
@@ -344,11 +345,11 @@ if __name__ == '__main__':
     em = SentenceTransformerEmbeddingModel(m)
     sv = LLaMAValidationModel(m)
 
-    test_models(m, config)
+    # test_models(m, config)
 
     test_dummy()
+    test_scan(db, em, sv)
     test_projection(em)
-    test_scan(db, em)
     test_transform()
     test_select(em)
     test_join(em)

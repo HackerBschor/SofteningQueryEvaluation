@@ -49,7 +49,7 @@ class Project(Operator):
         self.child_operator.close()
 
     def get_description(self) -> str:
-        col_desc = [f"{name}≈{col.column_name}" for name, col in zip(self.columns, self.table.table_structure)]
+        col_desc = [f'"{name}"≈>{col.column_name}' for name, col in zip(self.columns, self.table.table_structure)]
         return f"π_{{{', '.join(col_desc)}}}"
 
     def get_structure(self) -> tuple[str, List] | str:

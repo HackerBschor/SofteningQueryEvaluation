@@ -30,7 +30,7 @@ class GeminiValidationModel(SemanticValidationModel):
 
         answer = response.text.lower().strip()
 
-        if answer not in ("yes", "no"):
-            logging.debug(f"LLM response not in the right format (yes/ no). Response: '{answer}'")
+        assert answer in ("yes", "no"), f"LLM response not in the right format (yes/ no). Response: '{answer}'"
+        # logging.debug()
 
         return answer == "yes"
