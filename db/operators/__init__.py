@@ -4,5 +4,18 @@ from .Project import Project
 from .Scan import Scan
 from .Select import Select
 from .Transform import Transform
+from .Aggregate import HashAggregate, SoftAggregate
+from .TextGeneration import TextGeneration
 
-__all__ = ["Dummy", "Join", "Project", "Scan", "Select", "Transform", "InnerHashJoin", "InnerSoftJoin"]
+__all__ = [
+    "Dummy",
+    "Join",
+    "Project",
+    "Scan",
+    "Select",
+    "Transform",
+    "InnerHashJoin",
+    "InnerSoftJoin",
+    "HashAggregate",
+    "SoftAggregate"
+]

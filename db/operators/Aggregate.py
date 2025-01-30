@@ -1,5 +1,5 @@
 import logging
-from typing import Any, Callable, Type
+from typing import Any, Callable
 
 import faiss
 import numpy as np
@@ -30,6 +30,60 @@ class SumAggregation(AggregationFunction):
 
     def __str__(self):
         return f"SUM({self.column_name})"
+
+class MaxAggregation(AggregationFunction):
+    def __init__(self, column_name: str):
+        super().__init__(column_name, "Number", reduce_function=lambda result, value: max(result, value))
+
+    def __str__(self):
+        return f"MAX({self.column_name})"
+
+class MinAggregation(AggregationFunction):
+    def __init__(self, column_name: str):
+        super().__init__(column_name, "Number", reduce_function=lambda result, value: min(result, value))
+
+    def __str__(self):
+        return f"MIN({self.column_name})"
+
+class CountAggregation(AggregationFunction):
+    def __init__(self, column_name: str):
+        super().__init__(column_name, "Number", reduce_function=lambda result, value: result + 1)
+
+    def __str__(self):
+        return f"COUNT({self.column_name})"
+
+class CountDistinctAggregation(AggregationFunction):
+    def __init__(self, column_name: str):
+        self.data = set()
+
+        def rf(result, value):
+            if value in self.data:
+                return result
+
+            self.data.update(value)
+            return result + 1
+
+
+        super().__init__(column_name, "Number", reduce_function=rf)
+
+    def __str__(self):
+        return f"COUNT-DISTINCT({self.column_name})"
+
+class AvgAggregation(AggregationFunction):
+    def __init__(self, column_name: str):
+        super().__init__(column_name, "Number", function = lambda rows: np.average(rows))
+
+    def __str__(self):
+        return f"AVG({self.column_name})"
+
+class StringAggregation(AggregationFunction):
+    def __init__(self, column_name: str, delimiter: str=", "):
+        self.delimiter = delimiter
+        super().__init__(column_name, "Text", function = lambda rows: delimiter.join(rows))
+
+    def __str__(self):
+        return f"STRING_AGG({self.column_name}, \"{self.delimiter}\")"
+
 
 class Aggregate(Operator):
     def __init__(self, child_operator: Operator, columns: list[str], aggregation: list[AggregationFunction]):
@@ -152,8 +206,6 @@ class SoftAggregate(Aggregate):
             "Set only num_clusters or num_clusters_relative"
         if self.num_clusters_relative is not None:
             assert 0 < self.num_clusters_relative < 1
-
-        print(self.KEY_SUMMARY_SYSTEM_PROMPT)
 
         super().__init__(child_operator, columns, aggregation)
 
