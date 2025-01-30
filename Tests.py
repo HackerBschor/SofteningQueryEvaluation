@@ -7,6 +7,7 @@ from tqdm import tqdm
 from collections import Counter
 from sklearn.metrics import classification_report
 
+from db.operators.Aggregate import HashAggregate, SumAggregation
 from models import ModelMgr
 from db.structure import Column, Constant
 from db.criteria import Negation, HardEqual, SoftEqual
@@ -285,6 +286,11 @@ def test_join(embedding_model):
     join = InnerSoftJoin(c1, c2, Column("c1.companies"), Column("c2.companies"), embedding_model, threshold=50, debug=True)
     # TODO: Validate [rec for rec in join]
     print("Done")
+
+def test_aggregations():
+    d = Dummy("Test", ["a", "b", "c"], [(1,2,3), (1,3,4), (1,5,6), (2,7,8), (2,8,9), (3,0,0)])
+    ha = HashAggregate(d, ["a"], [SumAggregation("b"), SumAggregation("c")])
+    assert [x for x in ha] == [{'a': 1, 'b': 10, 'c': 13}, {'a': 2, 'b': 15, 'c': 17}, {'a': 3, 'b': 0, 'c': 0}]
 
 
 def test_semantic_validation(validator):

@@ -12,6 +12,8 @@ from models.semantic_validation.Model import SemanticValidationModel
 
 import re
 
+# TODO: Add DISTINCT Values so bad column names don't affect the response
+
 class Scan(Operator):
     SQL_FETCH_TABLES = """
             WITH primary_keys AS (
