@@ -7,18 +7,19 @@ from tqdm import tqdm
 from collections import Counter
 from sklearn.metrics import classification_report
 
-from db.operators.Aggregate import HashAggregate, SumAggregation
 from models import ModelMgr
 from db.structure import Column, Constant
 from db.criteria import Negation, HardEqual, SoftEqual
 from db.operators import Dummy, Scan, Transform, Select, Project, Join, InnerHashJoin, InnerSoftJoin
+from db.operators.Aggregate import HashAggregate, SumAggregation
+from models.text_generation.LLaMA import LLaMATextGenerationModel
 
 from utils import CosineSimilarity, get_config
 
 from models.semantic_validation import GeminiValidationModel, LLaMAValidationModel
 from models.embedding import GenericEmbeddingModel, LLaMAEmbeddingModel, SentenceTransformerEmbeddingModel
 
-from utils.DB import DBConnector
+from db.db import DBConnector
 
 
 def set_compare(a: list[dict], b: list[dict]):
@@ -155,11 +156,11 @@ def test_dummy():
 
 def test_scan(db_connector, embedding_model, semantiv_validation):
     print("Test Scan...", end=" ")
-    scan1 = Scan("firms", db_connector, embedding_model, semantiv_validation)
+    scan1 = Scan("firms", db_connector, embedding_model, semantiv_validation, threshold=.3)
     assert scan1.table.table_name == "companies"
     scan1.close()
 
-    scan2 = Scan("actors", db_connector, embedding_model, semantiv_validation)
+    scan2 = Scan("actors", db_connector, embedding_model, semantiv_validation, threshold=.3)
     assert scan2.table.table_schema == "imdb", scan2.table.table_name == "persons"
     scan2.close()
 
@@ -350,8 +351,7 @@ if __name__ == '__main__':
     db = DBConnector(config_file)
     em = SentenceTransformerEmbeddingModel(m)
     sv = LLaMAValidationModel(m)
-
-    # test_models(m, config)
+    gm = LLaMATextGenerationModel(m)
 
     test_dummy()
     test_scan(db, em, sv)

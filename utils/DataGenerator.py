@@ -1,7 +1,4 @@
 import json
-from importlib.metadata import files
-
-import numpy as np
 import pandas as pd
 import requests
 import re
@@ -20,9 +17,10 @@ from datasets import Dataset
 
 from psycopg2.extras import Json
 
+from models import ModelMgr
 from utils import TColor
-from utils.Model import EmbeddingModel
-from utils.DB import DBConnector
+from models.embedding.Generic import GenericEmbeddingModel
+from db.db import DBConnector
 
 def streamed_download(url, path_file):
     print(f"Downloading file {url} to {path_file}", end=" ")
@@ -224,7 +222,7 @@ class VectorDB:
 
 
 def process_wiki_data(path="../data/wikipedia/decompressed", remove_files=False, max_files = 5):
-    model = EmbeddingModel("../config.ini")
+    model = GenericEmbeddingModel(ModelMgr())
     vector_db = VectorDB("../config.ini")
 
     vector_db.create_documents_vector_db(vec_size=768, reset=True)
@@ -343,7 +341,7 @@ def test_embeddings(query, column):
     assert column in ["text", "title"], "Column must be title/ text"
 
     db = DBConnector("../config.ini", use_vector=True)
-    m = EmbeddingModel("../config.ini")
+    m = GenericEmbeddingModel(ModelMgr())
 
     embedding = m.embedd(query)[0]
 

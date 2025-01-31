@@ -2,13 +2,13 @@ from tqdm import tqdm
 from datasets import Dataset
 from torch.utils.data import DataLoader
 
-from utils.DB import DBConnector
-from utils.Model import EmbeddingModel
+from db.db import DBConnector
+from models.embedding.Generic import GenericEmbeddingModel
 
 
 def create_table_embeddings(vec_size=768):
     db = DBConnector("../config.ini", use_vector=True)
-    m = EmbeddingModel("../config.ini")
+    m = GenericEmbeddingModel()
 
     with db.get_cursor() as cursor:
         cursor.execute(
