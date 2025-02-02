@@ -17,7 +17,7 @@ class Join(Operator):
         self.criteria: Criteria = criteria
         self.current_tuple = None
 
-        name = f"{self.child_left.table.table_name}+{self.child_left.table.table_name}"
+        name = f"{self.child_left.table.table_name}+{self.child_right.table.table_name}"
 
         # builds columns map: a = {x, y} & b = {y, z} -> columns_map = {left: {x: x, y: a.y}, right: {z: z, y: b.y}}
         columns_left = {x.column_name for x in self.child_left.table.table_structure}

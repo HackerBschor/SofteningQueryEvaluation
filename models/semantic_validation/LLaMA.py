@@ -52,7 +52,6 @@ class LLaMAValidationModel(SemanticValidationModel):
 
         answer = self._tokenizer.decode( answer_tok[0][len(prompt_tok[0]):], skip_special_tokens=True ).lower()
 
-        if answer not in ("yes", "no"):
-            logging.debug(f"LLM response not in the right format (yes/ no). Response: '{answer}'")
+        assert answer in ("yes", "no")
 
         return answer == "yes"
