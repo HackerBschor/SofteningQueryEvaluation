@@ -33,6 +33,8 @@ class Scan(Operator):
         self.sv: SemanticValidationModel = sv
         self.use_semantic_table_search = use_semantic_table_search
         self.vector_store = vector_store_type(self.em.get_embedding_size())
+        self.is_distance = self.vector_store.metric_type == faiss.METRIC_L2
+
         self.use_semantic_validation = use_semantic_validation
         table, confidence = self._get_table()
 
@@ -112,8 +114,7 @@ class Scan(Operator):
         for i in range(len(embeddings) - 1):
             idx, distance = idxs[0][i], distances[0][i]
 
-            # TODO: !!! distance < self.threshold for other metrics !!!
-            if distance < self.threshold:
+            if distance < self.threshold if self.is_distance else distance > self.threshold:
                 return None, None
 
             sql_table = self.db.tables[table_names[idx]]
