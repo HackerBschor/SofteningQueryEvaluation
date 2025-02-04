@@ -6,6 +6,7 @@ from .Select import Select
 from .Transform import Transform
 from .Aggregate import HashAggregate, SoftAggregate
 from .TextGeneration import TextGeneration
+from .ColumnTransform import ColumnTransform
 
 __all__ = [
     "Dummy",
@@ -17,5 +18,6 @@ __all__ = [
     "InnerHashJoin",
     "InnerSoftJoin",
     "HashAggregate",
-    "SoftAggregate"
+    "SoftAggregate",
+    "ColumnTransform"
 ]

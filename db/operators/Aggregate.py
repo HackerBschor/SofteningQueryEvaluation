@@ -85,6 +85,14 @@ class StringAggregation(AggregationFunction):
         return f"STRING_AGG({self.column_name}, \"{self.delimiter}\")"
 
 
+class DistinctAggregation(AggregationFunction):
+    def __init__(self, column_name: str, column_type: str):
+        super().__init__(column_name, column_type, function = lambda rows: rows[0])
+
+    def __str__(self):
+        return f"DISTINCT({self.column_name})"
+
+
 class Aggregate(Operator):
     def __init__(self, child_operator: Operator, columns: list[str], aggregation: list[AggregationFunction]):
         self.child_operator: Operator = child_operator
