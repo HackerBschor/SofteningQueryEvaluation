@@ -280,12 +280,12 @@
       {"name": "Ian McKellen", "birth_year":  1939},
       {"name": "Freddie Highmore", "birth_year": 1992},
       {"name": "Viggo Mortensen", "birth_year": 1958},
-      { "name": "Leonardo DiCaprio", "birth_year": 1974 },
-      { "name": "Joseph Gordon-Levitt", "birth_year": 1981 },
-      { "name": "Elliot Page", "birth_year": 1987 },
-      { "name": "Keanu Reeves", "birth_year": 1964 },
-      { "name": "Carrie-Anne Moss", "birth_year": 1967 },
-      { "name": "Laurence Fishburne", "birth_year": 1961 }
+      {"name": "Leonardo DiCaprio", "birth_year": 1974 },
+      {"name": "Joseph Gordon-Levitt", "birth_year": 1981 },
+      {"name": "Elliot Page", "birth_year": 1987 },
+      {"name": "Keanu Reeves", "birth_year": 1964 },
+      {"name": "Carrie-Anne Moss", "birth_year": 1967 },
+      {"name": "Laurence Fishburne", "birth_year": 1961 }
     ]
   },
   "plays_in": {
@@ -297,12 +297,12 @@
     "data": [
       {
         "movie": "Pirates of the Caribbean: The Curse of the Black Pearl",
-        "actor/actress": "Johnny Depp",
+        "actor/actress": "John Christopher Depp II",
         "role": "Jack Sparrow"
       },
       {
         "movie": "Pirates of the Caribbean: The Curse of the Black Pearl",
-        "actor/actress": "Orlando Bloom",
+        "actor/actress": "Orlando Jonathan Blanchard Copeland Bloom",
         "role": "Will Turner"
       },
       {
@@ -322,7 +322,7 @@
       },
       {
         "movie": "The Lord of the Rings: The Fellowship of the Ring",
-        "actor/actress": "Ian McKellen",
+        "actor/actress": "Sir Ian Murray McKellen",
         "role": "Gandalf"
       },
       {
@@ -337,42 +337,42 @@
       },
       {
         "movie": "Charlie and the Chocolate Factory",
-        "actor/actress": "Johnny Depp",
+        "actor/actress": "John Christopher \"Johnny\" Depp II",
         "role": "Willy Wonka"
       },
       {
         "movie": "Charlie and the Chocolate Factory",
-        "actor/actress": "Freddie Highmore",
+        "actor/actress": "Alfred Highmore",
         "role": "Charlie Bucket"
       },
       {
         "movie": "Pirates of the Caribbean: Dead Man's Chest",
-        "actor/actress": "Johnny Depp",
+        "actor/actress": "The Mad Hatter in Alice in Wonderland Actor",
         "role": "Jack Sparrow"
       },
       {
         "movie": "Pirates of the Caribbean: Dead Man's Chest",
-        "actor/actress": "Orlando Bloom",
+        "actor/actress": "@orlandobloom",
         "role": "Will Turner"
       },
       {
         "movie": "Pirates of the Caribbean: Dead Man's Chest",
-        "actor/actress": "Keira Knightley",
+        "actor/actress": "Keira Christina Knightley",
         "role": "Elizabeth Swann"
       },
       {
         "movie": "The Lord of the Rings: The Return of the King",
-        "actor/actress": "Orlando Bloom",
+        "actor/actress": "Orlando Jonathan Blanchard Copeland Bloom",
         "role": "Legolas"
       },
       {
         "movie": "The Lord of the Rings: The Return of the King",
-        "actor/actress": "Elijah Wood",
+        "actor/actress": "Elijah Jordan Wood",
         "role": "Frodo"
       },
       {
         "movie": "The Lord of the Rings: The Return of the King",
-        "actor/actress": "Ian McKellen",
+        "actor/actress": "Sir Ian Murray McKellen",
         "role": "Gandalf"
       },
       {
@@ -382,7 +382,7 @@
       },
             {
         "movie": "Inception",
-        "actor/actress": "Leonardo DiCaprio",
+        "actor/actress": "Jack Dawson in Titanic",
         "role": "Cobb"
       },
       {
@@ -397,7 +397,7 @@
       },
       {
         "movie": "The Matrix",
-        "actor/actress": "Keanu Reeves",
+        "actor/actress": "Keanu Charles Reeves",
         "role": "Neo"
       },
       {
