@@ -1,0 +1,415 @@
+{
+  "chemicals": {
+    "schema": [
+      {"name":  "scientific_name", "type": "text", "primary_key":  true},
+      {"name":  "boiling_point_C", "type": "integer", "primary_key":  false},
+      {"name":  "state_at_room_temp", "type": "text", "primary_key":  false},
+      {"name":  "pH", "type": "text", "primary_key":  false},
+      {"name":  "flammable", "type": "boolean", "primary_key":  false}
+    ],
+    "data": [
+      {
+        "scientific_name": "H2O",
+        "boiling_point_C": 100,
+        "state_at_room_temp": "Liquid",
+        "pH": 7.0,
+        "flammable": false
+      },
+      {
+        "scientific_name": "H2SO4",
+        "boiling_point_C": 337,
+        "state_at_room_temp": "Liquid",
+        "pH": 0.3,
+        "flammable": false
+      },
+      {
+          "scientific_name": "CH3OH",
+        "boiling_point_C": 64.7,
+        "state_at_room_temp": "Liquid",
+        "pH": "Neutral",
+        "flammable": true
+      },
+      {
+        "scientific_name": "HCl",
+        "boiling_point_C": -85.1,
+        "state_at_room_temp": "Gas (liquid in solution)",
+        "pH": 1.0,
+        "flammable": false
+      },
+      {
+          "scientific_name": "NH3",
+        "boiling_point_C": -33.34,
+        "state_at_room_temp": "Gas",
+        "pH": 11.6,
+        "flammable": true
+      },
+      {
+        "scientific_name": "C2H5OH",
+        "boiling_point_C": 78.37,
+        "state_at_room_temp": "Liquid",
+        "pH": "Neutral",
+        "flammable": true
+      },
+      {
+        "scientific_name": "C6H6",
+        "boiling_point_C": 80.1,
+        "state_at_room_temp": "Liquid",
+        "pH": "Neutral",
+        "flammable": true
+      },
+      {
+        "scientific_name": "Cl2",
+        "boiling_point_C": -34.04,
+        "state_at_room_temp": "Gas",
+        "pH": "Acidic in water",
+        "flammable": false
+      },
+      {
+        "scientific_name": "C3H6O",
+        "boiling_point_C": 56.05,
+        "state_at_room_temp": "Liquid",
+        "pH": "Neutral",
+        "flammable": true
+      },
+      {
+        "scientific_name": "NaOH",
+        "boiling_point_C": 1388,
+        "state_at_room_temp": "Solid",
+        "pH": 14.0,
+        "flammable": false
+      },
+      {
+        "scientific_name": "C8H10N4O2",
+        "boiling_point_C": 178,
+        "state_at_room_temp": "Solid",
+        "pH": "Neutral",
+        "flammable": false
+      }
+    ]
+  },
+  "chemical_warnings": {
+    "schema": [
+      {"name":  "name", "type": "text", "primary_key":  true},
+      {"name":  "warning", "type": "text", "primary_key":  true}
+    ],
+    "data": [
+      {
+        "name": "Water",
+        "warning": "No Warning"
+      },
+      {
+        "name": "Sulfuric Acid",
+        "warning": "Highly Corrosive"
+      },
+      {
+        "name": "Methanol",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Methanol",
+        "warning": "Flammable"
+      },
+      {
+          "name": "Hydrochloric Acid",
+        "warning": "Highly Corrosive"
+      },
+      {
+        "name": "Hydrochloric Acid",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Ammonia",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Ammonia",
+        "warning": "Irritant"
+      },
+      {
+        "name": "Ethanol",
+        "warning": "Flammable"
+      },
+      {
+        "name": "Ethanol",
+        "warning": "Mildly Toxic"
+      },
+      {
+        "name": "Benzene",
+        "warning": "Carcinogenic"
+      },
+      {
+        "name": "Benzene",
+        "warning": "Flammable"
+      },
+      {
+        "name": "Chlorine",
+        "warning": "Highly Toxic"
+      },
+      {
+        "name": "Acetone",
+        "warning": "Highly Flammable"
+      },
+      {
+        "name": "Acetone",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Sodium Hydroxide",
+        "warning": "Highly Corrosive"
+      },
+      {
+        "name": "Caffeine",
+        "warning": "No Warnings"
+      }
+    ]
+  },
+  "movies": {
+    "schema": [
+      {"name":  "name", "type": "text", "primary_key":  true},
+      {"name":  "release", "type": "text", "primary_key":  false},
+      {"name":  "genres", "type": "text", "primary_key":  false},
+      {"name":  "description", "type": "text", "primary_key":  false}
+    ],
+    "data": [
+      {
+        "name":  "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "release": "2003",
+        "genres": "Action,Adventure,Fantasy",
+        "description": "Jack Sparrow, a freewheeling 17th-century pirate who roams the Caribbean Sea, butts heads with a rival pirate bent on pillaging the village of Port Royal. When the governor's daughter is kidnapped, Sparrow decides to help the girl's love save her. But their seafaring mission is hardly simple."
+      },
+      {
+        "name": "The Lord of the Rings: The Fellowship of the Ring",
+        "release": "2001",
+        "genres": "Action,Adventure,Fantasy",
+        "description": "Young hobbit Frodo Baggins, after inheriting a mysterious ring from his uncle Bilbo, must leave his home in order to keep it from falling into the hands of its evil creator. Along the way, a fellowship is formed to protect the ringbearer and make sure that the ring arrives at its final destination: Mt. Doom, the only place where it can be destroyed."
+      },
+      {
+        "name": "Pirates of the Caribbean: Dead Man's Chest",
+        "release": "June, 2006",
+        "genres": "Action,Adventure,Fantasy",
+        "description": "Captain Jack Sparrow works his way out of a blood debt with the ghostly Davey Jones, he also attempts to avoid eternal damnation."
+      },
+      {
+        "name": "The Lord of the Rings: The Return of the King",
+        "release": "It was released on the 10th of December 2003",
+        "genres": "Action,Adventure,Drama,Fantasy",
+        "description": "Aragorn is revealed as the heir to the ancient kings as he, Gandalf and the other members of the broken fellowship struggle to save Gondor from Sauron's forces. Meanwhile, Frodo and Sam bring the ring closer to the heart of Mordor, the dark lord's realm."
+      },
+      {
+        "name": "Charlie and the Chocolate Factory",
+        "release": "2005-07-13",
+        "genres": "Adventure,Comedy,Family",
+        "description": "A young boy wins a tour through the most magnificent chocolate factory in the world, led by the world's most unusual candy maker."
+      },
+      {
+        "name": "Inception",
+        "release": "July, 2010",
+        "genres": "Action,Adventure,Sci-Fi",
+        "description": "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious."
+      },
+      {
+        "name": "The Matrix",
+        "release": "Release Date: 17th of June 1999",
+        "genres": "Action,Sci-Fi",
+        "description": "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth."
+      }
+    ]
+  },
+  "movies_de": {
+    "schema": [
+      {"name":  "name", "type": "text", "primary_key":  true},
+      {"name":  "release", "type": "text", "primary_key":  false},
+      {"name":  "genres", "type": "text", "primary_key":  false},
+      {"name":  "description", "type": "text", "primary_key":  false}
+    ],
+    "data": [
+      {
+        "name":  "Fluch der Karibik",
+        "release": "2003",
+        "genres": "Action,Adventure,Fantasy",
+        "description": "Waffenschmied Will Turner tut sich mit dem exzentrischen Piraten \"Captain\" Jack Sparrow zusammen, um seine große Liebe, die Tochter des Gouverneurs, aus den Händen der Piraten zu retten, die früher mit Jack verbündet waren, jetzt aber Untote sind"
+      },
+      {
+        "name": "Der Herr der Ringe: Die Gefährten",
+        "release": "2001",
+        "genres": "Action,Adventure,Fantasy",
+        "description": "Ein sanftmütiger Hobbit aus dem Auenland und seine acht Gefährten machen sich auf den Weg, um den mächtigen Einen Ring zu zerstören und so die Mittelerde vor dem dunklen Herrscher Sauron zu bewahren."
+      },
+      {
+        "name": "Pirates of the Caribbean – Fluch der Karibik 2",
+        "release": "Juni 2006",
+        "genres": "Action,Adventure,Fantasy",
+        "description": "Jack Sparrow rast, um das Herz von Davy Jones zu retten, um nicht seine Seele in den Dienst von Jones zu stellen, während andere Freunde und Feinde das Herz auch für ihre eigene Agenda suchen."
+      },
+      {
+          "name": "Der Herr der Ringe: Die Rückkehr des Königs",
+        "release": "Der Film wurde am 10th December 2003 veröffentlicht",
+        "genres": "Action,Adventure,Drama,Fantasy",
+        "description": "Gandalf und Aragorn führen die Männer der Mittelerde in den Kampf gegen Saurons Armee, um ihn von Frodo und Sam abzulenken, die sich gerade dem Schicksalsberg mit dem Einen Ring nähern."
+      },
+      {
+        "name": "Charlie und die Schokoladenfabrik",
+        "release": "13.07.2005",
+        "genres": "Adventure,Comedy,Family",
+        "description": "Ein kleiner Junge gewinnt eine Führung durch die großartigste Schokoladenfabrik der Welt, angeführt von dem ungewöhnlichsten Süßwarenhersteller der Welt."
+      },
+      {
+        "name": "Inception",
+        "release": "Juli 2010",
+        "genres": "Action,Adventure,Sci-Fi",
+        "description": "Ein Dieb stiehlt Unternehmensgeheimnisse mithilfe einer Technologie für gemeinsames Träumen. Dann erhält er den Auftrag, eine Idee im Kopf eines Geschäftsführers festzusetzen."
+      },
+      {
+        "name": "Matrix",
+        "release": "Veröffentlichungsdatum: 17 Juni 1999",
+        "genres": "Action,Sci-Fi",
+        "description": "Ein Computerhacker erfährt von mysteriösen Rebellen die Wahrheit über seine Realität und seine Rolle im Krieg gegen deren Kontrolleure."
+      }
+    ]
+  },
+  "actors":{
+    "schema": [
+      {"name":  "name", "type": "text", "primary_key":  true},
+      {"name":  "birth_year", "type": "integer", "primary_key":  false}
+    ],
+    "data": [
+      {"name": "Johnny Depp", "birth_year": 1963},
+      {"name": "Orlando Bloom", "birth_year": 1977},
+      {"name": "Keira Knightley", "birth_year": 1985},
+      {"name": "Elijah Wood", "birth_year": 1981},
+      {"name": "Ian McKellen", "birth_year":  1939},
+      {"name": "Freddie Highmore", "birth_year": 1992},
+      {"name": "Viggo Mortensen", "birth_year": 1958},
+      { "name": "Leonardo DiCaprio", "birth_year": 1974 },
+      { "name": "Joseph Gordon-Levitt", "birth_year": 1981 },
+      { "name": "Elliot Page", "birth_year": 1987 },
+      { "name": "Keanu Reeves", "birth_year": 1964 },
+      { "name": "Carrie-Anne Moss", "birth_year": 1967 },
+      { "name": "Laurence Fishburne", "birth_year": 1961 }
+    ]
+  },
+  "plays_in": {
+    "schema": [
+      {"name":  "movie", "type": "text", "primary_key":  true},
+      {"name":  "actor/actress", "type": "text", "primary_key":  true},
+      {"name":  "role", "type": "text", "primary_key":  true}
+    ],
+    "data": [
+      {
+        "movie": "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "actor/actress": "Johnny Depp",
+        "role": "Jack Sparrow"
+      },
+      {
+        "movie": "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "actor/actress": "Orlando Bloom",
+        "role": "Will Turner"
+      },
+      {
+        "movie": "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "actor/actress": "Keira Knightley",
+        "role": "Elizabeth Swann"
+      },
+      {
+        "movie": "The Lord of the Rings: The Fellowship of the Ring",
+        "actor/actress": "Orlando Bloom",
+        "role": "Legolas"
+      },
+      {
+        "movie": "The Lord of the Rings: The Fellowship of the Ring",
+        "actor/actress": "Elijah Wood",
+        "role": "Frodo"
+      },
+      {
+        "movie": "The Lord of the Rings: The Fellowship of the Ring",
+        "actor/actress": "Ian McKellen",
+        "role": "Gandalf"
+      },
+      {
+        "movie": "The Lord of the Rings: The Fellowship of the Ring",
+        "actor/actress": "Sean Bean",
+        "role": "Boromir"
+      },
+      {
+        "movie": "The Lord of the Rings: The Fellowship of the Ring",
+        "actor/actress": "Viggo Mortensen",
+        "role": "Aragorn"
+      },
+      {
+        "movie": "Charlie and the Chocolate Factory",
+        "actor/actress": "Johnny Depp",
+        "role": "Willy Wonka"
+      },
+      {
+        "movie": "Charlie and the Chocolate Factory",
+        "actor/actress": "Freddie Highmore",
+        "role": "Charlie Bucket"
+      },
+      {
+        "movie": "Pirates of the Caribbean: Dead Man's Chest",
+        "actor/actress": "Johnny Depp",
+        "role": "Jack Sparrow"
+      },
+      {
+        "movie": "Pirates of the Caribbean: Dead Man's Chest",
+        "actor/actress": "Orlando Bloom",
+        "role": "Will Turner"
+      },
+      {
+        "movie": "Pirates of the Caribbean: Dead Man's Chest",
+        "actor/actress": "Keira Knightley",
+        "role": "Elizabeth Swann"
+      },
+      {
+        "movie": "The Lord of the Rings: The Return of the King",
+        "actor/actress": "Orlando Bloom",
+        "role": "Legolas"
+      },
+      {
+        "movie": "The Lord of the Rings: The Return of the King",
+        "actor/actress": "Elijah Wood",
+        "role": "Frodo"
+      },
+      {
+        "movie": "The Lord of the Rings: The Return of the King",
+        "actor/actress": "Ian McKellen",
+        "role": "Gandalf"
+      },
+      {
+        "movie": "The Lord of the Rings: The Return of the King",
+        "actor/actress": "Viggo Mortensen",
+        "role": "Aragorn"
+      },
+            {
+        "movie": "Inception",
+        "actor/actress": "Leonardo DiCaprio",
+        "role": "Cobb"
+      },
+      {
+        "movie": "Inception",
+        "actor/actress": "Joseph Gordon-Levitt",
+        "role": "Arthur"
+      },
+      {
+        "movie": "Inception",
+        "actor/actress": "Elliot Page",
+        "role": "Ariadne"
+      },
+      {
+        "movie": "The Matrix",
+        "actor/actress": "Keanu Reeves",
+        "role": "Neo"
+      },
+      {
+        "movie": "The Matrix",
+        "actor/actress": "Carrie-Anne Moss",
+        "role": "Trinity"
+      },
+      {
+        "movie": "The Matrix",
+        "actor/actress": "Laurence Fishburne",
+        "role": "Morpheus"
+      }
+    ]
+  }
+}
