@@ -4,6 +4,7 @@ import logging
 
 from typing import Any, Type, Optional
 
+from models.semantic_validation.Model import SemanticValidationModel
 from .Operator import Operator
 from ..structure import SQLColumn, SQLTable, Column
 from ..criteria import Criteria
@@ -141,7 +142,10 @@ class InnerSoftJoin(Join):
             child_right: Operator,
             column_left: Column | None | list[str],
             column_right: Column | None | list[str],
-            embedding_mode: EmbeddingModel,
+            em: EmbeddingModel,
+            use_semantic_validation: bool = False,
+            sv: SemanticValidationModel | None = None,
+            sv_template: str | None = None,
             vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
             threshold: float = 0,
             debug = False):
@@ -150,7 +154,13 @@ class InnerSoftJoin(Join):
 
         self.column_left: Column | None | list[str] = column_left
         self.column_right: Column | None | list[str] = column_right
-        self.embedding_mode: EmbeddingModel = embedding_mode
+        self.em: EmbeddingModel = em
+
+        assert not use_semantic_validation or (sv_template is not None and sv is not None)
+        self.use_semantic_validation: bool = use_semantic_validation
+        self.sv: SemanticValidationModel = sv
+        self.sv_template = sv_template
+
         self.vector_store_type = vector_store_type
         self.threshold: float = threshold
         self.debug: bool = debug
@@ -167,7 +177,7 @@ class InnerSoftJoin(Join):
 
     def open(self) -> None:
         self.child_left.open()
-        self.vector_store = self.vector_store_type(self.embedding_mode.get_embedding_size())
+        self.vector_store = self.vector_store_type(self.em.get_embedding_size())
 
         logging.debug("Loading & embedd records")
         embeddings = []
@@ -204,14 +214,18 @@ class InnerSoftJoin(Join):
                 idx = self.indices[self.index_left]
                 distance = self.distances[self.index_left]
 
-                # if idx < 0 or distance > self.threshold:
-                #     raise IndexError
-
                 self.index_left += 1
+                rec = self.records_left[idx] | self.record_right
 
-                # TODO: Semantic Validation
+                logging.debug(f"Joined record {rec} distance {distance}")
 
-                return self.records_left[idx] | self.record_right | ({} if not self.debug else {"distance": distance })
+                if self.use_semantic_validation:
+                    prompt = self.sv_template.format(**rec)
+                    if not self.sv(prompt):
+                        logging.debug(f"Prompt: \"{prompt}\" filed in semantic validation")
+                        continue
+
+                return rec
 
             except IndexError:
                 self.record_right = None
@@ -234,4 +248,4 @@ class InnerSoftJoin(Join):
         else:
             key = {col: rec[col] for col in column}
 
-        return self.embedding_mode.embedd(key)[0]
+        return self.em(key)

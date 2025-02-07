@@ -4,7 +4,8 @@ from models import Model
 class EmbeddingModel(Model):
     def __call__(self, text: str | list[str], batch_size = 32) -> np.array:
         if isinstance(text, str):
-            return self.embedd(text)
+            embedding = self.embedd(text)
+            return embedding[0] if len(embedding.shape) > 0 else embedding
         else:
             embeddings = []
             for batch in range(0, len(text), batch_size):

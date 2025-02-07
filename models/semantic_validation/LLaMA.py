@@ -10,7 +10,7 @@ class LLaMAValidationModel(SemanticValidationModel):
     DEFAULT_SYSTEM_PROMPT = "You are a validator. You get a statement and need to validate it. Answer with \"yes\" and \"no\" only!"
     DEFAULT_MODEL = "meta-llama/Llama-3.2-3B-Instruct"
 
-    def __init__(self, model_mgr: ModelMgr, system_prompt=DEFAULT_SYSTEM_PROMPT, model_path=DEFAULT_MODEL):
+    def __init__(self, model_mgr: ModelMgr, system_prompt=DEFAULT_SYSTEM_PROMPT, model_path=DEFAULT_MODEL, temperature: float | None = None):
         self._system_prompt = system_prompt
 
         model = AutoModelForCausalLM.from_pretrained(model_path,
@@ -21,6 +21,15 @@ class LLaMAValidationModel(SemanticValidationModel):
 
         tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
         tokenizer.pad_token = tokenizer.eos_token
+
+        self.generation_config = {
+            "eos_token_id": tokenizer.eos_token_id,
+            "pad_token_id": tokenizer.eos_token_id,
+            "max_new_tokens": 1
+        }
+
+        if temperature is not None:
+            self.generation_config["temperature"] = temperature
 
         super().__init__(model_mgr, model, tokenizer)
 
@@ -42,16 +51,10 @@ class LLaMAValidationModel(SemanticValidationModel):
             prompt_tok = prompt_tok.cuda()
             attention_mask = attention_mask.cuda()
 
-        answer_tok = self._model.generate(prompt_tok,
-            attention_mask = attention_mask,
-            eos_token_id=self._tokenizer.eos_token_id,
-            pad_token_id=self._tokenizer.eos_token_id,
-            max_new_tokens=3,
-            temperature=0.0001
-        )
-
+        answer_tok = self._model.generate(prompt_tok, attention_mask = attention_mask, **self.generation_config)
         answer = self._tokenizer.decode( answer_tok[0][len(prompt_tok[0]):], skip_special_tokens=True ).lower()
 
-        assert answer in ("yes", "no")
+        if answer not in ("yes", "no"):
+            logging.error(f"{answer} is not a valid answer")
 
         return answer == "yes"

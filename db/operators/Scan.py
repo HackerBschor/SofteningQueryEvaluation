@@ -13,6 +13,8 @@ from models.embedding.Model import EmbeddingModel
 from models.semantic_validation.Model import SemanticValidationModel
 
 
+# TODO: Increase Performance using Lookup Tables
+## When selecting on a categorical field and |categories| << n -> build Lookup Table {Category -> bool}
 
 class Scan(Operator):
     TABLE_SCHEMA_PATTERN = r'\b([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*)\b'
