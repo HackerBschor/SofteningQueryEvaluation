@@ -4,7 +4,7 @@ from .Project import Project
 from .Scan import Scan
 from .Select import Select
 from .Transform import Transform
-from .Aggregate import HashAggregate, SoftAggregate
+from .Aggregate import HashAggregate, SoftAggregateFaissKMeans, SoftAggregateScikit
 from .TextGeneration import TextGeneration
 from .ColumnTransform import ColumnTransform
 
@@ -18,6 +18,7 @@ __all__ = [
     "InnerHashJoin",
     "InnerSoftJoin",
     "HashAggregate",
-    "SoftAggregate",
+    "SoftAggregateFaissKMeans",
+    "SoftAggregateScikit",
     "ColumnTransform"
 ]
