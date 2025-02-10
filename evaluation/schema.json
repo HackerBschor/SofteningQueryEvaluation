@@ -408,7 +408,7 @@
     ]
   },
   "movies": {
-    "citation": "https://developer.imdb.com/non-commercial-datasets/"
+    "citation": "https://developer.imdb.com/non-commercial-datasets/",
     "schema": [
       {"name":  "name", "type": "text", "primary_key":  true},
       {"name":  "release", "type": "text", "primary_key":  false},
@@ -536,7 +536,7 @@
     ]
   },
   "plays_in": {
-    "citation": "https://developer.imdb.com/non-commercial-datasets/"
+    "citation": "https://developer.imdb.com/non-commercial-datasets/",
     "schema": [
       {"name":  "movie", "type": "text", "primary_key":  true},
       {"name":  "actor/actress", "type": "text", "primary_key":  true},
