@@ -43,7 +43,7 @@ class LLaMAEmbeddingModel(EmbeddingModel):
 
         tokens = self._tokenizer(text, return_tensors='pt', max_length=max_len, padding="max_length", truncation=True)
 
-        if torch.cuda.is_available() is not None:
+        if torch.cuda.is_available():
             tokens = tokens.to("cuda")
 
         with torch.no_grad():

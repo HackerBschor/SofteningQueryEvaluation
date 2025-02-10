@@ -4,11 +4,12 @@ import logging
 
 from typing import Any, Type, Optional
 
-from models.semantic_validation.Model import SemanticValidationModel
 from .Operator import Operator
 from ..structure import SQLColumn, SQLTable, Column
 from ..criteria import Criteria
+
 from models.embedding.Model import EmbeddingModel
+from models.semantic_validation.Model import SemanticValidationModel
 
 
 class Join(Operator):
@@ -88,6 +89,7 @@ class Join(Operator):
     def _build_joined_record(self, left: dict, right: dict) -> dict:
         return self._remap_record("left", left) | self._remap_record("right", right)
 
+
 class InnerHashJoin(Join):
     def __init__(self, child_left: Operator, child_right: Operator, column_left: Column, column_right: Column):
         self.column_left: Column = column_left
@@ -133,6 +135,16 @@ class InnerHashJoin(Join):
 
     def get_description(self) -> str:
         return f"⋈_{{{self.column_left.name} = {self.column_right.name}}}"
+
+
+class InnerTFIDFJoin(Join):
+    # TODO: Implement for comparison (from sklearn.feature_extraction.text import TfidfVectorizer)
+    raise NotImplementedError
+
+
+class InnerFuzzyJoin(Join):
+    # Fuzzy string matching (Levenshtein, Jaccard, Jaro-Winkler)
+    raise NotImplementedError
 
 
 class InnerSoftJoin(Join):
