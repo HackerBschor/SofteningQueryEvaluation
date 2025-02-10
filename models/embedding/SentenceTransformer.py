@@ -5,6 +5,7 @@ import torch
 
 from models.embedding.Model import EmbeddingModel
 
+
 class SentenceTransformerEmbeddingModel(EmbeddingModel):
     DEFAULT_MODEL = "sentence-transformers/all-mpnet-base-v2"
 
@@ -14,13 +15,12 @@ class SentenceTransformerEmbeddingModel(EmbeddingModel):
 
         super().__init__(model_mgr, model, tokenizer)
 
-
     def embedd(self, text: str | list[str]) -> np.array:
         self.model_to_cuda()
 
         tokens = self._tokenizer(text, padding=True, truncation=True, return_tensors='pt')
 
-        if torch.cuda.is_available() is not None:
+        if torch.cuda.is_available():
             tokens = tokens.to("cuda")
 
         with torch.no_grad():
@@ -28,7 +28,6 @@ class SentenceTransformerEmbeddingModel(EmbeddingModel):
             sentence_embeddings = self._mean_pooling(model_output, tokens['attention_mask'])
 
         return F.normalize(sentence_embeddings, p=2, dim=1).detach().cpu().numpy()
-
 
     @staticmethod
     def _mean_pooling(model_output, attention_mask):

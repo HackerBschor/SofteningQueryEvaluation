@@ -57,6 +57,11 @@ class HardEqual(Criteria):
         return f"{self.crit[0]} = {self.crit[1]}"
 
 
+class FuzzyEqual:
+    # TODO: Implement for comparison
+    raise NotImplementedError
+
+
 class SoftEqual(Criteria):
     def __init__(self,
                  left: Column | Constant | list[str] | None,

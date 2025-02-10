@@ -1,5 +1,5 @@
 from .Dummy import Dummy
-from .Join import Join, InnerHashJoin, InnerSoftJoin
+from .Join import Join, InnerHashJoin, InnerSoftJoin, InnerTFIDFJoin
 from .Project import Project
 from .Scan import Scan
 from .Select import Select
@@ -20,5 +20,6 @@ __all__ = [
     "HashAggregate",
     "SoftAggregateFaissKMeans",
     "SoftAggregateScikit",
-    "ColumnTransform"
+    "ColumnTransform",
+    "InnerTFIDFJoin"
 ]

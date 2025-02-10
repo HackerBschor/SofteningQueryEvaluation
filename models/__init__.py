@@ -1,10 +1,19 @@
 import torch
+import configparser
 
 from huggingface_hub import login
 
+from utils import get_config
+
+
 class ModelMgr:
-    def __init__(self):
+    def __init__(self, config: str = None):
         self.current_model_gpu: Model | None = None
+
+        if config is not None:
+            config: configparser.ConfigParser = get_config(config)
+            if "huggingface_token" in config["MODEL"] is not None:
+                login(config["MODEL"]["huggingface_token"])
 
     def get_gpu_resources(self, model):
         if self.current_model_gpu is None:
@@ -17,13 +26,10 @@ class ModelMgr:
 
 
 class Model:
-    def __init__(self, model_mgr, model, tokenizer, huggingface_token=None):
+    def __init__(self, model_mgr, model, tokenizer):
         self._model = model
         self._tokenizer = tokenizer
         self._model_mgr: ModelMgr = model_mgr
-
-        if huggingface_token is not None:
-            login(huggingface_token)
 
     def model_to_cpu(self):
         self._model.cpu()
