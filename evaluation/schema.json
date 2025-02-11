@@ -1,11 +1,31 @@
 {
   "chemicals": {
     "schema": [
-      {"name":  "scientific_name", "type": "text", "primary_key":  true},
-      {"name":  "boiling_point_C", "type": "integer", "primary_key":  false},
-      {"name":  "state_at_room_temp", "type": "text", "primary_key":  false},
-      {"name":  "pH", "type": "text", "primary_key":  false},
-      {"name":  "flammable", "type": "boolean", "primary_key":  false}
+      {
+        "name": "scientific_name",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "boiling_point_C",
+        "type": "integer",
+        "primary_key": false
+      },
+      {
+        "name": "state_at_room_temp",
+        "type": "text",
+        "primary_key": false
+      },
+      {
+        "name": "pH",
+        "type": "text",
+        "primary_key": false
+      },
+      {
+        "name": "flammable",
+        "type": "boolean",
+        "primary_key": false
+      }
     ],
     "data": [
       {
@@ -37,7 +57,7 @@
         "flammable": false
       },
       {
-          "scientific_name": "NH3",
+        "scientific_name": "NH3",
         "boiling_point_C": -33.34,
         "state_at_room_temp": "Gas",
         "pH": 11.6,
@@ -68,7 +88,7 @@
         "scientific_name": "C3H6O",
         "boiling_point_C": 56.05,
         "state_at_room_temp": "Liquid",
-        "pH": "Neutral",
+        "pH": "7.000",
         "flammable": true
       },
       {
@@ -82,342 +102,1094 @@
         "scientific_name": "C8H10N4O2",
         "boiling_point_C": 178,
         "state_at_room_temp": "Solid",
-        "pH": "Neutral",
+        "pH": "Base",
         "flammable": false
       }
     ]
   },
   "chemical_warnings": {
     "schema": [
-      {"name":  "name", "type": "text", "primary_key":  true},
-      {"name":  "warning", "type": "text", "primary_key":  true}
+      {
+        "name": "name",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "warning",
+        "type": "text",
+        "primary_key": true
+      }
+    ],
+      "data": [
+        {
+          "name": "Water",
+          "warning": "No Warning"
+        },
+        {
+          "name": "Sulfuric Acid",
+          "warning": "Highly Corrosive"
+        },
+        {
+          "name": "Methanol",
+          "warning": "Toxic"
+        },
+        {
+          "name": "Methanol",
+          "warning": "Flammable"
+        },
+        {
+          "name": "Hydrochloric Acid",
+          "warning": "Highly Corrosive"
+        },
+        {
+          "name": "Muriatic Acid",
+          "warning": "Toxic"
+        },
+        {
+          "name": "Ammonia",
+          "warning": "Toxic"
+        },
+        {
+          "name": "Ammonia",
+          "warning": "Irritant"
+        },
+        {
+          "name": "Ethanol",
+          "warning": "Flammable"
+        },
+        {
+          "name": "Drinking Alcohol",
+          "warning": "Mildly Toxic"
+        },
+        {
+          "name": "Benzene",
+          "warning": "Carcinogenic"
+        },
+        {
+          "name": "Benzene",
+          "warning": "Flammable"
+        },
+        {
+          "name": "Chlorine",
+          "warning": "Highly Toxic"
+        },
+        {
+          "name": "Acetone",
+          "warning": "Highly Flammable"
+        },
+        {
+          "name": "Acetone",
+          "warning": "Toxic"
+        },
+        {
+          "name": "Sodium Hydroxide",
+          "warning": "Highly Corrosive"
+        },
+        {
+          "name": "Caffeine",
+          "warning": "No Warnings"
+        }
+      ]
+  },
+  "elements": {
+    "schema": [
+      {
+        "name": "atomic_number",
+        "type": "number"
+      },
+      {
+        "name": "element",
+        "type": "text"
+      }
     ],
     "data": [
       {
-        "name": "Water",
-        "warning": "No Warning"
+        "atomic_number": 1,
+        "element": "Hydrogen"
       },
       {
-        "name": "Sulfuric Acid",
-        "warning": "Highly Corrosive"
+        "atomic_number": 2,
+        "element": "Helium"
       },
       {
-        "name": "Methanol",
-        "warning": "Toxic"
+        "atomic_number": 3,
+        "element": "Lithium"
       },
       {
-        "name": "Methanol",
-        "warning": "Flammable"
+        "atomic_number": 4,
+        "element": "Beryllium"
       },
       {
-          "name": "Hydrochloric Acid",
-        "warning": "Highly Corrosive"
+        "atomic_number": 5,
+        "element": "Boron"
       },
       {
-        "name": "Muriatic Acid",
-        "warning": "Toxic"
+        "atomic_number": 6,
+        "element": "Carbon"
       },
       {
-        "name": "Ammonia",
-        "warning": "Toxic"
+        "atomic_number": 7,
+        "element": "Nitrogen"
       },
       {
-        "name": "Ammonia",
-        "warning": "Irritant"
+        "atomic_number": 8,
+        "element": "Oxygen"
       },
       {
-        "name": "Ethanol",
-        "warning": "Flammable"
+        "atomic_number": 9,
+        "element": "Fluorine"
       },
       {
-        "name": "Drinking Alcohol",
-        "warning": "Mildly Toxic"
+        "atomic_number": 10,
+        "element": "Neon"
       },
       {
-        "name": "Benzene",
-        "warning": "Carcinogenic"
+        "atomic_number": 11,
+        "element": "Sodium"
       },
       {
-        "name": "Benzene",
-        "warning": "Flammable"
+        "atomic_number": 12,
+        "element": "Magnesium"
       },
       {
-        "name": "Chlorine",
-        "warning": "Highly Toxic"
+        "atomic_number": 13,
+        "element": "Aluminum"
       },
       {
-        "name": "Acetone",
-        "warning": "Highly Flammable"
+        "atomic_number": 14,
+        "element": "Silicon"
       },
       {
-        "name": "Acetone",
-        "warning": "Toxic"
+        "atomic_number": 15,
+        "element": "Phosphorus"
       },
       {
-        "name": "Sodium Hydroxide",
-        "warning": "Highly Corrosive"
+        "atomic_number": 16,
+        "element": "Sulfur"
       },
       {
-        "name": "Caffeine",
-        "warning": "No Warnings"
+        "atomic_number": 17,
+        "element": "Chlorine"
+      },
+      {
+        "atomic_number": 18,
+        "element": "Argon"
+      },
+      {
+        "atomic_number": 19,
+        "element": "Potassium"
+      },
+      {
+        "atomic_number": 20,
+        "element": "Calcium"
+      },
+      {
+        "atomic_number": 21,
+        "element": "Scandium"
+      },
+      {
+        "atomic_number": 22,
+        "element": "Titanium"
+      },
+      {
+        "atomic_number": 23,
+        "element": "Vanadium"
+      },
+      {
+        "atomic_number": 24,
+        "element": "Chromium"
+      },
+      {
+        "atomic_number": 25,
+        "element": "Manganese"
+      },
+      {
+        "atomic_number": 26,
+        "element": "Iron"
+      },
+      {
+        "atomic_number": 27,
+        "element": "Cobalt"
+      },
+      {
+        "atomic_number": 28,
+        "element": "Nickel"
+      },
+      {
+        "atomic_number": 29,
+        "element": "Copper"
+      },
+      {
+        "atomic_number": 30,
+        "element": "Zinc"
+      },
+      {
+        "atomic_number": 31,
+        "element": "Gallium"
+      },
+      {
+        "atomic_number": 32,
+        "element": "Germanium"
+      },
+      {
+        "atomic_number": 33,
+        "element": "Arsenic"
+      },
+      {
+        "atomic_number": 34,
+        "element": "Selenium"
+      },
+      {
+        "atomic_number": 35,
+        "element": "Bromine"
+      },
+      {
+        "atomic_number": 36,
+        "element": "Krypton"
+      },
+      {
+        "atomic_number": 37,
+        "element": "Rubidium"
+      },
+      {
+        "atomic_number": 38,
+        "element": "Strontium"
+      },
+      {
+        "atomic_number": 39,
+        "element": "Yttrium"
+      },
+      {
+        "atomic_number": 40,
+        "element": "Zirconium"
+      },
+      {
+        "atomic_number": 41,
+        "element": "Niobium"
+      },
+      {
+        "atomic_number": 42,
+        "element": "Molybdenum"
+      },
+      {
+        "atomic_number": 43,
+        "element": "Technetium"
+      },
+      {
+        "atomic_number": 44,
+        "element": "Ruthenium"
+      },
+      {
+        "atomic_number": 45,
+        "element": "Rhodium"
+      },
+      {
+        "atomic_number": 46,
+        "element": "Palladium"
+      },
+      {
+        "atomic_number": 47,
+        "element": "Silver"
+      },
+      {
+        "atomic_number": 48,
+        "element": "Cadmium"
+      },
+      {
+        "atomic_number": 49,
+        "element": "Indium"
+      },
+      {
+        "atomic_number": 50,
+        "element": "Tin"
+      },
+      {
+        "atomic_number": 51,
+        "element": "Antimony"
+      },
+      {
+        "atomic_number": 52,
+        "element": "Tellurium"
+      },
+      {
+        "atomic_number": 53,
+        "element": "Iodine"
+      },
+      {
+        "atomic_number": 54,
+        "element": "Xenon"
+      },
+      {
+        "atomic_number": 55,
+        "element": "Cesium"
+      },
+      {
+        "atomic_number": 56,
+        "element": "Barium"
+      },
+      {
+        "atomic_number": 57,
+        "element": "Lanthanum"
+      },
+      {
+        "atomic_number": 58,
+        "element": "Cerium"
+      },
+      {
+        "atomic_number": 59,
+        "element": "Praseodymium"
+      },
+      {
+        "atomic_number": 60,
+        "element": "Neodymium"
+      },
+      {
+        "atomic_number": 61,
+        "element": "Promethium"
+      },
+      {
+        "atomic_number": 62,
+        "element": "Samarium"
+      },
+      {
+        "atomic_number": 63,
+        "element": "Europium"
+      },
+      {
+        "atomic_number": 64,
+        "element": "Gadolinium"
+      },
+      {
+        "atomic_number": 65,
+        "element": "Terbium"
+      },
+      {
+        "atomic_number": 66,
+        "element": "Dysprosium"
+      },
+      {
+        "atomic_number": 67,
+        "element": "Holmium"
+      },
+      {
+        "atomic_number": 68,
+        "element": "Erbium"
+      },
+      {
+        "atomic_number": 69,
+        "element": "Thulium"
+      },
+      {
+        "atomic_number": 70,
+        "element": "Ytterbium"
+      },
+      {
+        "atomic_number": 71,
+        "element": "Lutetium"
+      },
+      {
+        "atomic_number": 72,
+        "element": "Hafnium"
+      },
+      {
+        "atomic_number": 73,
+        "element": "Tantalum"
+      },
+      {
+        "atomic_number": 74,
+        "element": "Wolfram"
+      },
+      {
+        "atomic_number": 75,
+        "element": "Rhenium"
+      },
+      {
+        "atomic_number": 76,
+        "element": "Osmium"
+      },
+      {
+        "atomic_number": 77,
+        "element": "Iridium"
+      },
+      {
+        "atomic_number": 78,
+        "element": "Platinum"
+      },
+      {
+        "atomic_number": 79,
+        "element": "Gold"
+      },
+      {
+        "atomic_number": 80,
+        "element": "Mercury"
+      },
+      {
+        "atomic_number": 81,
+        "element": "Thallium"
+      },
+      {
+        "atomic_number": 82,
+        "element": "Lead"
+      },
+      {
+        "atomic_number": 83,
+        "element": "Bismuth"
+      },
+      {
+        "atomic_number": 84,
+        "element": "Polonium"
+      },
+      {
+        "atomic_number": 85,
+        "element": "Astatine"
+      },
+      {
+        "atomic_number": 86,
+        "element": "Radon"
+      },
+      {
+        "atomic_number": 87,
+        "element": "Francium"
+      },
+      {
+        "atomic_number": 88,
+        "element": "Radium"
+      },
+      {
+        "atomic_number": 89,
+        "element": "Actinium"
+      },
+      {
+        "atomic_number": 90,
+        "element": "Thorium"
+      },
+      {
+        "atomic_number": 91,
+        "element": "Protactinium"
+      },
+      {
+        "atomic_number": 92,
+        "element": "Uranium"
+      },
+      {
+        "atomic_number": 93,
+        "element": "Neptunium"
+      },
+      {
+        "atomic_number": 94,
+        "element": "Plutonium"
+      },
+      {
+        "atomic_number": 95,
+        "element": "Americium"
+      },
+      {
+        "atomic_number": 96,
+        "element": "Curium"
+      },
+      {
+        "atomic_number": 97,
+        "element": "Berkelium"
+      },
+      {
+        "atomic_number": 98,
+        "element": "Californium"
+      },
+      {
+        "atomic_number": 99,
+        "element": "Einsteinium"
+      },
+      {
+        "atomic_number": 100,
+        "element": "Fermium"
+      },
+      {
+        "atomic_number": 101,
+        "element": "Mendelevium"
+      },
+      {
+        "atomic_number": 102,
+        "element": "Nobelium"
+      },
+      {
+        "atomic_number": 103,
+        "element": "Lawrencium"
+      },
+      {
+        "atomic_number": 104,
+        "element": "Rutherfordium"
+      },
+      {
+        "atomic_number": 105,
+        "element": "Dubnium"
+      },
+      {
+        "atomic_number": 106,
+        "element": "Seaborgium"
+      },
+      {
+        "atomic_number": 107,
+        "element": "Bohrium"
+      },
+      {
+        "atomic_number": 108,
+        "element": "Hassium"
+      },
+      {
+        "atomic_number": 109,
+        "element": "Meitnerium"
+      },
+      {
+        "atomic_number": 110,
+        "element": "Darmstadtium "
+      },
+      {
+        "atomic_number": 111,
+        "element": "Roentgenium "
+      },
+      {
+        "atomic_number": 112,
+        "element": "Copernicium "
+      },
+      {
+        "atomic_number": 113,
+        "element": "Nihonium"
+      },
+      {
+        "atomic_number": 114,
+        "element": "Flerovium"
+      },
+      {
+        "atomic_number": 115,
+        "element": "Moscovium"
+      },
+      {
+        "atomic_number": 116,
+        "element": "Livermorium"
+      },
+      {
+        "atomic_number": 117,
+        "element": "Tennessine"
+      },
+      {
+        "atomic_number": 118,
+        "element": "Oganesson"
       }
     ]
   },
-  "elements": {
-    "data": [
-      { "atomic_number": 1, "element": "Hydrogen" },
-      { "atomic_number": 2, "element": "Helium" },
-      { "atomic_number": 3, "element": "Lithium" },
-      { "atomic_number": 4, "element": "Beryllium" },
-      { "atomic_number": 5, "element": "Boron" },
-      { "atomic_number": 6, "element": "Carbon" },
-      { "atomic_number": 7, "element": "Nitrogen" },
-      { "atomic_number": 8, "element": "Oxygen" },
-      { "atomic_number": 9, "element": "Fluorine" },
-      { "atomic_number": 10, "element": "Neon" },
-      { "atomic_number": 11, "element": "Sodium" },
-      { "atomic_number": 12, "element": "Magnesium" },
-      { "atomic_number": 13, "element": "Aluminum" },
-      { "atomic_number": 14, "element": "Silicon" },
-      { "atomic_number": 15, "element": "Phosphorus" },
-      { "atomic_number": 16, "element": "Sulfur" },
-      { "atomic_number": 17, "element": "Chlorine" },
-      { "atomic_number": 18, "element": "Argon" },
-      { "atomic_number": 19, "element": "Potassium" },
-      { "atomic_number": 20, "element": "Calcium" },
-      { "atomic_number": 21, "element": "Scandium" },
-      { "atomic_number": 22, "element": "Titanium" },
-      { "atomic_number": 23, "element": "Vanadium" },
-      { "atomic_number": 24, "element": "Chromium" },
-      { "atomic_number": 25, "element": "Manganese" },
-      { "atomic_number": 26, "element": "Iron" },
-      { "atomic_number": 27, "element": "Cobalt" },
-      { "atomic_number": 28, "element": "Nickel" },
-      { "atomic_number": 29, "element": "Copper" },
-      { "atomic_number": 30, "element": "Zinc" },
-      { "atomic_number": 31, "element": "Gallium" },
-      { "atomic_number": 32, "element": "Germanium" },
-      { "atomic_number": 33, "element": "Arsenic" },
-      { "atomic_number": 34, "element": "Selenium" },
-      { "atomic_number": 35, "element": "Bromine" },
-      { "atomic_number": 36, "element": "Krypton" },
-      { "atomic_number": 37, "element": "Rubidium" },
-      { "atomic_number": 38, "element": "Strontium" },
-      { "atomic_number": 39, "element": "Yttrium" },
-      { "atomic_number": 40, "element": "Zirconium" },
-      { "atomic_number": 41, "element": "Niobium" },
-      { "atomic_number": 42, "element": "Molybdenum" },
-      { "atomic_number": 43, "element": "Technetium" },
-      { "atomic_number": 44, "element": "Ruthenium" },
-      { "atomic_number": 45, "element": "Rhodium" },
-      { "atomic_number": 46, "element": "Palladium" },
-      { "atomic_number": 47, "element": "Silver" },
-      { "atomic_number": 48, "element": "Cadmium" },
-      { "atomic_number": 49, "element": "Indium" },
-      { "atomic_number": 50, "element": "Tin" },
-      { "atomic_number": 51, "element": "Antimony" },
-      { "atomic_number": 52, "element": "Tellurium" },
-      { "atomic_number": 53, "element": "Iodine" },
-      { "atomic_number": 54, "element": "Xenon" },
-      { "atomic_number": 55, "element": "Cesium" },
-      { "atomic_number": 56, "element": "Barium" },
-      { "atomic_number": 57, "element": "Lanthanum" },
-      { "atomic_number": 58, "element": "Cerium" },
-      { "atomic_number": 59, "element": "Praseodymium" },
-      { "atomic_number": 60, "element": "Neodymium" },
-      { "atomic_number": 61, "element": "Promethium" },
-      { "atomic_number": 62, "element": "Samarium" },
-      { "atomic_number": 63, "element": "Europium" },
-      { "atomic_number": 64, "element": "Gadolinium" },
-      { "atomic_number": 65, "element": "Terbium" },
-      { "atomic_number": 66, "element": "Dysprosium" },
-      { "atomic_number": 67, "element": "Holmium" },
-      { "atomic_number": 68, "element": "Erbium" },
-      { "atomic_number": 69, "element": "Thulium" },
-      { "atomic_number": 70, "element": "Ytterbium" },
-      { "atomic_number": 71, "element": "Lutetium" },
-      { "atomic_number": 72, "element": "Hafnium" },
-      { "atomic_number": 73, "element": "Tantalum" },
-      { "atomic_number": 74, "element": "Wolfram" },
-      { "atomic_number": 75, "element": "Rhenium" },
-      { "atomic_number": 76, "element": "Osmium" },
-      { "atomic_number": 77, "element": "Iridium" },
-      { "atomic_number": 78, "element": "Platinum" },
-      { "atomic_number": 79, "element": "Gold" },
-      { "atomic_number": 80, "element": "Mercury" },
-      { "atomic_number": 81, "element": "Thallium" },
-      { "atomic_number": 82, "element": "Lead" },
-      { "atomic_number": 83, "element": "Bismuth" },
-      { "atomic_number": 84, "element": "Polonium" },
-      { "atomic_number": 85, "element": "Astatine" },
-      { "atomic_number": 86, "element": "Radon" },
-      { "atomic_number": 87, "element": "Francium" },
-      { "atomic_number": 88, "element": "Radium" },
-      { "atomic_number": 89, "element": "Actinium" },
-      { "atomic_number": 90, "element": "Thorium" },
-      { "atomic_number": 91, "element": "Protactinium" },
-      { "atomic_number": 92, "element": "Uranium" },
-      { "atomic_number": 93, "element": "Neptunium" },
-      { "atomic_number": 94, "element": "Plutonium" },
-      { "atomic_number": 95, "element": "Americium" },
-      { "atomic_number": 96, "element": "Curium" },
-      { "atomic_number": 97, "element": "Berkelium" },
-      { "atomic_number": 98, "element": "Californium" },
-      { "atomic_number": 99, "element": "Einsteinium" },
-      { "atomic_number": 100, "element": "Fermium" },
-      { "atomic_number": 101, "element": "Mendelevium" },
-      { "atomic_number": 102, "element": "Nobelium" },
-      { "atomic_number": 103, "element": "Lawrencium" },
-      { "atomic_number": 104, "element": "Rutherfordium" },
-      { "atomic_number": 105, "element": "Dubnium" },
-      { "atomic_number": 106, "element": "Seaborgium" },
-      { "atomic_number": 107, "element": "Bohrium" },
-      { "atomic_number": 108, "element": "Hassium" },
-      { "atomic_number": 109, "element": "Meitnerium" },
-      { "atomic_number": 110, "element": "Darmstadtium " },
-      { "atomic_number": 111, "element": "Roentgenium " },
-      { "atomic_number": 112, "element": "Copernicium " },
-      { "atomic_number": 113, "element": "Nihonium" },
-      { "atomic_number": 114, "element": "Flerovium" },
-      { "atomic_number": 115, "element": "Moscovium" },
-      { "atomic_number": 116, "element": "Livermorium" },
-      { "atomic_number": 117, "element": "Tennessine" },
-      { "atomic_number": 118, "element": "Oganesson" }
-    ]
-  },
   "elements_phase": {
+    "schema": [
+      {
+        "name": "symbol",
+        "type": "text"
+      },
+      {
+        "name": "phase",
+        "type": "text"
+      }
+    ],
     "data": [
-      { "symbol": "H", "phase": "gas" },
-      { "symbol": "He", "phase": "gas" },
-      { "symbol": "Li", "phase": "solid" },
-      { "symbol": "Be", "phase": "solid" },
-      { "symbol": "B", "phase": "solid" },
-      { "symbol": "C", "phase": "solid" },
-      { "symbol": "N", "phase": "gas" },
-      { "symbol": "O", "phase": "gas" },
-      { "symbol": "F", "phase": "gas" },
-      { "symbol": "Ne", "phase": "gas" },
-      { "symbol": "Na", "phase": "solid" },
-      { "symbol": "Mg", "phase": "solid" },
-      { "symbol": "Al", "phase": "solid" },
-      { "symbol": "Si", "phase": "solid" },
-      { "symbol": "P", "phase": "solid" },
-      { "symbol": "S", "phase": "solid" },
-      { "symbol": "Cl", "phase": "gas" },
-      { "symbol": "Ar", "phase": "gas" },
-      { "symbol": "K", "phase": "solid" },
-      { "symbol": "Ca", "phase": "solid" },
-      { "symbol": "Sc", "phase": "solid" },
-      { "symbol": "Ti", "phase": "solid" },
-      { "symbol": "V", "phase": "solid" },
-      { "symbol": "Cr", "phase": "solid" },
-      { "symbol": "Mn", "phase": "solid" },
-      { "symbol": "Fe", "phase": "solid" },
-      { "symbol": "Co", "phase": "solid" },
-      { "symbol": "Ni", "phase": "solid" },
-      { "symbol": "Cu", "phase": "solid" },
-      { "symbol": "Zn", "phase": "solid" },
-      { "symbol": "Ga", "phase": "solid" },
-      { "symbol": "Ge", "phase": "solid" },
-      { "symbol": "As", "phase": "solid" },
-      { "symbol": "Se", "phase": "solid" },
-      { "symbol": "Br", "phase": "liq" },
-      { "symbol": "Kr", "phase": "gas" },
-      { "symbol": "Rb", "phase": "solid" },
-      { "symbol": "Sr", "phase": "solid" },
-      { "symbol": "Y", "phase": "solid" },
-      { "symbol": "Zr", "phase": "solid" },
-      { "symbol": "Nb", "phase": "solid" },
-      { "symbol": "Mo", "phase": "solid" },
-      { "symbol": "Tc", "phase": "artificial" },
-      { "symbol": "Ru", "phase": "solid" },
-      { "symbol": "Rh", "phase": "solid" },
-      { "symbol": "Pd", "phase": "solid" },
-      { "symbol": "Ag", "phase": "solid" },
-      { "symbol": "Cd", "phase": "solid" },
-      { "symbol": "In", "phase": "solid" },
-      { "symbol": "Sn", "phase": "solid" },
-      { "symbol": "Sb", "phase": "solid" },
-      { "symbol": "Te", "phase": "solid" },
-      { "symbol": "I", "phase": "solid" },
-      { "symbol": "Xe", "phase": "gas" },
-      { "symbol": "Cs", "phase": "solid" },
-      { "symbol": "Ba", "phase": "solid" },
-      { "symbol": "La", "phase": "solid" },
-      { "symbol": "Ce", "phase": "solid" },
-      { "symbol": "Pr", "phase": "solid" },
-      { "symbol": "Nd", "phase": "solid" },
-      { "symbol": "Pm", "phase": "artificial" },
-      { "symbol": "Sm", "phase": "solid" },
-      { "symbol": "Eu", "phase": "solid" },
-      { "symbol": "Gd", "phase": "solid" },
-      { "symbol": "Tb", "phase": "solid" },
-      { "symbol": "Dy", "phase": "solid" },
-      { "symbol": "Ho", "phase": "solid" },
-      { "symbol": "Er", "phase": "solid" },
-      { "symbol": "Tm", "phase": "solid" },
-      { "symbol": "Yb", "phase": "solid" },
-      { "symbol": "Lu", "phase": "solid" },
-      { "symbol": "Hf", "phase": "solid" },
-      { "symbol": "Ta", "phase": "solid" },
-      { "symbol": "W", "phase": "solid" },
-      { "symbol": "Re", "phase": "solid" },
-      { "symbol": "Os", "phase": "solid" },
-      { "symbol": "Ir", "phase": "solid" },
-      { "symbol": "Pt", "phase": "solid" },
-      { "symbol": "Au", "phase": "solid" },
-      { "symbol": "Hg", "phase": "liq" },
-      { "symbol": "Tl", "phase": "solid" },
-      { "symbol": "Pb", "phase": "solid" },
-      { "symbol": "Bi", "phase": "solid" },
-      { "symbol": "Po", "phase": "solid" },
-      { "symbol": "At", "phase": "solid" },
-      { "symbol": "Rn", "phase": "gas" },
-      { "symbol": "Fr", "phase": "solid" },
-      { "symbol": "Ra", "phase": "solid" },
-      { "symbol": "Ac", "phase": "solid" },
-      { "symbol": "Th", "phase": "solid" },
-      { "symbol": "Pa", "phase": "solid" },
-      { "symbol": "U", "phase": "solid" },
-      { "symbol": "Np", "phase": "artificial" },
-      { "symbol": "Pu", "phase": "artificial" },
-      { "symbol": "Am", "phase": "artificial" },
-      { "symbol": "Cm", "phase": "artificial" },
-      { "symbol": "Bk", "phase": "artificial" },
-      { "symbol": "Cf", "phase": "artificial" },
-      { "symbol": "Es", "phase": "artificial" },
-      { "symbol": "Fm", "phase": "artificial" },
-      { "symbol": "Md", "phase": "artificial" },
-      { "symbol": "No", "phase": "artificial" },
-      { "symbol": "Lr", "phase": "artificial" },
-      { "symbol": "Rf", "phase": "artificial" },
-      { "symbol": "Db", "phase": "artificial" },
-      { "symbol": "Sg", "phase": "artificial" },
-      { "symbol": "Bh", "phase": "artificial" },
-      { "symbol": "Hs", "phase": "artificial" },
-      { "symbol": "Mt", "phase": "artificial" },
-      { "symbol": "Ds ", "phase": "artificial" },
-      { "symbol": "Rg ", "phase": "artificial" },
-      { "symbol": "Cn ", "phase": "artificial" },
-      { "symbol": "Nh", "phase": "artificial" },
-      { "symbol": "Fl", "phase": "artificial" },
-      { "symbol": "Mc", "phase": "artificial" },
-      { "symbol": "Lv", "phase": "artificial" },
-      { "symbol": "Ts", "phase": "artificial" },
-      { "symbol": "Og", "phase": "artificial" }
+      {
+        "symbol": "H",
+        "phase": "gas"
+      },
+      {
+        "symbol": "He",
+        "phase": "gas"
+      },
+      {
+        "symbol": "Li",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Be",
+        "phase": "solid"
+      },
+      {
+        "symbol": "B",
+        "phase": "solid"
+      },
+      {
+        "symbol": "C",
+        "phase": "solid"
+      },
+      {
+        "symbol": "N",
+        "phase": "gas"
+      },
+      {
+        "symbol": "O",
+        "phase": "gas"
+      },
+      {
+        "symbol": "F",
+        "phase": "gas"
+      },
+      {
+        "symbol": "Ne",
+        "phase": "gas"
+      },
+      {
+        "symbol": "Na",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Mg",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Al",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Si",
+        "phase": "solid"
+      },
+      {
+        "symbol": "P",
+        "phase": "solid"
+      },
+      {
+        "symbol": "S",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Cl",
+        "phase": "gas"
+      },
+      {
+        "symbol": "Ar",
+        "phase": "gas"
+      },
+      {
+        "symbol": "K",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ca",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Sc",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ti",
+        "phase": "solid"
+      },
+      {
+        "symbol": "V",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Cr",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Mn",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Fe",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Co",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ni",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Cu",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Zn",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ga",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ge",
+        "phase": "solid"
+      },
+      {
+        "symbol": "As",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Se",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Br",
+        "phase": "liq"
+      },
+      {
+        "symbol": "Kr",
+        "phase": "gas"
+      },
+      {
+        "symbol": "Rb",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Sr",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Y",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Zr",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Nb",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Mo",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Tc",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Ru",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Rh",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Pd",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ag",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Cd",
+        "phase": "solid"
+      },
+      {
+        "symbol": "In",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Sn",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Sb",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Te",
+        "phase": "solid"
+      },
+      {
+        "symbol": "I",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Xe",
+        "phase": "gas"
+      },
+      {
+        "symbol": "Cs",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ba",
+        "phase": "solid"
+      },
+      {
+        "symbol": "La",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ce",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Pr",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Nd",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Pm",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Sm",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Eu",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Gd",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Tb",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Dy",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ho",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Er",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Tm",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Yb",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Lu",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Hf",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ta",
+        "phase": "solid"
+      },
+      {
+        "symbol": "W",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Re",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Os",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ir",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Pt",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Au",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Hg",
+        "phase": "liq"
+      },
+      {
+        "symbol": "Tl",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Pb",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Bi",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Po",
+        "phase": "solid"
+      },
+      {
+        "symbol": "At",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Rn",
+        "phase": "gas"
+      },
+      {
+        "symbol": "Fr",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ra",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Ac",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Th",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Pa",
+        "phase": "solid"
+      },
+      {
+        "symbol": "U",
+        "phase": "solid"
+      },
+      {
+        "symbol": "Np",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Pu",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Am",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Cm",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Bk",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Cf",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Es",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Fm",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Md",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "No",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Lr",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Rf",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Db",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Sg",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Bh",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Hs",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Mt",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Ds ",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Rg ",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Cn ",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Nh",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Fl",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Mc",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Lv",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Ts",
+        "phase": "artificial"
+      },
+      {
+        "symbol": "Og",
+        "phase": "artificial"
+      }
     ]
   },
   "movies": {
     "citation": "https://developer.imdb.com/non-commercial-datasets/",
     "schema": [
-      {"name":  "name", "type": "text", "primary_key":  true},
-      {"name":  "release", "type": "text", "primary_key":  false},
-      {"name":  "genres", "type": "text", "primary_key":  false},
-      {"name":  "description", "type": "text", "primary_key":  false}
+      {
+        "name": "name",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "release",
+        "type": "text",
+        "primary_key": false
+      },
+      {
+        "name": "genres",
+        "type": "text",
+        "primary_key": false
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "primary_key": false
+      }
     ],
     "data": [
       {
-        "name":  "Pirates of the Caribbean: The Curse of the Black Pearl",
+        "name": "Pirates of the Caribbean: The Curse of the Black Pearl",
         "release": "2003",
         "genres": "Action,Adventure,Fantasy",
         "description": "Jack Sparrow, a freewheeling 17th-century pirate who roams the Caribbean Sea, butts heads with a rival pirate bent on pillaging the village of Port Royal. When the governor's daughter is kidnapped, Sparrow decides to help the girl's love save her. But their seafaring mission is hardly simple."
@@ -461,16 +1233,35 @@
     ]
   },
   "movies_de": {
-    "citation": ["https://developer.imdb.com/non-commercial-datasets/", "https://www.imdb.com/de/"],
+    "citation": [
+      "https://developer.imdb.com/non-commercial-datasets/",
+      "https://www.imdb.com/de/"
+    ],
     "schema": [
-      {"name":  "name", "type": "text", "primary_key":  true},
-      {"name":  "release", "type": "text", "primary_key":  false},
-      {"name":  "genres", "type": "text", "primary_key":  false},
-      {"name":  "description", "type": "text", "primary_key":  false}
+      {
+        "name": "name",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "release",
+        "type": "text",
+        "primary_key": false
+      },
+      {
+        "name": "genres",
+        "type": "text",
+        "primary_key": false
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "primary_key": false
+      }
     ],
     "data": [
       {
-        "name":  "Fluch der Karibik",
+        "name": "Fluch der Karibik",
         "release": "2003",
         "genres": "Action,Adventure,Fantasy",
         "description": "Waffenschmied Will Turner tut sich mit dem exzentrischen Piraten \"Captain\" Jack Sparrow zusammen, um seine große Liebe, die Tochter des Gouverneurs, aus den Händen der Piraten zu retten, die früher mit Jack verbündet waren, jetzt aber Untote sind"
@@ -513,34 +1304,93 @@
       }
     ]
   },
-  "actors":{
+  "actors": {
     "citation": "https://developer.imdb.com/non-commercial-datasets/",
     "schema": [
-      {"name":  "name", "type": "text", "primary_key":  true},
-      {"name":  "birth_year", "type": "integer", "primary_key":  false}
+      {
+        "name": "name",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "birth_year",
+        "type": "integer",
+        "primary_key": false
+      }
     ],
     "data": [
-      {"name": "Johnny Depp", "birth_year": 1963},
-      {"name": "Orlando Bloom", "birth_year": 1977},
-      {"name": "Keira Knightley", "birth_year": 1985},
-      {"name": "Elijah Wood", "birth_year": 1981},
-      {"name": "Ian McKellen", "birth_year":  1939},
-      {"name": "Freddie Highmore", "birth_year": 1992},
-      {"name": "Viggo Mortensen", "birth_year": 1958},
-      {"name": "Leonardo DiCaprio", "birth_year": 1974 },
-      {"name": "Joseph Gordon-Levitt", "birth_year": 1981 },
-      {"name": "Elliot Page", "birth_year": 1987 },
-      {"name": "Keanu Reeves", "birth_year": 1964 },
-      {"name": "Carrie-Anne Moss", "birth_year": 1967 },
-      {"name": "Laurence Fishburne", "birth_year": 1961 }
+      {
+        "name": "Johnny Depp",
+        "birth_year": 1963
+      },
+      {
+        "name": "Orlando Bloom",
+        "birth_year": 1977
+      },
+      {
+        "name": "Keira Knightley",
+        "birth_year": 1985
+      },
+      {
+        "name": "Elijah Wood",
+        "birth_year": 1981
+      },
+      {
+        "name": "Ian McKellen",
+        "birth_year": 1939
+      },
+      {
+        "name": "Freddie Highmore",
+        "birth_year": 1992
+      },
+      {
+        "name": "Viggo Mortensen",
+        "birth_year": 1958
+      },
+      {
+        "name": "Leonardo DiCaprio",
+        "birth_year": 1974
+      },
+      {
+        "name": "Joseph Gordon-Levitt",
+        "birth_year": 1981
+      },
+      {
+        "name": "Elliot Page",
+        "birth_year": 1987
+      },
+      {
+        "name": "Keanu Reeves",
+        "birth_year": 1964
+      },
+      {
+        "name": "Carrie-Anne Moss",
+        "birth_year": 1967
+      },
+      {
+        "name": "Laurence Fishburne",
+        "birth_year": 1961
+      }
     ]
   },
   "plays_in": {
     "citation": "https://developer.imdb.com/non-commercial-datasets/",
     "schema": [
-      {"name":  "movie", "type": "text", "primary_key":  true},
-      {"name":  "actor/actress", "type": "text", "primary_key":  true},
-      {"name":  "role", "type": "text", "primary_key":  true}
+      {
+        "name": "movie",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "actor/actress",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "role",
+        "type": "text",
+        "primary_key": true
+      }
     ],
     "data": [
       {
@@ -628,7 +1478,7 @@
         "actor/actress": "Viggo Mortensen",
         "role": "Aragorn"
       },
-            {
+      {
         "movie": "Inception",
         "actor/actress": "Jack Dawson in Titanic",
         "role": "Cobb"
@@ -662,109 +1512,1801 @@
   },
   "top_artists_2023": {
     "citation": "https://dl.acm.org/doi/abs/10.1145/3240323.3240342",
-    "schema": {},
+    "schema": [
+      {
+        "name": "artist",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "streams",
+        "type": "number",
+        "primary_key": false
+      }
+    ],
     "data": [
-      {"artist": "The Weeknd", "streams": "14.2 Billion"},
-      {"artist": "Taylor Swift", "streams": "14B"},
-      {"artist": "Ed Sheeran", "streams": "13908947204"},
-      {"artist": "Harry Styles", "streams": "11.6B"},
-      {"artist": "Olivia Rodrigo", "streams": "7.442B"},
-      {"artist": "Kelly Clarkson", "streams": "485M"},
-      {"artist": "Troye Sivan", "streams": "431424489"},
-      {"artist": "Paul McCartney", "streams": "403 Million"},
-      {"artist": "Taylor Swift, Lana Del Rey", "streams": "323437194"}
+      {
+        "artist": "The Weeknd",
+        "streams": "14.2 Billion"
+      },
+      {
+        "artist": "Taylor Swift",
+        "streams": "14B"
+      },
+      {
+        "artist": "Ed Sheeran",
+        "streams": "13908947204"
+      },
+      {
+        "artist": "Harry Styles",
+        "streams": "11.6B"
+      },
+      {
+        "artist": "Olivia Rodrigo",
+        "streams": "7.442B"
+      },
+      {
+        "artist": "Kelly Clarkson",
+        "streams": "485M"
+      },
+      {
+        "artist": "Troye Sivan",
+        "streams": "431424489"
+      },
+      {
+        "artist": "Paul McCartney",
+        "streams": "403 Million"
+      },
+      {
+        "artist": "Taylor Swift, Lana Del Rey",
+        "streams": "323437194"
+      }
     ]
   },
   "diseases": {
-    "schema": [ {"name":  "movie", "type": "text", "primary_key": true} ],
+    "schema": [
+      {
+        "name": "name",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "primary_key": false
+      }
+    ],
     "citation": "https://www.kaggle.com/datasets/itachi9604/disease-symptom-description-dataset/",
     "data": [
-      {"name": "Drug Reaction", "description": "An adverse drug reaction (ADR) is an injury caused by taking medication. ADRs may occur following a single dose or prolonged administration of a drug or result from the combination of two or more drugs."},
-      {"name": "Malaria", "description": "An infectious disease caused by protozoan parasites from the Plasmodium family that can be transmitted by the bite of the Anopheles mosquito or by a contaminated needle or transfusion. Falciparum malaria is the most deadly type."},
-      {"name": "Allergy", "description": "An allergy is an immune system response to a foreign substance that's not typically harmful to your body.They can include certain foods, pollen, or pet dander. Your immune system's job is to keep you healthy by fighting harmful pathogens."},
-      {"name": "Hypothyroidism", "description": "Hypothyroidism, also called underactive thyroid or low thyroid, is a disorder of the endocrine system in which the thyroid gland does not produce enough thyroid hormone."},
-      {"name": "Psoriasis", "description": "Psoriasis is a common skin disorder that forms thick, red, bumpy patches covered with silvery scales. They can pop up anywhere, but most appear on the scalp, elbows, knees, and lower back. Psoriasis can't be passed from person to person. It does sometimes happen in members of the same family."},
-      {"name": "GERD", "description": "Gastroesophageal reflux disease, or GERD, is a digestive disorder that affects the lower esophageal sphincter (LES), the ring of muscle between the esophagus and stomach. Many people, including pregnant women, suffer from heartburn or acid indigestion caused by GERD."},
-      {"name": "Chronic cholestasis", "description": "Chronic cholestatic diseases, whether occurring in infancy, childhood or adulthood, are characterized by defective bile acid transport from the liver to the intestine, which is caused by primary damage to the biliary epithelium in most cases"},
-      {"name": "hepatitis A", "description": "Hepatitis A is a highly contagious liver infection caused by the hepatitis A virus. The virus is one of several types of hepatitis viruses that cause inflammation and affect your liver's ability to function."},
-      {"name": "Osteoarthristis", "description": "Osteoarthritis is the most common form of arthritis, affecting millions of people worldwide. It occurs when the protective cartilage that cushions the ends of your bones wears down over time."},
-      {"name": "(vertigo) Paroymsal  Positional Vertigo", "description": "Benign paroxysmal positional vertigo (BPPV) is one of the most common causes of vertigo — the sudden sensation that you're spinning or that the inside of your head is spinning. Benign paroxysmal positional vertigo causes brief episodes of mild to intense dizziness."},
-      {"name": "Hypoglycemia", "description": " Hypoglycemia is a condition in which your blood sugar (glucose) level is lower than normal. Glucose is your body's main energy source. Hypoglycemia is often related to diabetes treatment. But other drugs and a variety of conditions — many rare — can cause low blood sugar in people who don't have diabetes."},
-      {"name": "Acne", "description": "Acne vulgaris is the formation of comedones, papules, pustules, nodules, and/or cysts as a result of obstruction and inflammation of pilosebaceous units (hair follicles and their accompanying sebaceous gland). Acne develops on the face and upper trunk. It most often affects adolescents."},
-      {"name": "Diabetes", "description": "Diabetes is a disease that occurs when your blood glucose, also called blood sugar, is too high. Blood glucose is your main source of energy and comes from the food you eat. Insulin, a hormone made by the pancreas, helps glucose from food get into your cells to be used for energy."},
-      {"name": "Impetigo", "description": "Impetigo (im-puh-TIE-go) is a common and highly contagious skin infection that mainly affects infants and children. Impetigo usually appears as red sores on the face, especially around a child's nose and mouth, and on hands and feet. The sores burst and develop honey-colored crusts."},
-      {"name": "Hypertension", "description": "Hypertension (HTN or HT), also known as high blood pressure (HBP), is a long-term medical condition in which the blood pressure in the arteries is persistently elevated. High blood pressure typically does not cause symptoms."},
-      {"name": "Peptic ulcer diseae", "description": "Peptic ulcer disease (PUD) is a break in the inner lining of the stomach, the first part of the small intestine, or sometimes the lower esophagus. An ulcer in the stomach is called a gastric ulcer, while one in the first part of the intestines is a duodenal ulcer."},
-      {"name": "Dimorphic hemorrhoids(piles)", "description": "Hemorrhoids, also spelled haemorrhoids, are vascular structures in the anal canal. In their ... Other names, Haemorrhoids, piles, hemorrhoidal disease ."},
-      {"name": "Common Cold", "description": "The common cold is a viral infection of your nose and throat (upper respiratory tract). It's usually harmless, although it might not feel that way. Many types of viruses can cause a common cold."},
-      {"name": "Chicken pox", "description": "Chickenpox is a highly contagious disease caused by the varicella-zoster virus (VZV). It can cause an itchy, blister-like rash. The rash first appears on the chest, back, and face, and then spreads over the entire body, causing between 250 and 500 itchy blisters."},
-      {"name": "Cervical spondylosis", "description": "Cervical spondylosis is a general term for age-related wear and tear affecting the spinal disks in your neck. As the disks dehydrate and shrink, signs of osteoarthritis develop, including bony projections along the edges of bones (bone spurs)."},
-      {"name": "Hyperthyroidism", "description": "Hyperthyroidism (overactive thyroid) occurs when your thyroid gland produces too much of the hormone thyroxine. Hyperthyroidism can accelerate your body's metabolism, causing unintentional weight loss and a rapid or irregular heartbeat."},
-      {"name": "Urinary tract infection", "description": "Urinary tract infection: An infection of the kidney, ureter, bladder, or urethra. Abbreviated UTI. Not everyone with a UTI has symptoms, but common symptoms include a frequent urge to urinate and pain or burning when urinating."},
-      {"name": "Varicose veins", "description": "A vein that has enlarged and twisted, often appearing as a bulging, blue blood vessel that is clearly visible through the skin. Varicose veins are most common in older adults, particularly women, and occur especially on the legs."},
-      {"name": "AIDS", "description": "Acquired immunodeficiency syndrome (AIDS) is a chronic, potentially life-threatening condition caused by the human immunodeficiency virus (HIV). By damaging your immune system, HIV interferes with your body's ability to fight infection and disease."},
-      {"name": "Paralysis (brain hemorrhage)", "description": "Intracerebral hemorrhage (ICH) is when blood suddenly bursts into brain tissue, causing damage to your brain. Symptoms usually appear suddenly during ICH. They include headache, weakness, confusion, and paralysis, particularly on one side of your body."},
-      {"name": "Typhoid", "description": "An acute illness characterized by fever caused by infection with the bacterium Salmonella typhi. Typhoid fever has an insidious onset, with fever, headache, constipation, malaise, chills, and muscle pain. Diarrhea is uncommon, and vomiting is not usually severe."},
-      {"name": "Hepatitis B", "description": "Hepatitis B is an infection of your liver. It can cause scarring of the organ, liver failure, and cancer. It can be fatal if it isn't treated. It's spread when people come in contact with the blood, open sores, or body fluids of someone who has the hepatitis B virus."},
-      {"name": "Fungal infection", "description": "In humans, fungal infections occur when an invading fungus takes over an area of the body and is too much for the immune system to handle. Fungi can live in the air, soil, water, and plants. There are also some fungi that live naturally in the human body. Like many microbes, there are helpful fungi and harmful fungi."},
-      {"name": "Hepatitis C", "description": "Inflammation of the liver due to the hepatitis C virus (HCV), which is usually spread via blood transfusion (rare), hemodialysis, and needle sticks. The damage hepatitis C does to the liver can lead to cirrhosis and its complications as well as cancer."},
-      {"name": "Migraine", "description": "A migraine can cause severe throbbing pain or a pulsing sensation, usually on one side of the head. It's often accompanied by nausea, vomiting, and extreme sensitivity to light and sound. Migraine attacks can last for hours to days, and the pain can be so severe that it interferes with your daily activities."},
-      {"name": "Bronchial Asthma", "description": "Bronchial asthma is a medical condition which causes the airway path of the lungs to swell and narrow. Due to this swelling, the air path produces excess mucus making it hard to breathe, which results in coughing, short breath, and wheezing. The disease is chronic and interferes with daily working."},
-      {"name": "Alcoholic hepatitis", "description": "Alcoholic hepatitis is a diseased, inflammatory condition of the liver caused by heavy alcohol consumption over an extended period of time. It's also aggravated by binge drinking and ongoing alcohol use. If you develop this condition, you must stop drinking alcohol"},
-      {"name": "Jaundice", "description": "Yellow staining of the skin and sclerae (the whites of the eyes) by abnormally high blood levels of the bile pigment bilirubin. The yellowing extends to other tissues and body fluids. Jaundice was once called the \"morbus regius\" (the regal disease) in the belief that only the touch of a king could cure it"},
-      {"name": "Hepatitis E", "description": "A rare form of liver inflammation caused by infection with the hepatitis E virus (HEV). It is transmitted via food or drink handled by an infected person or through infected water supplies in areas where fecal matter may get into the water. Hepatitis E does not cause chronic liver disease."},
-      {"name": "Dengue", "description": "an acute infectious disease caused by a flavivirus (species Dengue virus of the genus Flavivirus), transmitted by aedes mosquitoes, and characterized by headache, severe joint pain, and a rash. — called also breakbone fever, dengue fever."},
-      {"name": "Hepatitis D", "description": "Hepatitis D, also known as the hepatitis delta virus, is an infection that causes the liver to become inflamed. This swelling can impair liver function and cause long-term liver problems, including liver scarring and cancer. The condition is caused by the hepatitis D virus (HDV)."},
-      {"name": "Heart attack", "description": "The death of heart muscle due to the loss of blood supply. The loss of blood supply is usually caused by a complete blockage of a coronary artery, one of the arteries that supplies blood to the heart muscle."},
-      {"name": "Pneumonia", "description": "Pneumonia is an infection in one or both lungs. Bacteria, viruses, and fungi cause it. The infection causes inflammation in the air sacs in your lungs, which are called alveoli. The alveoli fill with fluid or pus, making it difficult to breathe."},
-      {"name": "Arthritis", "description": "Arthritis is the swelling and tenderness of one or more of your joints. The main symptoms of arthritis are joint pain and stiffness, which typically worsen with age. The most common types of arthritis are osteoarthritis and rheumatoid arthritis."},
-      {"name": "Gastroenteritis", "description": "Gastroenteritis is an inflammation of the digestive tract, particularly the stomach, and large and small intestines. Viral and bacterial gastroenteritis are intestinal infections associated with symptoms of diarrhea , abdominal cramps, nausea , and vomiting ."},
-      {"name": "Tuberculosis", "description": "Tuberculosis (TB) is an infectious disease usually caused by Mycobacterium tuberculosis (MTB) bacteria. Tuberculosis generally affects the lungs, but can also affect other parts of the body. Most infections show no symptoms, in which case it is known as latent tuberculosis."}
+      {
+        "name": "Drug Reaction",
+        "description": "An adverse drug reaction (ADR) is an injury caused by taking medication. ADRs may occur following a single dose or prolonged administration of a drug or result from the combination of two or more drugs."
+      },
+      {
+        "name": "Malaria",
+        "description": "An infectious disease caused by protozoan parasites from the Plasmodium family that can be transmitted by the bite of the Anopheles mosquito or by a contaminated needle or transfusion. Falciparum malaria is the most deadly type."
+      },
+      {
+        "name": "Allergy",
+        "description": "An allergy is an immune system response to a foreign substance that's not typically harmful to your body.They can include certain foods, pollen, or pet dander. Your immune system's job is to keep you healthy by fighting harmful pathogens."
+      },
+      {
+        "name": "Hypothyroidism",
+        "description": "Hypothyroidism, also called underactive thyroid or low thyroid, is a disorder of the endocrine system in which the thyroid gland does not produce enough thyroid hormone."
+      },
+      {
+        "name": "Psoriasis",
+        "description": "Psoriasis is a common skin disorder that forms thick, red, bumpy patches covered with silvery scales. They can pop up anywhere, but most appear on the scalp, elbows, knees, and lower back. Psoriasis can't be passed from person to person. It does sometimes happen in members of the same family."
+      },
+      {
+        "name": "GERD",
+        "description": "Gastroesophageal reflux disease, or GERD, is a digestive disorder that affects the lower esophageal sphincter (LES), the ring of muscle between the esophagus and stomach. Many people, including pregnant women, suffer from heartburn or acid indigestion caused by GERD."
+      },
+      {
+        "name": "Chronic cholestasis",
+        "description": "Chronic cholestatic diseases, whether occurring in infancy, childhood or adulthood, are characterized by defective bile acid transport from the liver to the intestine, which is caused by primary damage to the biliary epithelium in most cases"
+      },
+      {
+        "name": "hepatitis A",
+        "description": "Hepatitis A is a highly contagious liver infection caused by the hepatitis A virus. The virus is one of several types of hepatitis viruses that cause inflammation and affect your liver's ability to function."
+      },
+      {
+        "name": "Osteoarthristis",
+        "description": "Osteoarthritis is the most common form of arthritis, affecting millions of people worldwide. It occurs when the protective cartilage that cushions the ends of your bones wears down over time."
+      },
+      {
+        "name": "(vertigo) Paroymsal  Positional Vertigo",
+        "description": "Benign paroxysmal positional vertigo (BPPV) is one of the most common causes of vertigo — the sudden sensation that you're spinning or that the inside of your head is spinning. Benign paroxysmal positional vertigo causes brief episodes of mild to intense dizziness."
+      },
+      {
+        "name": "Hypoglycemia",
+        "description": " Hypoglycemia is a condition in which your blood sugar (glucose) level is lower than normal. Glucose is your body's main energy source. Hypoglycemia is often related to diabetes treatment. But other drugs and a variety of conditions — many rare — can cause low blood sugar in people who don't have diabetes."
+      },
+      {
+        "name": "Acne",
+        "description": "Acne vulgaris is the formation of comedones, papules, pustules, nodules, and/or cysts as a result of obstruction and inflammation of pilosebaceous units (hair follicles and their accompanying sebaceous gland). Acne develops on the face and upper trunk. It most often affects adolescents."
+      },
+      {
+        "name": "Diabetes",
+        "description": "Diabetes is a disease that occurs when your blood glucose, also called blood sugar, is too high. Blood glucose is your main source of energy and comes from the food you eat. Insulin, a hormone made by the pancreas, helps glucose from food get into your cells to be used for energy."
+      },
+      {
+        "name": "Impetigo",
+        "description": "Impetigo (im-puh-TIE-go) is a common and highly contagious skin infection that mainly affects infants and children. Impetigo usually appears as red sores on the face, especially around a child's nose and mouth, and on hands and feet. The sores burst and develop honey-colored crusts."
+      },
+      {
+        "name": "Hypertension",
+        "description": "Hypertension (HTN or HT), also known as high blood pressure (HBP), is a long-term medical condition in which the blood pressure in the arteries is persistently elevated. High blood pressure typically does not cause symptoms."
+      },
+      {
+        "name": "Peptic ulcer diseae",
+        "description": "Peptic ulcer disease (PUD) is a break in the inner lining of the stomach, the first part of the small intestine, or sometimes the lower esophagus. An ulcer in the stomach is called a gastric ulcer, while one in the first part of the intestines is a duodenal ulcer."
+      },
+      {
+        "name": "Dimorphic hemorrhoids(piles)",
+        "description": "Hemorrhoids, also spelled haemorrhoids, are vascular structures in the anal canal. In their ... Other names, Haemorrhoids, piles, hemorrhoidal disease ."
+      },
+      {
+        "name": "Common Cold",
+        "description": "The common cold is a viral infection of your nose and throat (upper respiratory tract). It's usually harmless, although it might not feel that way. Many types of viruses can cause a common cold."
+      },
+      {
+        "name": "Chicken pox",
+        "description": "Chickenpox is a highly contagious disease caused by the varicella-zoster virus (VZV). It can cause an itchy, blister-like rash. The rash first appears on the chest, back, and face, and then spreads over the entire body, causing between 250 and 500 itchy blisters."
+      },
+      {
+        "name": "Cervical spondylosis",
+        "description": "Cervical spondylosis is a general term for age-related wear and tear affecting the spinal disks in your neck. As the disks dehydrate and shrink, signs of osteoarthritis develop, including bony projections along the edges of bones (bone spurs)."
+      },
+      {
+        "name": "Hyperthyroidism",
+        "description": "Hyperthyroidism (overactive thyroid) occurs when your thyroid gland produces too much of the hormone thyroxine. Hyperthyroidism can accelerate your body's metabolism, causing unintentional weight loss and a rapid or irregular heartbeat."
+      },
+      {
+        "name": "Urinary tract infection",
+        "description": "Urinary tract infection: An infection of the kidney, ureter, bladder, or urethra. Abbreviated UTI. Not everyone with a UTI has symptoms, but common symptoms include a frequent urge to urinate and pain or burning when urinating."
+      },
+      {
+        "name": "Varicose veins",
+        "description": "A vein that has enlarged and twisted, often appearing as a bulging, blue blood vessel that is clearly visible through the skin. Varicose veins are most common in older adults, particularly women, and occur especially on the legs."
+      },
+      {
+        "name": "AIDS",
+        "description": "Acquired immunodeficiency syndrome (AIDS) is a chronic, potentially life-threatening condition caused by the human immunodeficiency virus (HIV). By damaging your immune system, HIV interferes with your body's ability to fight infection and disease."
+      },
+      {
+        "name": "Paralysis (brain hemorrhage)",
+        "description": "Intracerebral hemorrhage (ICH) is when blood suddenly bursts into brain tissue, causing damage to your brain. Symptoms usually appear suddenly during ICH. They include headache, weakness, confusion, and paralysis, particularly on one side of your body."
+      },
+      {
+        "name": "Typhoid",
+        "description": "An acute illness characterized by fever caused by infection with the bacterium Salmonella typhi. Typhoid fever has an insidious onset, with fever, headache, constipation, malaise, chills, and muscle pain. Diarrhea is uncommon, and vomiting is not usually severe."
+      },
+      {
+        "name": "Hepatitis B",
+        "description": "Hepatitis B is an infection of your liver. It can cause scarring of the organ, liver failure, and cancer. It can be fatal if it isn't treated. It's spread when people come in contact with the blood, open sores, or body fluids of someone who has the hepatitis B virus."
+      },
+      {
+        "name": "Fungal infection",
+        "description": "In humans, fungal infections occur when an invading fungus takes over an area of the body and is too much for the immune system to handle. Fungi can live in the air, soil, water, and plants. There are also some fungi that live naturally in the human body. Like many microbes, there are helpful fungi and harmful fungi."
+      },
+      {
+        "name": "Hepatitis C",
+        "description": "Inflammation of the liver due to the hepatitis C virus (HCV), which is usually spread via blood transfusion (rare), hemodialysis, and needle sticks. The damage hepatitis C does to the liver can lead to cirrhosis and its complications as well as cancer."
+      },
+      {
+        "name": "Migraine",
+        "description": "A migraine can cause severe throbbing pain or a pulsing sensation, usually on one side of the head. It's often accompanied by nausea, vomiting, and extreme sensitivity to light and sound. Migraine attacks can last for hours to days, and the pain can be so severe that it interferes with your daily activities."
+      },
+      {
+        "name": "Bronchial Asthma",
+        "description": "Bronchial asthma is a medical condition which causes the airway path of the lungs to swell and narrow. Due to this swelling, the air path produces excess mucus making it hard to breathe, which results in coughing, short breath, and wheezing. The disease is chronic and interferes with daily working."
+      },
+      {
+        "name": "Alcoholic hepatitis",
+        "description": "Alcoholic hepatitis is a diseased, inflammatory condition of the liver caused by heavy alcohol consumption over an extended period of time. It's also aggravated by binge drinking and ongoing alcohol use. If you develop this condition, you must stop drinking alcohol"
+      },
+      {
+        "name": "Jaundice",
+        "description": "Yellow staining of the skin and sclerae (the whites of the eyes) by abnormally high blood levels of the bile pigment bilirubin. The yellowing extends to other tissues and body fluids. Jaundice was once called the \"morbus regius\" (the regal disease) in the belief that only the touch of a king could cure it"
+      },
+      {
+        "name": "Hepatitis E",
+        "description": "A rare form of liver inflammation caused by infection with the hepatitis E virus (HEV). It is transmitted via food or drink handled by an infected person or through infected water supplies in areas where fecal matter may get into the water. Hepatitis E does not cause chronic liver disease."
+      },
+      {
+        "name": "Dengue",
+        "description": "an acute infectious disease caused by a flavivirus (species Dengue virus of the genus Flavivirus), transmitted by aedes mosquitoes, and characterized by headache, severe joint pain, and a rash. — called also breakbone fever, dengue fever."
+      },
+      {
+        "name": "Hepatitis D",
+        "description": "Hepatitis D, also known as the hepatitis delta virus, is an infection that causes the liver to become inflamed. This swelling can impair liver function and cause long-term liver problems, including liver scarring and cancer. The condition is caused by the hepatitis D virus (HDV)."
+      },
+      {
+        "name": "Heart attack",
+        "description": "The death of heart muscle due to the loss of blood supply. The loss of blood supply is usually caused by a complete blockage of a coronary artery, one of the arteries that supplies blood to the heart muscle."
+      },
+      {
+        "name": "Pneumonia",
+        "description": "Pneumonia is an infection in one or both lungs. Bacteria, viruses, and fungi cause it. The infection causes inflammation in the air sacs in your lungs, which are called alveoli. The alveoli fill with fluid or pus, making it difficult to breathe."
+      },
+      {
+        "name": "Arthritis",
+        "description": "Arthritis is the swelling and tenderness of one or more of your joints. The main symptoms of arthritis are joint pain and stiffness, which typically worsen with age. The most common types of arthritis are osteoarthritis and rheumatoid arthritis."
+      },
+      {
+        "name": "Gastroenteritis",
+        "description": "Gastroenteritis is an inflammation of the digestive tract, particularly the stomach, and large and small intestines. Viral and bacterial gastroenteritis are intestinal infections associated with symptoms of diarrhea , abdominal cramps, nausea , and vomiting ."
+      },
+      {
+        "name": "Tuberculosis",
+        "description": "Tuberculosis (TB) is an infectious disease usually caused by Mycobacterium tuberculosis (MTB) bacteria. Tuberculosis generally affects the lungs, but can also affect other parts of the body. Most infections show no symptoms, in which case it is known as latent tuberculosis."
+      }
     ]
   },
   "diseases_symptom": {
+    "schema": [
+      {
+        "name": "disease",
+        "type": "text",
+        "primary_key": true
+      },
+      {
+        "name": "symptom",
+        "type": "text",
+        "primary_key": false
+      }
+    ],
     "data": [
-      {"disease": "Fungal infection", "symptom": "dischromic  patches"}, {"disease": "Fungal infection", "symptom": "nodal skin eruptions"}, {"disease": "Fungal infection", "symptom": "skin rash"}, {"disease": "Fungal infection", "symptom": "itching"},
-      {"disease": "Allergy", "symptom": "chills"}, {"disease": "Allergy", "symptom": "watering from eyes"}, {"disease": "Allergy", "symptom": "shivering"}, {"disease": "Allergy", "symptom": "continuous sneezing"},
-      {"disease": "GERD", "symptom": "vomiting"}, {"disease": "GERD", "symptom": "ulcers on tongue"}, {"disease": "GERD", "symptom": "chest pain"}, {"disease": "GERD", "symptom": "stomach pain"}, {"disease": "GERD", "symptom": "cough"}, {"disease": "GERD", "symptom": "acidity"},
-      {"disease": "Chronic cholestasis", "symptom": "loss of appetite"}, {"disease": "Chronic cholestasis", "symptom": "yellowish skin"}, {"disease": "Chronic cholestasis", "symptom": "abdominal pain"}, {"disease": "Chronic cholestasis", "symptom": "vomiting"}, {"disease": "Chronic cholestasis", "symptom": "itching"}, {"disease": "Chronic cholestasis", "symptom": "nausea"}, {"disease": "Chronic cholestasis", "symptom": "yellowing of eyes"},
-      {"disease": "Drug Reaction", "symptom": "burning micturition"}, {"disease": "Drug Reaction", "symptom": "spotting  urination"}, {"disease": "Drug Reaction", "symptom": "itching"}, {"disease": "Drug Reaction", "symptom": "stomach pain"}, {"disease": "Drug Reaction", "symptom": "skin rash"},
-      {"disease": "Peptic ulcer diseae", "symptom": "abdominal pain"}, {"disease": "Peptic ulcer diseae", "symptom": "loss of appetite"}, {"disease": "Peptic ulcer diseae", "symptom": "vomiting"}, {"disease": "Peptic ulcer diseae", "symptom": "indigestion"}, {"disease": "Peptic ulcer diseae", "symptom": "internal itching"}, {"disease": "Peptic ulcer diseae", "symptom": "passage of gases"},
-      {"disease": "AIDS", "symptom": "muscle wasting"}, {"disease": "AIDS", "symptom": "high fever"}, {"disease": "AIDS", "symptom": "extra marital contacts"}, {"disease": "AIDS", "symptom": "patches in throat"},
-      {"disease": "Diabetes ", "symptom": "irregular sugar level"}, {"disease": "Diabetes ", "symptom": "restlessness"}, {"disease": "Diabetes ", "symptom": "lethargy"}, {"disease": "Diabetes ", "symptom": "fatigue"}, {"disease": "Diabetes ", "symptom": "polyuria"}, {"disease": "Diabetes ", "symptom": "weight loss"}, {"disease": "Diabetes ", "symptom": "obesity"}, {"disease": "Diabetes ", "symptom": "increased appetite"}, {"disease": "Diabetes ", "symptom": "blurred and distorted vision"}, {"disease": "Diabetes ", "symptom": "excessive hunger"},
-      {"disease": "Gastroenteritis", "symptom": "dehydration"}, {"disease": "Gastroenteritis", "symptom": "diarrhoea"}, {"disease": "Gastroenteritis", "symptom": "sunken eyes"}, {"disease": "Gastroenteritis", "symptom": "vomiting"},
-      {"disease": "Bronchial Asthma", "symptom": "mucoid sputum"}, {"disease": "Bronchial Asthma", "symptom": "fatigue"}, {"disease": "Bronchial Asthma", "symptom": "cough"}, {"disease": "Bronchial Asthma", "symptom": "high fever"}, {"disease": "Bronchial Asthma", "symptom": "breathlessness"}, {"disease": "Bronchial Asthma", "symptom": "family history"},
-      {"disease": "Hypertension ", "symptom": "dizziness"}, {"disease": "Hypertension ", "symptom": "chest pain"}, {"disease": "Hypertension ", "symptom": "lack of concentration"}, {"disease": "Hypertension ", "symptom": "headache"}, {"disease": "Hypertension ", "symptom": "loss of balance"},
-      {"disease": "Migraine", "symptom": "irritability"}, {"disease": "Migraine", "symptom": "stiff neck"}, {"disease": "Migraine", "symptom": "headache"}, {"disease": "Migraine", "symptom": "visual disturbances"}, {"disease": "Migraine", "symptom": "indigestion"}, {"disease": "Migraine", "symptom": "acidity"}, {"disease": "Migraine", "symptom": "blurred and distorted vision"}, {"disease": "Migraine", "symptom": "excessive hunger"}, {"disease": "Migraine", "symptom": "depression"},
-      {"disease": "Cervical spondylosis", "symptom": "back pain"}, {"disease": "Cervical spondylosis", "symptom": "weakness in limbs"}, {"disease": "Cervical spondylosis", "symptom": "dizziness"}, {"disease": "Cervical spondylosis", "symptom": "loss of balance"}, {"disease": "Cervical spondylosis", "symptom": "neck pain"},
-      {"disease": "Paralysis (brain hemorrhage)", "symptom": "weakness of one body side"}, {"disease": "Paralysis (brain hemorrhage)", "symptom": "altered sensorium"}, {"disease": "Paralysis (brain hemorrhage)", "symptom": "headache"}, {"disease": "Paralysis (brain hemorrhage)", "symptom": "vomiting"},
-      {"disease": "Jaundice", "symptom": "abdominal pain"}, {"disease": "Jaundice", "symptom": "yellowish skin"}, {"disease": "Jaundice", "symptom": "vomiting"}, {"disease": "Jaundice", "symptom": "itching"}, {"disease": "Jaundice", "symptom": "fatigue"}, {"disease": "Jaundice", "symptom": "weight loss"}, {"disease": "Jaundice", "symptom": "high fever"}, {"disease": "Jaundice", "symptom": "dark urine"},
-      {"disease": "Malaria", "symptom": "chills"}, {"disease": "Malaria", "symptom": "muscle pain"}, {"disease": "Malaria", "symptom": "vomiting"}, {"disease": "Malaria", "symptom": "headache"}, {"disease": "Malaria", "symptom": "high fever"}, {"disease": "Malaria", "symptom": "sweating"}, {"disease": "Malaria", "symptom": "nausea"}, {"disease": "Malaria", "symptom": "diarrhoea"},
-      {"disease": "Chicken pox", "symptom": "loss of appetite"}, {"disease": "Chicken pox", "symptom": "red spots over body"}, {"disease": "Chicken pox", "symptom": "swelled lymph nodes"}, {"disease": "Chicken pox", "symptom": "lethargy"}, {"disease": "Chicken pox", "symptom": "itching"}, {"disease": "Chicken pox", "symptom": "fatigue"}, {"disease": "Chicken pox", "symptom": "headache"}, {"disease": "Chicken pox", "symptom": "mild fever"}, {"disease": "Chicken pox", "symptom": "skin rash"}, {"disease": "Chicken pox", "symptom": "high fever"}, {"disease": "Chicken pox", "symptom": "malaise"},
-      {"disease": "Dengue", "symptom": "back pain"}, {"disease": "Dengue", "symptom": "chills"}, {"disease": "Dengue", "symptom": "loss of appetite"}, {"disease": "Dengue", "symptom": "muscle pain"}, {"disease": "Dengue", "symptom": "vomiting"}, {"disease": "Dengue", "symptom": "red spots over body"}, {"disease": "Dengue", "symptom": "pain behind the eyes"}, {"disease": "Dengue", "symptom": "headache"}, {"disease": "Dengue", "symptom": "fatigue"}, {"disease": "Dengue", "symptom": "joint pain"}, {"disease": "Dengue", "symptom": "skin rash"}, {"disease": "Dengue", "symptom": "high fever"}, {"disease": "Dengue", "symptom": "malaise"}, {"disease": "Dengue", "symptom": "nausea"},
-      {"disease": "Typhoid", "symptom": "chills"}, {"disease": "Typhoid", "symptom": "abdominal pain"}, {"disease": "Typhoid", "symptom": "vomiting"}, {"disease": "Typhoid", "symptom": "toxic look (typhos)"}, {"disease": "Typhoid", "symptom": "belly pain"}, {"disease": "Typhoid", "symptom": "headache"}, {"disease": "Typhoid", "symptom": "fatigue"}, {"disease": "Typhoid", "symptom": "constipation"}, {"disease": "Typhoid", "symptom": "high fever"}, {"disease": "Typhoid", "symptom": "nausea"}, {"disease": "Typhoid", "symptom": "diarrhoea"},
-      {"disease": "hepatitis A", "symptom": "loss of appetite"}, {"disease": "hepatitis A", "symptom": "yellowish skin"}, {"disease": "hepatitis A", "symptom": "abdominal pain"}, {"disease": "hepatitis A", "symptom": "muscle pain"}, {"disease": "hepatitis A", "symptom": "vomiting"}, {"disease": "hepatitis A", "symptom": "mild fever"}, {"disease": "hepatitis A", "symptom": "joint pain"}, {"disease": "hepatitis A", "symptom": "nausea"}, {"disease": "hepatitis A", "symptom": "yellowing of eyes"}, {"disease": "hepatitis A", "symptom": "diarrhoea"}, {"disease": "hepatitis A", "symptom": "dark urine"},
-      {"disease": "Hepatitis B", "symptom": "loss of appetite"}, {"disease": "Hepatitis B", "symptom": "yellowish skin"}, {"disease": "Hepatitis B", "symptom": "abdominal pain"}, {"disease": "Hepatitis B", "symptom": "receiving unsterile injections"}, {"disease": "Hepatitis B", "symptom": "yellow urine"}, {"disease": "Hepatitis B", "symptom": "lethargy"}, {"disease": "Hepatitis B", "symptom": "itching"}, {"disease": "Hepatitis B", "symptom": "fatigue"}, {"disease": "Hepatitis B", "symptom": "receiving blood transfusion"}, {"disease": "Hepatitis B", "symptom": "malaise"}, {"disease": "Hepatitis B", "symptom": "yellowing of eyes"}, {"disease": "Hepatitis B", "symptom": "dark urine"},
-      {"disease": "Hepatitis C", "symptom": "loss of appetite"}, {"disease": "Hepatitis C", "symptom": "yellowish skin"}, {"disease": "Hepatitis C", "symptom": "fatigue"}, {"disease": "Hepatitis C", "symptom": "nausea"}, {"disease": "Hepatitis C", "symptom": "yellowing of eyes"}, {"disease": "Hepatitis C", "symptom": "family history"},
-      {"disease": "Hepatitis D", "symptom": "loss of appetite"}, {"disease": "Hepatitis D", "symptom": "yellowish skin"}, {"disease": "Hepatitis D", "symptom": "abdominal pain"}, {"disease": "Hepatitis D", "symptom": "vomiting"}, {"disease": "Hepatitis D", "symptom": "fatigue"}, {"disease": "Hepatitis D", "symptom": "joint pain"}, {"disease": "Hepatitis D", "symptom": "nausea"}, {"disease": "Hepatitis D", "symptom": "yellowing of eyes"}, {"disease": "Hepatitis D", "symptom": "dark urine"},
-      {"disease": "Hepatitis E", "symptom": "loss of appetite"}, {"disease": "Hepatitis E", "symptom": "yellowish skin"}, {"disease": "Hepatitis E", "symptom": "abdominal pain"}, {"disease": "Hepatitis E", "symptom": "acute liver failure"}, {"disease": "Hepatitis E", "symptom": "coma"}, {"disease": "Hepatitis E", "symptom": "vomiting"}, {"disease": "Hepatitis E", "symptom": "fatigue"}, {"disease": "Hepatitis E", "symptom": "joint pain"}, {"disease": "Hepatitis E", "symptom": "stomach bleeding"}, {"disease": "Hepatitis E", "symptom": "high fever"}, {"disease": "Hepatitis E", "symptom": "nausea"}, {"disease": "Hepatitis E", "symptom": "yellowing of eyes"}, {"disease": "Hepatitis E", "symptom": "dark urine"},
-      {"disease": "Alcoholic hepatitis", "symptom": "abdominal pain"}, {"disease": "Alcoholic hepatitis", "symptom": "yellowish skin"}, {"disease": "Alcoholic hepatitis", "symptom": "swelling of stomach"}, {"disease": "Alcoholic hepatitis", "symptom": "vomiting"}, {"disease": "Alcoholic hepatitis", "symptom": "distention of abdomen"}, {"disease": "Alcoholic hepatitis", "symptom": "fluid overload"}, {"disease": "Alcoholic hepatitis", "symptom": "history of alcohol consumption"},
-      {"disease": "Tuberculosis", "symptom": "chills"}, {"disease": "Tuberculosis", "symptom": "loss of appetite"}, {"disease": "Tuberculosis", "symptom": "vomiting"}, {"disease": "Tuberculosis", "symptom": "swelled lymph nodes"}, {"disease": "Tuberculosis", "symptom": "chest pain"}, {"disease": "Tuberculosis", "symptom": "mild fever"}, {"disease": "Tuberculosis", "symptom": "fatigue"}, {"disease": "Tuberculosis", "symptom": "cough"}, {"disease": "Tuberculosis", "symptom": "weight loss"}, {"disease": "Tuberculosis", "symptom": "high fever"}, {"disease": "Tuberculosis", "symptom": "sweating"}, {"disease": "Tuberculosis", "symptom": "malaise"}, {"disease": "Tuberculosis", "symptom": "blood in sputum"}, {"disease": "Tuberculosis", "symptom": "yellowing of eyes"}, {"disease": "Tuberculosis", "symptom": "breathlessness"}, {"disease": "Tuberculosis", "symptom": "phlegm"},
-      {"disease": "Common Cold", "symptom": "sinus pressure"}, {"disease": "Common Cold", "symptom": "chills"}, {"disease": "Common Cold", "symptom": "muscle pain"}, {"disease": "Common Cold", "symptom": "swelled lymph nodes"}, {"disease": "Common Cold", "symptom": "chest pain"}, {"disease": "Common Cold", "symptom": "headache"}, {"disease": "Common Cold", "symptom": "runny nose"}, {"disease": "Common Cold", "symptom": "fatigue"}, {"disease": "Common Cold", "symptom": "loss of smell"}, {"disease": "Common Cold", "symptom": "cough"}, {"disease": "Common Cold", "symptom": "throat irritation"}, {"disease": "Common Cold", "symptom": "redness of eyes"}, {"disease": "Common Cold", "symptom": "high fever"}, {"disease": "Common Cold", "symptom": "malaise"}, {"disease": "Common Cold", "symptom": "congestion"}, {"disease": "Common Cold", "symptom": "phlegm"}, {"disease": "Common Cold", "symptom": "continuous sneezing"},
-      {"disease": "Pneumonia", "symptom": "chills"}, {"disease": "Pneumonia", "symptom": "rusty sputum"}, {"disease": "Pneumonia", "symptom": "chest pain"}, {"disease": "Pneumonia", "symptom": "fatigue"}, {"disease": "Pneumonia", "symptom": "cough"}, {"disease": "Pneumonia", "symptom": "fast heart rate"}, {"disease": "Pneumonia", "symptom": "high fever"}, {"disease": "Pneumonia", "symptom": "sweating"}, {"disease": "Pneumonia", "symptom": "malaise"}, {"disease": "Pneumonia", "symptom": "breathlessness"}, {"disease": "Pneumonia", "symptom": "phlegm"},
-      {"disease": "Dimorphic hemmorhoids (piles)", "symptom": "irritation in anus"}, {"disease": "Dimorphic hemmorhoids(piles)", "symptom": "bloody stool"}, {"disease": "Dimorphic hemmorhoids(piles)", "symptom": "constipation"}, {"disease": "Dimorphic hemmorhoids(piles)", "symptom": "pain in anal region"}, {"disease": "Dimorphic hemmorhoids(piles)", "symptom": "pain during bowel movements"},
-      {"disease": "Heart attack", "symptom": "breathlessness"}, {"disease": "Heart attack", "symptom": "chest pain"}, {"disease": "Heart attack", "symptom": "sweating"}, {"disease": "Heart attack", "symptom": "vomiting"},
-      {"disease": "Varicose veins", "symptom": "bruising"}, {"disease": "Varicose veins", "symptom": "prominent veins on calf"}, {"disease": "Varicose veins", "symptom": "cramps"}, {"disease": "Varicose veins", "symptom": "fatigue"}, {"disease": "Varicose veins", "symptom": "swollen blood vessels"}, {"disease": "Varicose veins", "symptom": "obesity"}, {"disease": "Varicose veins", "symptom": "swollen legs"},
-      {"disease": "Hypothyroidism", "symptom": "weight gain"}, {"disease": "Hypothyroidism", "symptom": "puffy face and eyes"}, {"disease": "Hypothyroidism", "symptom": "mood swings"}, {"disease": "Hypothyroidism", "symptom": "swollen extremeties"}, {"disease": "Hypothyroidism", "symptom": "brittle nails"}, {"disease": "Hypothyroidism", "symptom": "irritability"}, {"disease": "Hypothyroidism", "symptom": "dizziness"}, {"disease": "Hypothyroidism", "symptom": "lethargy"}, {"disease": "Hypothyroidism", "symptom": "abnormal menstruation"}, {"disease": "Hypothyroidism", "symptom": "fatigue"}, {"disease": "Hypothyroidism", "symptom": "enlarged thyroid"}, {"disease": "Hypothyroidism", "symptom": "cold hands and feets"}, {"disease": "Hypothyroidism", "symptom": "depression"},
-      {"disease": "Hyperthyroidism", "symptom": "mood swings"}, {"disease": "Hyperthyroidism", "symptom": "irritability"}, {"disease": "Hyperthyroidism", "symptom": "restlessness"}, {"disease": "Hyperthyroidism", "symptom": "excessive hunger"}, {"disease": "Hyperthyroidism", "symptom": "abnormal menstruation"}, {"disease": "Hyperthyroidism", "symptom": "fatigue"}, {"disease": "Hyperthyroidism", "symptom": "fast heart rate"}, {"disease": "Hyperthyroidism", "symptom": "weight loss"}, {"disease": "Hyperthyroidism", "symptom": "sweating"}, {"disease": "Hyperthyroidism", "symptom": "muscle weakness"}, {"disease": "Hyperthyroidism", "symptom": "diarrhoea"},
-      {"disease": "Hypoglycemia", "symptom": "palpitations"}, {"disease": "Hypoglycemia", "symptom": "vomiting"}, {"disease": "Hypoglycemia", "symptom": "irritability"}, {"disease": "Hypoglycemia", "symptom": "headache"}, {"disease": "Hypoglycemia", "symptom": "fatigue"}, {"disease": "Hypoglycemia", "symptom": "sweating"}, {"disease": "Hypoglycemia", "symptom": "nausea"}, {"disease": "Hypoglycemia", "symptom": "anxiety"}, {"disease": "Hypoglycemia", "symptom": "blurred and distorted vision"}, {"disease": "Hypoglycemia", "symptom": "excessive hunger"}, {"disease": "Hypoglycemia", "symptom": "slurred speech"}, {"disease": "Hypoglycemia", "symptom": "drying and tingling lips"},
-      {"disease": "Osteoarthristis", "symptom": "swelling joints"}, {"disease": "Osteoarthristis", "symptom": "knee pain"}, {"disease": "Osteoarthristis", "symptom": "painful walking"}, {"disease": "Osteoarthristis", "symptom": "joint pain"}, {"disease": "Osteoarthristis", "symptom": "neck pain"}, {"disease": "Osteoarthristis", "symptom": "hip joint pain"},
-      {"disease": "Arthritis", "symptom": "swelling joints"}, {"disease": "Arthritis", "symptom": "stiff neck"}, {"disease": "Arthritis", "symptom": "movement stiffness"}, {"disease": "Arthritis", "symptom": "painful walking"}, {"disease": "Arthritis", "symptom": "muscle weakness"},
-      {"disease": "(vertigo) Paroymsal  Positional Vertigo", "symptom": "vomiting"}, {"disease": "(vertigo) Paroymsal  Positional Vertigo", "symptom": "headache"}, {"disease": "(vertigo) Paroymsal  Positional Vertigo", "symptom": "loss of balance"}, {"disease": "(vertigo) Paroymsal  Positional Vertigo", "symptom": "spinning movements"}, {"disease": "(vertigo) Paroymsal  Positional Vertigo", "symptom": "nausea"}, {"disease": "(vertigo) Paroymsal  Positional Vertigo", "symptom": "unsteadiness"},
-      {"disease": "Acne", "symptom": "scurring"}, {"disease": "Acne", "symptom": "pus filled pimples"}, {"disease": "Acne", "symptom": "skin rash"}, {"disease": "Acne", "symptom": "blackheads"},
-      {"disease": "Urinary tract infection", "symptom": "burning micturition"}, {"disease": "Urinary tract infection", "symptom": "continuous feel of urine"}, {"disease": "Urinary tract infection", "symptom": "bladder discomfort"}, {"disease": "Urinary tract infection", "symptom": "foul smell of urine"},
-      {"disease": "Psoriasis", "symptom": "inflammatory nails"}, {"disease": "Psoriasis", "symptom": "silver like dusting"}, {"disease": "Psoriasis", "symptom": "skin peeling"}, {"disease": "Psoriasis", "symptom": "joint pain"}, {"disease": "Psoriasis", "symptom": "skin rash"}, {"disease": "Psoriasis", "symptom": "small dents in nails"},
-      {"disease": "Impetigo", "symptom": "yellow crust ooze"}, {"disease": "Impetigo", "symptom": "blister"}, {"disease": "Impetigo", "symptom": "red sore around nose"}, {"disease": "Impetigo", "symptom": "skin rash"}, {"disease": "Impetigo", "symptom": "high fever"}
+      {
+        "disease": "Fungal infection",
+        "symptom": "dischromic  patches"
+      },
+      {
+        "disease": "Fungal infection",
+        "symptom": "nodal skin eruptions"
+      },
+      {
+        "disease": "Fungal infection",
+        "symptom": "skin rash"
+      },
+      {
+        "disease": "Fungal infection",
+        "symptom": "itching"
+      },
+      {
+        "disease": "Allergy",
+        "symptom": "chills"
+      },
+      {
+        "disease": "Allergy",
+        "symptom": "watering from eyes"
+      },
+      {
+        "disease": "Allergy",
+        "symptom": "shivering"
+      },
+      {
+        "disease": "Allergy",
+        "symptom": "continuous sneezing"
+      },
+      {
+        "disease": "GERD",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "GERD",
+        "symptom": "ulcers on tongue"
+      },
+      {
+        "disease": "GERD",
+        "symptom": "chest pain"
+      },
+      {
+        "disease": "GERD",
+        "symptom": "stomach pain"
+      },
+      {
+        "disease": "GERD",
+        "symptom": "cough"
+      },
+      {
+        "disease": "GERD",
+        "symptom": "acidity"
+      },
+      {
+        "disease": "Chronic cholestasis",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Chronic cholestasis",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "Chronic cholestasis",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Chronic cholestasis",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Chronic cholestasis",
+        "symptom": "itching"
+      },
+      {
+        "disease": "Chronic cholestasis",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Chronic cholestasis",
+        "symptom": "yellowing of eyes"
+      },
+      {
+        "disease": "Drug Reaction",
+        "symptom": "burning micturition"
+      },
+      {
+        "disease": "Drug Reaction",
+        "symptom": "spotting  urination"
+      },
+      {
+        "disease": "Drug Reaction",
+        "symptom": "itching"
+      },
+      {
+        "disease": "Drug Reaction",
+        "symptom": "stomach pain"
+      },
+      {
+        "disease": "Drug Reaction",
+        "symptom": "skin rash"
+      },
+      {
+        "disease": "Peptic ulcer diseae",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Peptic ulcer diseae",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Peptic ulcer diseae",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Peptic ulcer diseae",
+        "symptom": "indigestion"
+      },
+      {
+        "disease": "Peptic ulcer diseae",
+        "symptom": "internal itching"
+      },
+      {
+        "disease": "Peptic ulcer diseae",
+        "symptom": "passage of gases"
+      },
+      {
+        "disease": "AIDS",
+        "symptom": "muscle wasting"
+      },
+      {
+        "disease": "AIDS",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "AIDS",
+        "symptom": "extra marital contacts"
+      },
+      {
+        "disease": "AIDS",
+        "symptom": "patches in throat"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "irregular sugar level"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "restlessness"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "lethargy"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "polyuria"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "weight loss"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "obesity"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "increased appetite"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "blurred and distorted vision"
+      },
+      {
+        "disease": "Diabetes ",
+        "symptom": "excessive hunger"
+      },
+      {
+        "disease": "Gastroenteritis",
+        "symptom": "dehydration"
+      },
+      {
+        "disease": "Gastroenteritis",
+        "symptom": "diarrhoea"
+      },
+      {
+        "disease": "Gastroenteritis",
+        "symptom": "sunken eyes"
+      },
+      {
+        "disease": "Gastroenteritis",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Bronchial Asthma",
+        "symptom": "mucoid sputum"
+      },
+      {
+        "disease": "Bronchial Asthma",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Bronchial Asthma",
+        "symptom": "cough"
+      },
+      {
+        "disease": "Bronchial Asthma",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Bronchial Asthma",
+        "symptom": "breathlessness"
+      },
+      {
+        "disease": "Bronchial Asthma",
+        "symptom": "family history"
+      },
+      {
+        "disease": "Hypertension ",
+        "symptom": "dizziness"
+      },
+      {
+        "disease": "Hypertension ",
+        "symptom": "chest pain"
+      },
+      {
+        "disease": "Hypertension ",
+        "symptom": "lack of concentration"
+      },
+      {
+        "disease": "Hypertension ",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Hypertension ",
+        "symptom": "loss of balance"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "irritability"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "stiff neck"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "visual disturbances"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "indigestion"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "acidity"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "blurred and distorted vision"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "excessive hunger"
+      },
+      {
+        "disease": "Migraine",
+        "symptom": "depression"
+      },
+      {
+        "disease": "Cervical spondylosis",
+        "symptom": "back pain"
+      },
+      {
+        "disease": "Cervical spondylosis",
+        "symptom": "weakness in limbs"
+      },
+      {
+        "disease": "Cervical spondylosis",
+        "symptom": "dizziness"
+      },
+      {
+        "disease": "Cervical spondylosis",
+        "symptom": "loss of balance"
+      },
+      {
+        "disease": "Cervical spondylosis",
+        "symptom": "neck pain"
+      },
+      {
+        "disease": "Paralysis (brain hemorrhage)",
+        "symptom": "weakness of one body side"
+      },
+      {
+        "disease": "Paralysis (brain hemorrhage)",
+        "symptom": "altered sensorium"
+      },
+      {
+        "disease": "Paralysis (brain hemorrhage)",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Paralysis (brain hemorrhage)",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "itching"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "weight loss"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Jaundice",
+        "symptom": "dark urine"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "chills"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "muscle pain"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "sweating"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Malaria",
+        "symptom": "diarrhoea"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "red spots over body"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "swelled lymph nodes"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "lethargy"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "itching"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "mild fever"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "skin rash"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Chicken pox",
+        "symptom": "malaise"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "back pain"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "chills"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "muscle pain"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "red spots over body"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "pain behind the eyes"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "joint pain"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "skin rash"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "malaise"
+      },
+      {
+        "disease": "Dengue",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "chills"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "toxic look (typhos)"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "belly pain"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "constipation"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Typhoid",
+        "symptom": "diarrhoea"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "muscle pain"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "mild fever"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "joint pain"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "yellowing of eyes"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "diarrhoea"
+      },
+      {
+        "disease": "hepatitis A",
+        "symptom": "dark urine"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "receiving unsterile injections"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "yellow urine"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "lethargy"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "itching"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "receiving blood transfusion"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "malaise"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "yellowing of eyes"
+      },
+      {
+        "disease": "Hepatitis B",
+        "symptom": "dark urine"
+      },
+      {
+        "disease": "Hepatitis C",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Hepatitis C",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "Hepatitis C",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Hepatitis C",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Hepatitis C",
+        "symptom": "yellowing of eyes"
+      },
+      {
+        "disease": "Hepatitis C",
+        "symptom": "family history"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "joint pain"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "yellowing of eyes"
+      },
+      {
+        "disease": "Hepatitis D",
+        "symptom": "dark urine"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "acute liver failure"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "coma"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "joint pain"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "stomach bleeding"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "yellowing of eyes"
+      },
+      {
+        "disease": "Hepatitis E",
+        "symptom": "dark urine"
+      },
+      {
+        "disease": "Alcoholic hepatitis",
+        "symptom": "abdominal pain"
+      },
+      {
+        "disease": "Alcoholic hepatitis",
+        "symptom": "yellowish skin"
+      },
+      {
+        "disease": "Alcoholic hepatitis",
+        "symptom": "swelling of stomach"
+      },
+      {
+        "disease": "Alcoholic hepatitis",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Alcoholic hepatitis",
+        "symptom": "distention of abdomen"
+      },
+      {
+        "disease": "Alcoholic hepatitis",
+        "symptom": "fluid overload"
+      },
+      {
+        "disease": "Alcoholic hepatitis",
+        "symptom": "history of alcohol consumption"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "chills"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "loss of appetite"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "swelled lymph nodes"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "chest pain"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "mild fever"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "cough"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "weight loss"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "sweating"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "malaise"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "blood in sputum"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "yellowing of eyes"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "breathlessness"
+      },
+      {
+        "disease": "Tuberculosis",
+        "symptom": "phlegm"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "sinus pressure"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "chills"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "muscle pain"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "swelled lymph nodes"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "chest pain"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "runny nose"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "loss of smell"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "cough"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "throat irritation"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "redness of eyes"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "malaise"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "congestion"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "phlegm"
+      },
+      {
+        "disease": "Common Cold",
+        "symptom": "continuous sneezing"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "chills"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "rusty sputum"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "chest pain"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "cough"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "fast heart rate"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "high fever"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "sweating"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "malaise"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "breathlessness"
+      },
+      {
+        "disease": "Pneumonia",
+        "symptom": "phlegm"
+      },
+      {
+        "disease": "Dimorphic hemmorhoids (piles)",
+        "symptom": "irritation in anus"
+      },
+      {
+        "disease": "Dimorphic hemmorhoids(piles)",
+        "symptom": "bloody stool"
+      },
+      {
+        "disease": "Dimorphic hemmorhoids(piles)",
+        "symptom": "constipation"
+      },
+      {
+        "disease": "Dimorphic hemmorhoids(piles)",
+        "symptom": "pain in anal region"
+      },
+      {
+        "disease": "Dimorphic hemmorhoids(piles)",
+        "symptom": "pain during bowel movements"
+      },
+      {
+        "disease": "Heart attack",
+        "symptom": "breathlessness"
+      },
+      {
+        "disease": "Heart attack",
+        "symptom": "chest pain"
+      },
+      {
+        "disease": "Heart attack",
+        "symptom": "sweating"
+      },
+      {
+        "disease": "Heart attack",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Varicose veins",
+        "symptom": "bruising"
+      },
+      {
+        "disease": "Varicose veins",
+        "symptom": "prominent veins on calf"
+      },
+      {
+        "disease": "Varicose veins",
+        "symptom": "cramps"
+      },
+      {
+        "disease": "Varicose veins",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Varicose veins",
+        "symptom": "swollen blood vessels"
+      },
+      {
+        "disease": "Varicose veins",
+        "symptom": "obesity"
+      },
+      {
+        "disease": "Varicose veins",
+        "symptom": "swollen legs"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "weight gain"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "puffy face and eyes"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "mood swings"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "swollen extremeties"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "brittle nails"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "irritability"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "dizziness"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "lethargy"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "abnormal menstruation"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "enlarged thyroid"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "cold hands and feets"
+      },
+      {
+        "disease": "Hypothyroidism",
+        "symptom": "depression"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "mood swings"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "irritability"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "restlessness"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "excessive hunger"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "abnormal menstruation"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "fast heart rate"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "weight loss"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "sweating"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "muscle weakness"
+      },
+      {
+        "disease": "Hyperthyroidism",
+        "symptom": "diarrhoea"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "palpitations"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "irritability"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "headache"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "fatigue"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "sweating"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "anxiety"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "blurred and distorted vision"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "excessive hunger"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "slurred speech"
+      },
+      {
+        "disease": "Hypoglycemia",
+        "symptom": "drying and tingling lips"
+      },
+      {
+        "disease": "Osteoarthristis",
+        "symptom": "swelling joints"
+      },
+      {
+        "disease": "Osteoarthristis",
+        "symptom": "knee pain"
+      },
+      {
+        "disease": "Osteoarthristis",
+        "symptom": "painful walking"
+      },
+      {
+        "disease": "Osteoarthristis",
+        "symptom": "joint pain"
+      },
+      {
+        "disease": "Osteoarthristis",
+        "symptom": "neck pain"
+      },
+      {
+        "disease": "Osteoarthristis",
+        "symptom": "hip joint pain"
+      },
+      {
+        "disease": "Arthritis",
+        "symptom": "swelling joints"
+      },
+      {
+        "disease": "Arthritis",
+        "symptom": "stiff neck"
+      },
+      {
+        "disease": "Arthritis",
+        "symptom": "movement stiffness"
+      },
+      {
+        "disease": "Arthritis",
+        "symptom": "painful walking"
+      },
+      {
+        "disease": "Arthritis",
+        "symptom": "muscle weakness"
+      },
+      {
+        "disease": "(vertigo) Paroymsal  Positional Vertigo",
+        "symptom": "vomiting"
+      },
+      {
+        "disease": "(vertigo) Paroymsal  Positional Vertigo",
+        "symptom": "headache"
+      },
+      {
+        "disease": "(vertigo) Paroymsal  Positional Vertigo",
+        "symptom": "loss of balance"
+      },
+      {
+        "disease": "(vertigo) Paroymsal  Positional Vertigo",
+        "symptom": "spinning movements"
+      },
+      {
+        "disease": "(vertigo) Paroymsal  Positional Vertigo",
+        "symptom": "nausea"
+      },
+      {
+        "disease": "(vertigo) Paroymsal  Positional Vertigo",
+        "symptom": "unsteadiness"
+      },
+      {
+        "disease": "Acne",
+        "symptom": "scurring"
+      },
+      {
+        "disease": "Acne",
+        "symptom": "pus filled pimples"
+      },
+      {
+        "disease": "Acne",
+        "symptom": "skin rash"
+      },
+      {
+        "disease": "Acne",
+        "symptom": "blackheads"
+      },
+      {
+        "disease": "Urinary tract infection",
+        "symptom": "burning micturition"
+      },
+      {
+        "disease": "Urinary tract infection",
+        "symptom": "continuous feel of urine"
+      },
+      {
+        "disease": "Urinary tract infection",
+        "symptom": "bladder discomfort"
+      },
+      {
+        "disease": "Urinary tract infection",
+        "symptom": "foul smell of urine"
+      },
+      {
+        "disease": "Psoriasis",
+        "symptom": "inflammatory nails"
+      },
+      {
+        "disease": "Psoriasis",
+        "symptom": "silver like dusting"
+      },
+      {
+        "disease": "Psoriasis",
+        "symptom": "skin peeling"
+      },
+      {
+        "disease": "Psoriasis",
+        "symptom": "joint pain"
+      },
+      {
+        "disease": "Psoriasis",
+        "symptom": "skin rash"
+      },
+      {
+        "disease": "Psoriasis",
+        "symptom": "small dents in nails"
+      },
+      {
+        "disease": "Impetigo",
+        "symptom": "yellow crust ooze"
+      },
+      {
+        "disease": "Impetigo",
+        "symptom": "blister"
+      },
+      {
+        "disease": "Impetigo",
+        "symptom": "red sore around nose"
+      },
+      {
+        "disease": "Impetigo",
+        "symptom": "skin rash"
+      },
+      {
+        "disease": "Impetigo",
+        "symptom": "high fever"
+      }
+    ]
+  },
+  "human_vital_sign": {
+    "citation": "https://www.kaggle.com/datasets/nasirayub2/human-vital-sign-dataset",
+    "schema": [
+      {
+        "name": "Patient ID",
+        "type": "integer"
+      },
+      {
+        "name": "Heart Rate",
+        "type": "integer"
+      },
+      {
+        "name": "Respiratory Rate",
+        "type": "integer"
+      },
+      {
+        "name": "Timestamp",
+        "type": "string"
+      },
+      {
+        "name": "Body Temperature",
+        "type": "number"
+      },
+      {
+        "name": "Oxygen Saturation",
+        "type": "number"
+      },
+      {
+        "name": "Systolic Blood Pressure",
+        "type": "integer"
+      },
+      {
+        "name": "Diastolic Blood Pressure",
+        "type": "integer"
+      },
+      {
+        "name": "Age",
+        "type": "integer"
+      },
+      {
+        "name": "Gender",
+        "type": "string"
+      },
+      {
+        "name": "Weight (kg)",
+        "type": "number"
+      },
+      {
+        "name": "Height (m)",
+        "type": "number"
+      },
+      {
+        "name": "Derived_HRV",
+        "type": "number"
+      },
+      {
+        "name": "Derived_Pulse_Pressure",
+        "type": "integer"
+      },
+      {
+        "name": "Derived_BMI",
+        "type": "number"
+      },
+      {
+        "name": "Derived_MAP",
+        "type": "number"
+      },
+      {
+        "name": "Risk Category",
+        "type": "string"
+      }
+    ],
+    "data": [
+      {
+        "Patient ID": 151348,
+        "Heart Rate": 94,
+        "Respiratory Rate": 13,
+        "Timestamp": "2024-04-05 19:26:46.116925",
+        "Body Temperature": 37.3236304575,
+        "Oxygen Saturation": 98.4323395933,
+        "Systolic Blood Pressure": 113,
+        "Diastolic Blood Pressure": 85,
+        "Age": 49,
+        "Gender": "Female",
+        "Weight (kg)": 86.7730914172,
+        "Height (m)": 1.814264328,
+        "Derived_HRV": 0.0580757662,
+        "Derived_Pulse_Pressure": 28,
+        "Derived_BMI": 26.3623393951,
+        "Derived_MAP": 94.3333333333,
+        "Risk Category": "High Risk"
+      },
+      {
+        "Patient ID": 96291,
+        "Heart Rate": 93,
+        "Respiratory Rate": 18,
+        "Timestamp": "2024-05-14 01:03:45.978893",
+        "Body Temperature": 36.1354797813,
+        "Oxygen Saturation": 99.0516784501,
+        "Systolic Blood Pressure": 118,
+        "Diastolic Blood Pressure": 87,
+        "Age": 23,
+        "Gender": "Male",
+        "Weight (kg)": 88.4064333622,
+        "Height (m)": 1.7625153733,
+        "Derived_HRV": 0.0533629908,
+        "Derived_Pulse_Pressure": 31,
+        "Derived_BMI": 28.4588955935,
+        "Derived_MAP": 97.3333333333,
+        "Risk Category": "High Risk"
+      },
+      {
+        "Patient ID": 29566,
+        "Heart Rate": 72,
+        "Respiratory Rate": 19,
+        "Timestamp": "2024-06-29 09:08:45.804997",
+        "Body Temperature": 36.9999576031,
+        "Oxygen Saturation": 99.7783960083,
+        "Systolic Blood Pressure": 127,
+        "Diastolic Blood Pressure": 76,
+        "Age": 20,
+        "Gender": "Male",
+        "Weight (kg)": 50.8370866141,
+        "Height (m)": 1.9859567776,
+        "Derived_HRV": 0.0671909887,
+        "Derived_Pulse_Pressure": 51,
+        "Derived_BMI": 12.8896483535,
+        "Derived_MAP": 93.0,
+        "Risk Category": "High Risk"
+      },
+      {
+        "Patient ID": 67833,
+        "Heart Rate": 61,
+        "Respiratory Rate": 14,
+        "Timestamp": "2024-06-02 19:21:45.901876",
+        "Body Temperature": 36.8446167312,
+        "Oxygen Saturation": 99.2750161323,
+        "Systolic Blood Pressure": 129,
+        "Diastolic Blood Pressure": 82,
+        "Age": 37,
+        "Gender": "Male",
+        "Weight (kg)": 70.8862938528,
+        "Height (m)": 1.6122037043,
+        "Derived_HRV": 0.0851977151,
+        "Derived_Pulse_Pressure": 47,
+        "Derived_BMI": 27.2723424392,
+        "Derived_MAP": 97.6666666667,
+        "Risk Category": "Low Risk"
+      },
+      {
+        "Patient ID": 192523,
+        "Heart Rate": 94,
+        "Respiratory Rate": 16,
+        "Timestamp": "2024-03-08 05:11:46.227948",
+        "Body Temperature": 36.0376223976,
+        "Oxygen Saturation": 97.0755116774,
+        "Systolic Blood Pressure": 119,
+        "Diastolic Blood Pressure": 86,
+        "Age": 58,
+        "Gender": "Female",
+        "Weight (kg)": 72.3512944679,
+        "Height (m)": 1.8231590897,
+        "Derived_HRV": 0.0552301957,
+        "Derived_Pulse_Pressure": 33,
+        "Derived_BMI": 21.7669295468,
+        "Derived_MAP": 97.0,
+        "Risk Category": "High Risk"
+      },
+      {
+        "Patient ID": 194910,
+        "Heart Rate": 69,
+        "Respiratory Rate": 13,
+        "Timestamp": "2024-03-06 13:24:46.235947",
+        "Body Temperature": 36.3981624684,
+        "Oxygen Saturation": 99.0726832695,
+        "Systolic Blood Pressure": 137,
+        "Diastolic Blood Pressure": 72,
+        "Age": 44,
+        "Gender": "Female",
+        "Weight (kg)": 60.3152113683,
+        "Height (m)": 1.7781439151,
+        "Derived_HRV": 0.0802900024,
+        "Derived_Pulse_Pressure": 65,
+        "Derived_BMI": 19.0762514447,
+        "Derived_MAP": 93.6666666667,
+        "Risk Category": "Low Risk"
+      },
+      {
+        "Patient ID": 14050,
+        "Heart Rate": 99,
+        "Respiratory Rate": 13,
+        "Timestamp": "2024-07-10 03:44:45.766855",
+        "Body Temperature": 36.3329193033,
+        "Oxygen Saturation": 97.1098613719,
+        "Systolic Blood Pressure": 131,
+        "Diastolic Blood Pressure": 76,
+        "Age": 40,
+        "Gender": "Female",
+        "Weight (kg)": 83.5326146736,
+        "Height (m)": 1.7776766746,
+        "Derived_HRV": 0.1491906792,
+        "Derived_Pulse_Pressure": 55,
+        "Derived_BMI": 26.4332478225,
+        "Derived_MAP": 94.3333333333,
+        "Risk Category": "High Risk"
+      },
+      {
+        "Patient ID": 96997,
+        "Heart Rate": 70,
+        "Respiratory Rate": 13,
+        "Timestamp": "2024-05-13 13:17:45.980893",
+        "Body Temperature": 36.3406778094,
+        "Oxygen Saturation": 99.2396472125,
+        "Systolic Blood Pressure": 133,
+        "Diastolic Blood Pressure": 81,
+        "Age": 72,
+        "Gender": "Female",
+        "Weight (kg)": 90.7235176095,
+        "Height (m)": 1.5314758373,
+        "Derived_HRV": 0.0603257253,
+        "Derived_Pulse_Pressure": 52,
+        "Derived_BMI": 38.6811682694,
+        "Derived_MAP": 98.3333333333,
+        "Risk Category": "High Risk"
+      },
+      {
+        "Patient ID": 39558,
+        "Heart Rate": 62,
+        "Respiratory Rate": 12,
+        "Timestamp": "2024-06-22 10:36:45.828863",
+        "Body Temperature": 36.3892676184,
+        "Oxygen Saturation": 97.1917688905,
+        "Systolic Blood Pressure": 139,
+        "Diastolic Blood Pressure": 74,
+        "Age": 65,
+        "Gender": "Male",
+        "Weight (kg)": 63.7079497573,
+        "Height (m)": 1.7403325235,
+        "Derived_HRV": 0.1258442362,
+        "Derived_Pulse_Pressure": 65,
+        "Derived_BMI": 21.0343529083,
+        "Derived_MAP": 95.6666666667,
+        "Risk Category": "Low Risk"
+      },
+      {
+        "Patient ID": 20800,
+        "Heart Rate": 63,
+        "Respiratory Rate": 19,
+        "Timestamp": "2024-07-05 11:14:45.780851",
+        "Body Temperature": 36.6192411587,
+        "Oxygen Saturation": 98.7670927759,
+        "Systolic Blood Pressure": 136,
+        "Diastolic Blood Pressure": 78,
+        "Age": 87,
+        "Gender": "Female",
+        "Weight (kg)": 89.3379369653,
+        "Height (m)": 1.6678061355,
+        "Derived_HRV": 0.0547628799,
+        "Derived_Pulse_Pressure": 58,
+        "Derived_BMI": 32.1177257187,
+        "Derived_MAP": 97.3333333333,
+        "Risk Category": "High Risk"
+      }
     ]
   }
 }

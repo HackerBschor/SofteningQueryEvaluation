@@ -139,12 +139,12 @@ class InnerHashJoin(Join):
 
 class InnerTFIDFJoin(Join):
     # TODO: Implement for comparison (from sklearn.feature_extraction.text import TfidfVectorizer)
-    raise NotImplementedError
+    pass
 
 
 class InnerFuzzyJoin(Join):
     # Fuzzy string matching (Levenshtein, Jaccard, Jaro-Winkler)
-    raise NotImplementedError
+    pass
 
 
 class InnerSoftJoin(Join):

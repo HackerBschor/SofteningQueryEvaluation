@@ -154,7 +154,6 @@ class Aggregate(Operator):
 
 class HashAggregate(Aggregate):
     def __init__(self, child_operator: Operator, columns: list[str], aggregation: list[AggregationFunction]):
-
         self.map = {}
         self.iter = None
 
@@ -167,6 +166,9 @@ class HashAggregate(Aggregate):
 
 
     def open(self) -> None:
+        self.map = {}
+        self.iter = None
+
         self.child_operator.open()
         for row in self.child_operator:
             key = frozenset({k: v for k,v in row.items() if k in self.group_by_columns_names}.items())
@@ -182,7 +184,9 @@ class HashAggregate(Aggregate):
         raise NotImplementedError()
 
     def close(self) -> None:
-        self.iter.close()
+        self.map = {}
+        self.iter = None
+        self.child_operator.close()
 
 
 class SoftAggregate(Aggregate):

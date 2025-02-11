@@ -59,7 +59,7 @@ class HardEqual(Criteria):
 
 class FuzzyEqual:
     # TODO: Implement for comparison
-    raise NotImplementedError
+    pass
 
 
 class SoftEqual(Criteria):
@@ -76,7 +76,7 @@ class SoftEqual(Criteria):
         emb_str_left = self._get_embedding_string(t, self.crit[0])
         emb_str_right = self._get_embedding_string(t, self.crit[1])
 
-        embeddings = self.em([emb_str_left, emb_str_right])
+        embeddings = self.em([str(emb_str_left), str(emb_str_right)])
         result = self.distance(embeddings[0], embeddings[1], self.threshold)
         logging.debug(f"{emb_str_left} ≈ {emb_str_right}: {result}")
         return result
