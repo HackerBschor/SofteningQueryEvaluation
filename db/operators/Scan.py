@@ -13,9 +13,6 @@ from models.embedding.Model import EmbeddingModel
 from models.semantic_validation.Model import SemanticValidationModel
 
 
-# TODO: Increase Performance using Lookup Tables
-## When selecting on a categorical field and |categories| << n -> build Lookup Table {Category -> bool}
-
 class Scan(Operator):
     TABLE_SCHEMA_PATTERN = r'\b([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*)\b'
 
@@ -54,7 +51,6 @@ class Scan(Operator):
 
         super().__init__(table, num_tuples)
 
-
     def __str__(self) -> str:
         return f'"{self.name}"≈>"{self.table.table_schema}.{self.table.table_name}"'
 
@@ -65,14 +61,12 @@ class Scan(Operator):
         self.cursor = self.db.get_cursor()
         self.cursor.execute(self.query)
 
-
     def __next__(self) -> dict:
         try:
             return next(self.cursor)
         except StopIteration:
             self.close()
             raise StopIteration
-
 
     def next_vectorized(self) -> list[dict]:
         idx: int = 0
@@ -102,7 +96,9 @@ class Scan(Operator):
             table_schema, table_name = result.group(1), result.group(2)
             return self.db.tables[f"{table_schema}.{table_name}"], 1.0
 
-        name_input = f"SQL Table for '{self.name}' (structure: <schame>.<name>: [<column>(<type>[, PRIMARY_KEY, VALUE_SAMPLES(<values>)])])"
+        name_input = f"SQL Table for '{self.name}' "
+        name_input += "(structure: <schame>.<name>: [<column>(<type>[, PRIMARY_KEY, VALUE_SAMPLES(<values>)])])"
+
         table_names = [str(table) for table in self.db.tables]
         embeddings = self.em([name_input] + table_names)
 

@@ -7,13 +7,12 @@ from db.operators.Operator import Operator
 
 
 class Dummy(Operator):
-    def __init__(self, name: str, columns: list[str], data: list[dict | tuple], num_tuples = 10):
-        convert_function = lambda r: r if isinstance(r, dict) else {columns[i]: value for i, value in enumerate(r)}
-        self.data: list[dict] = list(map(convert_function, copy.deepcopy(data)))
+    def __init__(self, name: str, columns: list[str], data: list[dict | tuple], num_tuples=10):
+        self.data: list[dict] = list(map(lambda r: self._convert_function(r, columns), copy.deepcopy(data)))
 
         self.idx: int | None = None
         self.iter: Iterator[dict] | None = None
-        table = SQLTable(None, name, [SQLColumn(col, type(self.data[0][col])) for col in columns])
+        table = SQLTable(None, name, [SQLColumn(col, str(type(self.data[0][col]))) for col in columns])
         super().__init__(table, num_tuples)
 
     def __str__(self) -> str:
@@ -27,7 +26,8 @@ class Dummy(Operator):
             raise StopIteration
 
     def open(self) -> None:
-        self.iter: Iterator[dict] | None = iter(self.data) # Reset Iterator
+        # Reset Iterator
+        self.iter: Iterator[dict] | None = iter(self.data)
         self.idx: int | None = 0
 
     def next_vectorized(self) -> list[dict]:
@@ -38,9 +38,12 @@ class Dummy(Operator):
         self.idx += 1
 
         # Return next "slice"
-        return self.data[idx * self.num_tuples : min((idx + 1) * self.num_tuples, len(self.data))]
-
+        return self.data[idx * self.num_tuples: min((idx + 1) * self.num_tuples, len(self.data))]
 
     def close(self) -> None:
         self.iter: Iterator[dict] | None = None
         self.idx: int | None = None
+
+    @staticmethod
+    def _convert_function(r, columns):
+        return r if isinstance(r, dict) else {columns[i]: value for i, value in enumerate(r)}

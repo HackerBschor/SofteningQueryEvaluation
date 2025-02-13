@@ -3,6 +3,10 @@ from typing import List
 from .Operator import Operator
 from ..criteria import Criteria
 
+# TODO: Increase Performance using Lookup Tables
+# # When selecting on a categorical field and |categories| << n -> build Lookup Table {Category -> bool}
+
+
 class Select(Operator):
     """
     Filters tuples according to a provided criteria
@@ -28,7 +32,7 @@ class Select(Operator):
 
     def next_vectorized(self) -> List[dict]:
         data = self.child_operator.next_vectorized()
-        return None if data is None else [t for t in data if self.criteria.eval(t)] # TODO: Batch Processing
+        return None if data is None else [t for t in data if self.criteria.eval(t)]  # TODO: Batch Processing
 
     def close(self) -> None:
         self.child_operator.close()
