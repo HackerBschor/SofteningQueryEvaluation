@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report
 from models import ModelMgr
 from db.structure import Column, Constant
 from db.criteria import Negation, HardEqual, SoftEqual
-from db.operators import Dummy, Scan, Transform, Select, Project, Join, InnerHashJoin, InnerSoftJoin
+from db.operators import Dummy, Scan, Select, Project, Join, InnerHashJoin, InnerSoftJoin
 from db.operators.Aggregate import HashAggregate, SumAggregation
 from models.text_generation.LLaMA import LLaMATextGenerationModel
 
@@ -180,24 +180,6 @@ def test_scan(db_connector, embedding_model, semantiv_validation):
     assert set_compare(test_data, build_vectorized_result(scan3))
     print("Done")
 
-def test_transform():
-    print("Test Transform...", end=" ")
-    def dummy_function(row):
-        row['c'] = row['a'] + row['b']
-        return row
-
-    mapped_test_data = copy.deepcopy(test_data)
-    mapped_test_data = list(map(dummy_function, mapped_test_data))
-
-    dummy = Transform(Dummy("test", ["a", "b", "c"], test_data), dummy_function)
-
-    compare_data = [row for row in dummy]
-    assert compare_data == mapped_test_data
-
-    dummy.open()
-    assert compare_data == build_vectorized_result(dummy)
-    print("Done")
-
 def test_select(embedding_model):
     print("Test Select...", end=" ")
     dummy = Dummy("test", ["a", "b", "c"], test_data)
@@ -356,7 +338,6 @@ if __name__ == '__main__':
     test_dummy()
     test_scan(db, em, sv)
     test_projection(em)
-    test_transform()
     test_select(em)
     test_join(em)
 

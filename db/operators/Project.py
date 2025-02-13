@@ -67,7 +67,7 @@ class MathOperation(MappingFunction):
     def div(x, y):
         return x / y
 
-    def __init__(self, left: Column | Constant, right: Column | Constant, operation: Operations,
+    def __init__(self, left: Column | Constant, operation: Operations, right: Column | Constant,
                  output_name: str = None):
         self.operation = operation
         self.left = left
@@ -131,11 +131,15 @@ class TextGeneration(MappingFunction):
         self.max_new_tokens: int = max_new_tokens
         self.temperature: float = temperature
 
-        super().__init__("𝒯", input_cols, output_col, "String", self.generate_text)
+        super().__init__(None, input_cols, output_col, "String", self.generate_text)
 
     def generate_text(self, *args):
         prompt = self.prompt_template.format(*args)
         return self.tgm(prompt, self.system_prompt, self.max_new_tokens, self.temperature)
+
+    def __str__(self) -> str:
+        cols = [f"<{x}>" for x in self.input_cols]
+        return f'𝒯("{self.prompt_template.format(*cols)}")→{self.output_col}'
 
 
 class Project(Operator):
