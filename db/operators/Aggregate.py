@@ -109,6 +109,14 @@ class DistinctAggregation(AggregationFunction):
         return f"DISTINCT({self.aggregation_column})"
 
 
+class SetAggregation(AggregationFunction):
+    def __init__(self, aggregation_column: str, new_column_name: str):
+        super().__init__(aggregation_column, new_column_name, "set", function=lambda rows: set(rows))
+
+    def __str__(self):
+        return f"LIST({self.aggregation_column})"
+
+
 class Aggregate(Operator):
     def __init__(self, child_operator: Operator, columns: list[str], aggregation: list[AggregationFunction]):
         self.child_operator: Operator = child_operator
@@ -258,7 +266,9 @@ class SoftAggregate(Aggregate):
             logging.debug(prompt)
             key = {"key": self.tgm(prompt, self.key_summary_sp)}
         else:
-            key = self.keys[cluster[0]]
+            key = {}
+            for name in self.group_by_columns_names:
+                key[name] = {self.keys[idx][name] for idx in cluster}
 
         rows = [self.rows[idx] for idx in cluster]
         return self._crate_record(key, rows)

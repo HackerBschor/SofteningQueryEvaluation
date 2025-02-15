@@ -142,6 +142,15 @@ class TextGeneration(MappingFunction):
         return f'𝒯("{self.prompt_template.format(*cols)}")→{self.output_col}'
 
 
+class CustomMapping(MappingFunction):
+    def __init__(self, input_cols: list[str], output_col: str, output_type: str, fun: Callable):
+        super().__init__(None, input_cols, output_col, output_type, fun)
+
+    def __str__(self) -> str:
+        cols = [f"<{x}>" for x in self.input_cols]
+        return f'CUSTOM("{', '.join(self.input_cols)}")→{self.output_col}'
+
+
 class Project(Operator):
     def __init__(self, child_operator: Operator, columns: list[str | tuple[str, str] | MappingFunction],
                  em: EmbeddingModel, vs: Type[faiss.IndexFlat] = faiss.IndexFlatIP, threshold: float = 0.8) -> None:
