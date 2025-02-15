@@ -4,6 +4,7 @@ from .Project import Project
 from .Scan import Scan
 from .Select import Select
 from .Aggregate import HashAggregate, SoftAggregateFaissKMeans, SoftAggregateScikit
+from .Union import Union
 
 __all__ = [
     "Dummy",
@@ -16,5 +17,6 @@ __all__ = [
     "HashAggregate",
     "SoftAggregateFaissKMeans",
     "SoftAggregateScikit",
-    "InnerTFIDFJoin"
+    "InnerTFIDFJoin",
+    "Union"
 ]
