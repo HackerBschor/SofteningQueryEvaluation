@@ -3,7 +3,12 @@ from typing import Any, Callable, Type
 
 import faiss
 import numpy as np
+import pandas as pd
+
 from sklearn.base import ClusterMixin, BaseEstimator
+from sklearn.manifold import TSNE
+
+import seaborn as sns
 
 from db.operators.Operator import Operator
 from db.structure import SQLTable, SQLColumn
@@ -228,7 +233,7 @@ class SoftAggregate(Aggregate):
 
         self.keys: list[dict] = []
         self.rows: list[dict] = []
-        self.embeddings: list[np.array] = []
+        self.embeddings: np.array = None
 
         self.create_key_summary: bool = create_key_summary
         self.tgm: TextGenerationModel | None = tgm
@@ -282,6 +287,23 @@ class SoftAggregate(Aggregate):
     def _build_clusters_map(self, embeddings):
         raise NotImplementedError()
 
+    def visualize(self):
+        clusters = []
+        rows = []
+        for cluster, embs in self.clusters.items():
+            clusters.append(pd.Series([str(self.keys[cluster]) for _ in range(len(embs))]))
+            rows.append(self.embeddings[embs])
+
+        clusters = pd.concat(clusters)
+        rows = np.concatenate(rows)
+
+        tsne = TSNE(n_components=2, perplexity=15, random_state=42, init='random', learning_rate=200)
+        vis_dims = tsne.fit_transform(rows)
+        df = pd.DataFrame({ "x": vis_dims[:, 0], "y": vis_dims[:, 1], "c": clusters })
+        sns.lmplot(x='x', y='y', data=df, hue='c', fit_reg=False)
+
+
+
 
 class SoftAggregateFaissKMeans(SoftAggregate):
     def __init__(self, child_operator: Operator, columns: list[str], aggregation: list[AggregationFunction],
@@ -332,6 +354,7 @@ class SoftAggregateScikit(SoftAggregate):
     def open(self) -> None:
         self.child_operator.open()
 
+        embeddings = []
         for row in self.child_operator:
             key = {k: v for k, v in row.items() if k in self.group_by_columns_names}
             value = {k: v for k, v in row.items() if k in self.aggregation_columns_names}
@@ -339,11 +362,13 @@ class SoftAggregateScikit(SoftAggregate):
 
             self.keys.append(key)
             self.rows.append(value)
-            self.embeddings.append(embedding)
+            embeddings.append(embedding)
+
+        self.embeddings = np.array(embeddings)
 
         self.child_operator.close()
 
-        self.clustering.fit(np.array(self.embeddings))
+        self.clustering.fit(self.embeddings)
 
         unclustered_elements = 0
         for i, x in enumerate(self.clustering.labels_):
