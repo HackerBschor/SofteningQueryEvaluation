@@ -57,6 +57,28 @@ class HardEqual(Criteria):
         return f"{self.crit[0]} = {self.crit[1]}"
 
 
+class IsNull(Criteria):
+    def __init__(self, left: Column | Constant):
+        super().__init__([left, None])
+
+    def eval(self, t) -> bool:
+        return self.crit[0].get(t) is None
+
+    def __str__(self):
+        return f"{self.crit[0]} is null"
+
+
+class IsNotNull(Criteria):
+    def __init__(self, left: Column | Constant):
+        super().__init__([left, None])
+
+    def eval(self, t) -> bool:
+        return self.crit[0].get(t) is not None
+
+    def __str__(self):
+        return f"{self.crit[0]} is not null"
+
+
 class FuzzyEqual:
     # TODO: Implement for comparison
     pass
