@@ -7,12 +7,16 @@ from db.operators.Operator import Operator
 
 
 class Dummy(Operator):
-    def __init__(self, name: str, columns: list[str], data: list[dict | tuple], num_tuples=10):
+    def __init__(self, name: str, columns: list[str] | list[SQLColumn], data: list[dict | tuple], num_tuples=10):
         self.data: list[dict] = list(map(lambda r: self._convert_function(r, columns), copy.deepcopy(data)))
 
         self.idx: int | None = None
         self.iter: Iterator[dict] | None = None
-        table = SQLTable(None, name, [SQLColumn(col, str(type(self.data[0][col]))) for col in columns])
+
+        if isinstance(columns[0], str):
+         columns = [SQLColumn(col, str(type(self.data[0][col]))) for col in columns]
+
+        table = SQLTable(None, name, columns)
         super().__init__(table, num_tuples)
 
     def __str__(self) -> str:
