@@ -71,3 +71,5 @@ jupyter==1.1.1
 pdf2image==1.17.0
 dot2tex==2.11.3
 scikit-learn==1.6.1
+matplotlib==3.10.0
+seaborn==0.13.2

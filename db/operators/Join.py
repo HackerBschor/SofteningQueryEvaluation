@@ -2,11 +2,11 @@ import faiss
 import numpy as np
 import logging
 
-from typing import Any, Type, Optional
+from typing import Any, Type, Optional, Literal, Callable
 
-from .Operator import Operator
-from ..structure import SQLColumn, SQLTable, Column
-from ..criteria import Criteria
+from db.operators.Operator import Operator
+from db.structure import SQLColumn, SQLTable, Column
+from db.criteria import Criteria
 
 from models.embedding.Model import EmbeddingModel
 from models.semantic_validation.Model import SemanticValidationModel
@@ -148,36 +148,59 @@ class InnerFuzzyJoin(Join):
 
 
 class InnerSoftJoin(Join):
+    # TODO: add Attributes to System Prompt
+    ZERO_SHOT_PROMPTING_SYSTEM_PROMPT = (
+        "You are tasked with determining whether two records listed below are the "
+        "same based on the information provided.\n"
+        "Carefully compare all attributes for each record before making your decision.\n"    
+        "Are record A and record B the same entity? Choose your answer from: [Yes, No].")
+
+    ZERO_SHOT_PROMPTING_TEMPLATE = "Record A: [{a}]\nRecord B: [{b}]"
+
+    @staticmethod
+    def default_serialization(x: dict) -> str:
+        return str({k: v for k, v in x.items() if v is not None})
+
     def __init__(
             self,
             child_left: Operator,
             child_right: Operator,
-            column_left: Column | None | list[str],
-            column_right: Column | None | list[str],
-            em: EmbeddingModel,
-            use_semantic_validation: bool = False,
-            sv: SemanticValidationModel | None = None,
-            sv_template: str | None = None,
+            method: Literal['threshold', 'zero-shot-prompting', 'both'] = "both",
+            embedding_method: Literal["FULL_SERIALIZED", "FIELD_SERIALIZED"] = "FULL_SERIALIZED",
+            serialization: Callable[[dict], str] = default_serialization,
             vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
-            threshold: float = 0,
-            debug = False):
+            threshold: float = None,
+            columns_left: None | list[str] = None,
+            columns_right: None | list[str] = None,
+            em: EmbeddingModel = None,
+            sv: SemanticValidationModel = None,
+            zs_system_prompt = ZERO_SHOT_PROMPTING_SYSTEM_PROMPT,
+            zs_template = ZERO_SHOT_PROMPTING_TEMPLATE):
 
-        # TODO: Soft Search For Join Columns
+        self.child_left: Operator = child_left
+        self.child_right: Operator = child_left
+        self.method: str = method
+        self.serialization: Callable[[dict], str] = serialization
 
-        self.column_left: Column | None | list[str] = column_left
-        self.column_right: Column | None | list[str] = column_right
-        self.em: EmbeddingModel = em
+        if self.method in ("threshold", "both"):
+            assert em is not None
+            assert threshold is not None
+            self.em = em
+            self.threshold = threshold
+            self.embedding_method: str = embedding_method
+            self.vector_store = vector_store_type(em.get_embedding_size())
+        if self.method in ("zero-shot-prompting", "both"):
+            assert sv is not None
+            self.sv = sv
+            self.zs_system_prompt = zs_system_prompt
+            self.zs_template = zs_template
 
-        assert not use_semantic_validation or (sv_template is not None and sv is not None)
-        self.use_semantic_validation: bool = use_semantic_validation
-        self.sv: SemanticValidationModel = sv
-        self.sv_template = sv_template
+        self.embeddings: np.array = None
+        self.embeddings_map: dict[Any, np.array] = {}
 
-        self.vector_store_type = vector_store_type
-        self.threshold: float = threshold
-        self.debug: bool = debug
+        self.columns_left: None | list[str] | list[SQLColumn] = None
+        self.columns_left: None | list[str] | list[SQLColumn] = None
 
-        self.vector_store: Optional[Type[faiss.IndexFlat]] = None
         self.records_left: Optional[list[dict]] = []
         self.record_right: Optional[dict] = None
 
@@ -187,39 +210,58 @@ class InnerSoftJoin(Join):
 
         super().__init__(child_left, child_right, None)
 
+        columns_left, columns_right = self._build_join_columns(columns_left, columns_right)
+        self.columns_left: list[SQLColumn] = columns_left
+        self.columns_right: list[SQLColumn] = columns_right
+
+
     def open(self) -> None:
         self.child_left.open()
-        self.vector_store = self.vector_store_type(self.em.get_embedding_size())
 
-        logging.debug("Loading & embedd records")
-        embeddings = []
-        for row in self.child_left:
-            row = self._remap_record("left", row)
-            self.records_left.append(row)
-            embeddings.append(self._create_embedding(row, "left"))
+        logging.debug("Loading records")
+        self.records_left = [self._remap_record("left", row) for row in self.child_left]
 
-        if embeddings:
+        if self.method in ("threshold", "both") and len(self.columns_left) > 0:
+            self.vector_store.reset()
+
+            logging.debug("Embedding records")
+            self.embeddings = self._create_left_embeddings()
+
             logging.debug("Save to vector store")
             # noinspection PyArgumentList
-            self.vector_store.add(np.array(embeddings))
+            self.vector_store.add(self.embeddings)
 
         self.child_left.close()
         self.child_right.open()
 
     def __next__(self) -> dict:
-        if not self.records_left:
+        if len(self.records_left) == 0:
             self.close()
             raise StopIteration
 
         while True:
             if self.record_right is None:
                 self.record_right = self._remap_record("right", next(self.child_right))
-                embedding_right = self._create_embedding(self.record_right, "right")
 
-                # noinspection PyArgumentList
-                _, distances, indices = self.vector_store.range_search(x=np.array([embedding_right]), thresh=self.threshold)
-                self.indices = list(indices)
-                self.distances = list(distances)
+                if self.method in ("threshold", "both"):
+                    if self.embedding_method == "FULL_SERIALIZED":
+                        key = str({col.column_name: self.record_right[col.column_name] for col in self.columns_right})
+                        embedding_right = self.em(key)
+                    else:
+                        key_elements = list({str(self.record_right[col.column_name]) for col in self.columns_right})
+                        key_elements = list(km for km in key_elements if km not in self.embeddings_map)
+                        if len(key_elements) > 0:
+                            for km, emb in zip(key_elements, self.em(key_elements)):
+                                self.embeddings_map[km] = emb
+                        embedding_right = np.average([self.embeddings_map[str(self.record_right[col.column_name])] for col in self.columns_right], axis=0)
+
+                    # noinspection PyArgumentList
+                    _, distances, indices = self.vector_store.range_search(x=np.array([embedding_right]), thresh=self.threshold)
+                    self.indices = list(indices)
+                    self.distances = list(distances)
+                else:
+                    self.indices = [i for i in range(len(self.columns_left))]
+
                 self.index_left = 0
 
             try:
@@ -231,8 +273,10 @@ class InnerSoftJoin(Join):
 
                 logging.debug(f"Joined record {rec} distance {distance}")
 
-                if self.use_semantic_validation:
-                    prompt = self.sv_template.format(**rec)
+                if self.method in ("zero-shot-prompting", "both"):
+                    rec_a = {col.column_name: self.records_left[idx][col.column_name] for col in self.columns_left}
+                    rec_b = {col.column_name: self.record_right[col.column_name] for col in self.columns_right}
+                    prompt = self.zs_template.format(a = self.serialization(rec_a), b = self.serialization(rec_b))
                     if not self.sv(prompt):
                         logging.debug(f"Prompt: \"{prompt}\" filed in semantic validation")
                         continue
@@ -246,18 +290,52 @@ class InnerSoftJoin(Join):
         raise NotImplementedError()
 
     def get_description(self) -> str:
-        left = ", ".join(self.column_left) if isinstance(self.column_left, list) else self.column_left.name
-        right = ", ".join(self.column_right) if isinstance(self.column_right, list) else self.column_right.name
-        return f"⋈_{{{left} ≈ {right}}}"
+        return f"⋈_{{{', '.join(map(str, self.columns_left))} ≈ {', '.join(map(str, self.columns_right))}}}"
 
-    def _create_embedding(self, rec, side):
-        column = self.column_left if side == "left" else self.column_right
+    def _build_join_columns(self, columns_left, columns_right):
+        # TODO: Soft Search For Join Columns
+        join_columns_left: list[SQLColumn] = []
+        join_columns_right: list[SQLColumn] = []
 
-        if column is None:
-            key = str(rec)
-        elif isinstance(column, Column):
-            key = column.get(rec)
+        if columns_left is None:
+            columns_left = [self.columns_map["left"][col.column_name] for col in self.child_left.table.table_structure]
         else:
-            key = {col: rec[col] for col in column}
+            columns_left = [self.columns_map["left"][col] if col in self.columns_map["left"] else col for col in columns_left]
 
-        return self.em(key)
+        if columns_right is None:
+            columns_right = [self.columns_map["right"][col.column_name] for col in self.child_right.table.table_structure]
+        else:
+            columns_right = [self.columns_map["right"][col] if col in self.columns_map["right"] else col for col in columns_right]
+
+        columns_found = set({})
+        for col in self.table.table_structure:
+            if col.column_name in columns_left:
+                join_columns_left.append(col)
+                columns_found.add(col.column_name)
+
+            if col.column_name in columns_right:
+                join_columns_right.append(col)
+                columns_found.add(col.column_name)
+
+        missing_columns_left = [col for col in columns_left if col not in columns_found]
+        missing_columns_right = [col for col in columns_left if col not in columns_found]
+
+        assert len(missing_columns_left) == 0, \
+            f"Columns {missing_columns_left} not found for right relation {self.table.table_structure}"
+        assert len(missing_columns_right) == 0, \
+            f"Columns {missing_columns_right} not found for left relation {self.table.table_structure}"
+
+        return join_columns_left, join_columns_right
+
+    def _create_left_embeddings(self) -> np.array:
+        if self.embedding_method == "FULL_SERIALIZED":
+            keys = [self.serialization({col.column_name: rec[col.column_name] for col in self.columns_left}) for rec in self.records_left]
+            return self.em(keys)
+        else:
+            key_elements_set = list({str(rec[col.column_name]) for col in self.columns_left for rec in self.records_left})
+            self.embeddings_map = {key: embedding for key, embedding in zip(key_elements_set, self.em(key_elements_set))}
+            key_elements_embeddings = np.array([
+                [self.embeddings_map[str(rec[col.column_name])] for col in self.columns_left]
+                for rec in self.records_left
+            ])
+            return np.average(key_elements_embeddings, axis=1)
