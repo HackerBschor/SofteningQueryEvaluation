@@ -149,17 +149,16 @@ class InnerFuzzyJoin(Join):
 
 class InnerSoftJoin(Join):
     # TODO: add Attributes to System Prompt
-    ZERO_SHOT_PROMPTING_SYSTEM_PROMPT = (
-        "You are tasked with determining whether two records listed below are the "
-        "same based on the information provided.\n"
-        "Carefully compare all attributes for each record before making your decision.\n"    
-        "Are record A and record B the same entity? Choose your answer from: [Yes, No].")
-
-    ZERO_SHOT_PROMPTING_TEMPLATE = "Record A: [{a}]\nRecord B: [{b}]"
+    ZERO_SHOT_SYSTEM_PROMPT = "Given the attributes of the two records, are they the same?. Answer with \"yes\" and \"no\" only!"
+    ZERO_SHOT_PROMPTING_TEMPLATE = "Record A is {a}\nRecord B is {b}"
 
     @staticmethod
-    def default_serialization(x: dict) -> str:
-        return str({k: v for k, v in x.items() if v is not None})
+    def default_serialization_embedding(x: dict) -> str:
+        return '{' + ', '.join([f'{k.split(".")[-1]}: \'{v}\'' for k, v in x.items() if v is not None]) + '}'
+
+    @staticmethod
+    def default_serialization_zero_shot_prompting(x: dict) -> str:
+        return ', '.join([v for k, v in x.items() if v is not None])
 
     def __init__(
             self,
@@ -167,20 +166,20 @@ class InnerSoftJoin(Join):
             child_right: Operator,
             method: Literal['threshold', 'zero-shot-prompting', 'both'] = "both",
             embedding_method: Literal["FULL_SERIALIZED", "FIELD_SERIALIZED"] = "FULL_SERIALIZED",
-            serialization: Callable[[dict], str] = default_serialization,
+            serialization_embedding: Callable[[dict], str] = default_serialization_embedding,
             vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
             threshold: float = None,
             columns_left: None | list[str] = None,
             columns_right: None | list[str] = None,
             em: EmbeddingModel = None,
             sv: SemanticValidationModel = None,
-            zs_system_prompt = ZERO_SHOT_PROMPTING_SYSTEM_PROMPT,
-            zs_template = ZERO_SHOT_PROMPTING_TEMPLATE):
+            zs_system_prompt = ZERO_SHOT_SYSTEM_PROMPT,
+            zs_template = ZERO_SHOT_PROMPTING_TEMPLATE,
+            serialization_zero_shot_prompting: Callable[[dict], str] = default_serialization_zero_shot_prompting):
 
         self.child_left: Operator = child_left
         self.child_right: Operator = child_left
         self.method: str = method
-        self.serialization: Callable[[dict], str] = serialization
 
         if self.method in ("threshold", "both"):
             assert em is not None
@@ -189,11 +188,15 @@ class InnerSoftJoin(Join):
             self.threshold = threshold
             self.embedding_method: str = embedding_method
             self.vector_store = vector_store_type(em.get_embedding_size())
+            self.serialization_embedding: Callable[[dict], str] = serialization_embedding
+
         if self.method in ("zero-shot-prompting", "both"):
             assert sv is not None
             self.sv = sv
             self.zs_system_prompt = zs_system_prompt
             self.zs_template = zs_template
+            self.serialization_zero_shot_prompting = serialization_zero_shot_prompting
+
 
         self.embeddings: np.array = None
         self.embeddings_map: dict[Any, np.array] = {}
@@ -276,8 +279,8 @@ class InnerSoftJoin(Join):
                 if self.method in ("zero-shot-prompting", "both"):
                     rec_a = {col.column_name: self.records_left[idx][col.column_name] for col in self.columns_left}
                     rec_b = {col.column_name: self.record_right[col.column_name] for col in self.columns_right}
-                    prompt = self.zs_template.format(a = self.serialization(rec_a), b = self.serialization(rec_b))
-                    if not self.sv(prompt):
+                    prompt = self.zs_template.format(a = self.serialization_zero_shot_prompting(rec_a), b = self.serialization_zero_shot_prompting(rec_b))
+                    if not self.sv(prompt, system_prompt=self.zs_system_prompt):
                         logging.debug(f"Prompt: \"{prompt}\" filed in semantic validation")
                         continue
 
@@ -329,7 +332,7 @@ class InnerSoftJoin(Join):
 
     def _create_left_embeddings(self) -> np.array:
         if self.embedding_method == "FULL_SERIALIZED":
-            keys = [self.serialization({col.column_name: rec[col.column_name] for col in self.columns_left}) for rec in self.records_left]
+            keys = [self.serialization_embedding({col.column_name: rec[col.column_name] for col in self.columns_left}) for rec in self.records_left]
             return self.em(keys)
         else:
             key_elements_set = list({str(rec[col.column_name]) for col in self.columns_left for rec in self.records_left})

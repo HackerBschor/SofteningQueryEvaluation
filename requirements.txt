@@ -73,3 +73,4 @@ dot2tex==2.11.3
 scikit-learn==1.6.1
 matplotlib==3.10.0
 seaborn==0.13.2
+ollama~=0.4.7
