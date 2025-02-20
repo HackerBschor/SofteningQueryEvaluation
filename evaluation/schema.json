@@ -2,41 +2,173 @@
   "language_detection": {
     "citation": "https://www.kaggle.com/datasets/zarajamshaid/language-identification-datasst/",
     "schema": [
-      {"name": "id", "type": "Integer", "primary_key": true},
-      {"name": "text", "type": "String", "primary_key": false},
-      {"name": "language", "type": "String", "primary_key": false}
+      {
+        "name": "id",
+        "type": "Integer",
+        "primary_key": true
+      },
+      {
+        "name": "text",
+        "type": "String",
+        "primary_key": false
+      },
+      {
+        "name": "language",
+        "type": "String",
+        "primary_key": false
+      }
     ],
     "data": [
-      {"id": 0, "text": "следует отметить балетмейстеров-постановщиков заслуженного артиста украины петроса малхасянц заслуженного артиста бурятии михаила заславского народного артиста украины герман олексійович нину поспелову сергея наенко галину клещеву", "language": "Russian"},
-      {"id": 1, "text": "lucia trandafir s-a născut în  ca fiică a lui vasile trandafir profesor în învățământul secundar a avut doi frați vasile și ion legionar și membru al decemvirilor un grup de zece legionari care l-au asasinat și ciopârțít pe ziaristul legionar anti-codrenist mihai stelescu", "language": "Romanian"},
-      {"id": 2, "text": "de b begint weer in het noorden van de stad halle op een kruising met de l en de lb de bb loopt als een vierbaans stadsweg in zuidoostelijke richting door halle op een kruising bij halle-haupbahnhof slaat de b in westelijke richting terwijl de b hier begint en samen met de b naar een zuidelijker gelegen kruispunt loopt op dit bewuste kruispunt slaat de b af en loopt in zuidoostelijke richting de stad uit de weg loopt langs gröbers en großkugel waarna net voor de a de deelstaatgrens met saksen volgt", "language": "Dutch"},
-      {"id": 3, "text": "現在の「衣笠キャンパス」周辺は、金閣寺、龍安寺、仁和寺、等持院などが点在する京都屈指の観光名所として知られる。キャンパス北側にはこれら名刹を結ぶ観光道路「きぬかけの路」が通る。中でも隣接する等持院の墓地には、室町幕府将軍の足利尊氏、足利義量および足利義勝、映画監督の牧野省三や衣笠貞之助、画家・山元春挙、木島桜谷、役者・尾上松之助、学園創立者・中川小十郎が眠っている。", "language": "Japanese"},
-      {"id": 4, "text": "the soundtrack for truck turner was composed by isaac hayes although many regard it as shafts equal in composition the soundtrack never managed to reach the mass popularity of the shaft soundtrack mainly due to the financial decline of stax records and was originally released on a double record album on vinyl which are mostly found in the \"bargain bins\" however in  it was released in a double-cd album alongside hayes other lesser-known soundtrack for the movie three tough guys and again released on its own cd in  some of the music score was used by filmmaker quentin tarantino in the kill bill series", "language": "English"},
-      {"id": 5, "text": "bij de volkstelling in  werd het aantal inwoners vastgesteld op  in  is het aantal inwoners door het united states census bureau geschat op  een stijging van  ", "language": "Dutch"},
-      {"id": 6, "text": "نخستین کتابخانهٔ شخصی در کرمانشاه در  با نام کتابخانه و قرائتخانهٔ نجابت تأسیس شد و کتابخانهٔ دولتشاه واقع در کاخ محمد علی میرزا دولتشاه فرزند ارشد فتحعلی شاه و حاکم وقت کرمانشاه که نسخی نایاب و نادر را در خود خود داشت از اولین کتابخانه‌های شخصی در این منطقه هستند و دیگر کتابخانه‌های شخصی که در کرمانشاه تأسیس شدند شامل کتابخانهٔ آل آقا در مسجد جامع کرمانشاه کتابخانهٔ سردار کابلی کتابخانهٔ فیض مهدوی با حدود  جلد کتابخانهٔ سید محمود کزازی در حال حاضر در متعلق به جلال الدین کزازی است کتابخانهٔ مرتضی نجومی با  جلد کتابخانهٔ عبدالجلیل جلیلی که در سال  تأسیس شد و شامل  نسخه خطی و چاپی بود که در سال  با کتابخانهٔ محمدحسین جلیلی تبدیل به یک کتابخانه شد", "language": "Persian"},
-      {"id": 7, "text": "تپندۍ د خټگرۍ يوه وسپنيزه آله ده چې د خټو سيمټو د تپلو او د خښتو نيمولو لپاره کارېږي دې ته په مختلفو گړدودونو کې رمبی هم وايي  په باغونو کې د خاورې نرمولو  خټو جوړولو  خښتو ماتولو او منظمولو لپاره د همدغې عالې څخه کار اخیستل کېږي ", "language": "Pushto"},
-      {"id": 8, "text": "في  أبريل م قدم الزعيم مصطفى النحاس مذكرة للسفير البريطاني ليحملها إلى الحكومة البريطانية فيها يطلب أن تصرح بريطانيا من الآن بأن القوات البريطانية ستنسحب من الأراضي المصرية فور انتهاء الحرب وأن مصر ستشارك في مفاوضات الصلح وسيتم الاعتراف بحقوق مصر في السودان وإلغاء الاحكام العرفية وقوبلت هذه المذكرة بارتياح كبيرة من فئات الشعب", "language": "Arabic"},
-      {"id": 9, "text": "作品はインスタレーションから絵画、彫刻、壁画、写真、映画にまで様々なスタイルに至り、多くの作品が抽象的かつ、反芸術的な色合いが濃いもので、実体の無い影のみを描いた作品「影」シリーズが脚光を浴び、石や木などの自然物に僅かに手を加えただけの作品、遠近法を完全に逆にした作品など、あえて「思考させる」「思考する」ことにより、作品と世界との間に新しい関係を作りだすことに成功し、年代以降の日本におけるコンセプチュアル・アートに大きな影響を与えた。", "language": "Japanese"},
-      {"id": 10, "text": "in  werd de gemeente kethel en spaland geannexeerd waardoor er ruimte was voor grootschalige woningbouw ten noorden van schiedam hier liggen nu de wijken tuindorp kethel groenoord woudhoek en spaland", "language": "Dutch"},
-      {"id": 11, "text": "kūh-e rīvāseh persiska کوه ريواسه är ett berg i iran det ligger i provinsen fars i den centrala delen av landet  km söder om huvudstaden teheran toppen på kūh-e rīvāseh är   meter över havet", "language": "Swedish"},
-      {"id": 12, "text": "मस्तिष्क ज्वर के दौरान बड़े स्तर पर सबअर्कनॉएड स्पेस में होने वाली सूजन बैक्टीरिया संक्रमण का प्रत्यक्ष परिणाम नहीं होता है बल्कि इसे बैक्टीरिया के केन्द्रीय तंत्रिका तंत्र में प्रवेश के कारण प्रतिरक्षा तंत्र की प्रतिक्रिया का परिणाम होता है। जब बैक्टीरिया संक्रमित कोशिका झिल्ली के घटक मस्तिष्क की प्रतिरोधक कोशिकाओं ऐस्ट्रोकाइट और माइक्रॉग्लिया द्वारा पहचाने जाते हैं तो वे हार्मोन जैसे मध्यस्थ साइटोकाइन की बड़ी मात्रा मुक्त करके प्रतिक्रिया करते हैं जो अन्य प्रतिरक्षा कोशिकाओं को नियुक्त करते हैं और दूसरे ऊतकों को प्रतिरक्षा प्रतिक्रिया में भाग लेने के लिये उकसाते हैं। रक्त-मस्तिष्क बाधा पारगम्य हो जाती है जिसके कारण \"वैसोजेनिक\" सेरेब्रेल एडीमा रक्त केशिकाओं से द्रव्य रिसाव के कारण मस्तिष्क की सूजन हो जाता है। श्वेत रक्त कणिकाओं की बड़ी मात्रा csf में प्रवेश कर जाती है जिसके कारण मस्तिष्क आवरण में सूजन हो जाती है और जिससे \"इंटरटिस्शल\" एडीमा कोशिकाओं को बीच द्रव्य के कारण सूजन हो जाता है। इसके अतिरिक्त रक्त केशिकाओं की दीवारें अपने आप सूज जाती है सेरेब्रल वेस्क्युलिटिस जिससे रक्त का प्रवाह कम हो जाता है और एक तीसरे तरह का एडीमा \"साइटोटॉक्सिक\" एडीमा हो जाता है। सेरेब्रल एडीमा के सभी तीन प्रकार एडीमा के कारण अंतःकपालीय दाब बढ़ जाता है जिसके साथ गंभीर संक्रमण में घटे रक्तचाप स", "language": "Hindi"},
-      {"id": 13, "text": "a obra apresenta uma série de modelos elaborado com base na capacidade matemática e estatística dos autores apoiada em uma múltipla e larga amostra de dados relevante acerca de carreiras criminais individuais os modelos então criados a partir dessa análise matemática estatística dos dados poderá ser aplicado em outros países visto que a maioria apresenta dados acerca de condenações prisões entre outros dados úteis à análise importante estudo portanto para o desenvolvimento racional do sistema criminal em escala global", "language": "Portugese"},
-      {"id": 14, "text": "sungai-sungai yang utama ialah sungai paraguay bermejo colorado uruguay dan sungai terbesar yaitu sungai paraná  yang terakhir mengalir bertama sebelum bertemu samudra atlantik membentuk estuaria di rio de la plata sungai perak iklim argentina terutama sedang dengan perbedaan yang besar dari subtropis di utara sampai keringsub-antartika di selatan", "language": "Indonesian"},
-      {"id": 15, "text": "بلینڈرانگریزی blender ایک پیشہورانہ مفت اور آزاد مصدر d کمپیوٹر گرافک سوفٹویئر ہے جو اینیمیٹڈ فلمیںبصری اثرات انگریزی visual effectsفنd پرنٹنگانٹرایکٹو تھری ڈی ایپلیکشنز interactive d applications اور ویڈیو گیمز بنانے کے لیے استعمال ہوتا ہے۔d ماڈلنگ یو وی انریپنگانگریزی uv unwrapping ٹیکسچرںگانگریزی texturing راسٹر گرافکس ایڈیٹنگ رگںگ اور سکنّگ مائع اور دھوئیں کی سیمولیشن پارٹیکل سیمولیشن سافٹ باڈی سیمولیشن ڈیجیٹل مجسمہ سازی اینیمیٹنگ کیمرا ٹریکںگ رینڈرنگانگریزی rendering ویڈیو ایڈیٹںگ وغیرہ بلینڈر کے فیچرز ہیں۔ اس کے اندر ایک گیم انجن بھی موجود ہے۔", "language": "Urdu"},
-      {"id": 16, "text": "அனுமான்காட் மாவட்டம் hanumangarh district - இந்தி हनुमानगढ़ ज़िला மேற்கு இந்தியாவில் அமைந்துள்ள இராஜஸ்தான் மாநிலத்தின்  மாவட்டங்களில் ஒன்றாகும் இம்மாவட்டத் தலைமையிட நகரம் அனுமான்காட் ஆகும் இ ராஜஸ்தான் மாநிலத்தின் வடக்குப் பகுதியில் பஞ்சாப் மற்றும் அரியானா மாநில எல்லைப்புறத்தில் அமைந்த இம்மாவட்டம் பிகானேர் கோட்டத்தில் உள்ளது", "language": "Tamil"},
-      {"id": 17, "text": "年（平成年） - びわこ・くさつキャンパスに「食マネジメント学部」（college of gastronomy management）を開設予定。理工学部の都市システム工学科と環境システム工学科を統合し「環境都市システム工学科」を開設予定。衣笠キャンパスの国際関係学部に「アメリカン大学・立命館大学国際連携学科」を開設予定。", "language": "Japanese"},
-      {"id": 18, "text": "seitsmeaastase sõja järel  aastal läks saar suurbritannia valdusse ja dominical moodustati esimene esindusorgan prantslased üritasid aastatel –  kolmel korral tulutult dominicale tungida  rajati dominical briti koloonia  lõpetati kogu briti impeeriumis orjandus  pääsesid esimesed mustanahalised saare esindusorganisse ja  aastal sai saarel esimese briti kolooniana seadusandliku võimu kohalik aafrika päritolu elanikkonna enamus  kuulutati dominica briti kroonikolooniaks – oli dominica lääne-india föderatsiooni provints", "language": "Estonian"},
-      {"id": 19, "text": "philocaenus jinjaensis is een vliesvleugelig insect uit de familie pteromalidae de wetenschappelijke naam is voor het eerst geldig gepubliceerd in  door van noort", "language": "Dutch"},
-      {"id": 20, "text": "文部科学副大臣としての在任日数が最も多いのは、池坊保子である。池坊は安倍内閣にて文部科学副大臣に任命され、それ以来、安倍改造内閣、福田康夫内閣の計内閣にて文部科学副大臣を務めた。また、文部科学副大臣としての就任回数が最も多いのは、鈴木寛である。池坊の在任日数には及ばないものの、鈴木は鳩山由紀夫内閣にて文部科学副大臣に任命され、それ以来、菅内閣、菅第次改造内閣、菅第次改造内閣の計内閣にて文部科学副大臣を務めた。", "language": "Japanese"},
-      {"id": 21, "text": "win is de -bit api voor moderne versies van windows de api bestaat uit functies die net zoals bij win geïmplementeerd zijn in systeem-dll-bestanden de kern-dll-bestanden van win zijn kerneldll userdll en gdidll win werd geïntroduceerd met windows nt de win-versie die bij windows  kwam werd aanvankelijk winc genoemd met de \"c\" die stond voor \"compatibiliteit\" maar deze term moest van microsoft plaatsmaken voor de naam \"win\"", "language": "Dutch"},
-      {"id": 22, "text": "年－年，由于苏联国家规定的粮食价格太低，农民并不急于卖粮，使粮食收购出现短缺。斯大林认为造成危机的原因是富农阶层的蓄意破坏，他不顾布哈林等人的反对，一方面采用特殊手段打击富农，强迫他们按指定价格卖出余粮；另一方面推行农业集体化政策。年月，斯大林又提出“消灭富农”的口号，命令没收富农的财产并将他们放逐，不准他们加入集体公社。由于对“富农”概念缺乏准确界限，集体化开始时国内“富农”占农户总数不到，而最后被剥夺的农户却达到农户总数的－，部分中农和贫农也被当作富农剥夺。年月苏共中央全会通过决议开始全盘集体化，从此集体农庄的规模以惊人的速度增长（两个月内集体农庄的比例从增长到），执行过程中，底层执行者经常采用威胁、恐吓等手段强迫农民入社。年月日，斯大林在《真理报》发表《胜利冲昏头脑》一文，批评全盘集体化运动中违反农民自愿原则的过火行为，于是引发大规模退社的浪潮。年月，集体农庄比例已由降到，斯大林不得不在月召开的苏共第十六次代表大会上再次改变态度，赞扬全盘集体化的成就并批评反对者是“和共产主义的敌人勾结在一起的人”，又一次掀起集体化运动的高潮。到年底未加入集体农庄的农户仅占，至此全盘集体化的目标基本实现。", "language": "Chinese"},
-      {"id": 23, "text": "dizinin pilot bölümü kanalın kurulduğu  yılından beri en fazla izlenen pilot bölüm olmuştur i̇lk sezon ortalama  milyon izleyici tarafından takip edilmiştir dizi başlarda ortalama bir izlenme payına sahipken eleştirmenlerin de kabul ettiği gibi sezonun ortalarına doğru izlenme payı artmıştır ve ikinci sezonun ilk bölümü genellikle çok iyi eleştiriler almıştır dizi birçok ödüle aday gösterilmiş - yıllarında düzenlenen teen choice awardsda toplam on iki ödül kazanmıştır dizinin dördüncü sezonunun ilk bölümü  ekim de yayınlanmıştır", "language": "Turkish"},
-      {"id": 24, "text": "그럼에도 불구하고 바그너의 작품은 이스라엘에서 사실상 연주 금지되어 왔으며 그리고 극히 적은 수의 공연이 행해지기는 했으나 엄청난 찬반 논란을 일으켰다 바그너의 곡은 사실 공영 라디오와 텔레비전 방송국에서는 흔히 방송되고 있지만 공공 공연으로 무대에 올리려는 시도는 반대 시위 특히 유대인 대학살 생존자들에 의해 저지되어 오고 있다 예를 들어 다니엘 바렌보임이 트리스탄과 이졸데의 한 소절을 년 이스라엘 축제의 앙코르로 연주한 뒤에 의회의 위원회는 지휘자를 쫓아내야 한다고 목소리를 높였고 결국 처음에는 계획되어 있었던 발퀴레 공연을 포기해야 했다 다른 경우에 주빈 메타는 관중석의 항의성 퇴장과 야유에도 불구하고 이스라엘에서 바그너를 연주했다바그너와 그의 음악이 일으키는 반응의 복잡함을 반영하는 수많은 역설 중 하나는 현대 시오니즘의 창시자인 theodore herzl이 바그너의 작품에 대한 열렬한 숭배자였다는 것이다", "language": "Korean"},
-      {"id": 25, "text": "แอ็ชเชอร์สมรสกับเยททา อูมีเคอร์ เมื่อปี คศ  และอาศัยอยู่ในกรุงโรมประเทศอิตาลี กระทั่งปี คศ  จากนั้น สถานการณ์ทางการเมืองทำให้ต้องย้ายไปยังสวิตเซอร์แลนด์ และต่อมาไปยังเบลเยียม ครั้นปี คศ  ขณะเกิดสงครามโลกครั้งที่  กองทัพเยอรมันยึดกรุงบรัสเซลส์ แอ็ชเชอร์จึงเดินทางกลับไปยังเนเธอร์แลนด์ และอาศัยในเมืองบาร์น baarn และลาเริน laren และทำงานที่นั่นกระทั่งเสียชีวิตเมื่อวันที่  มีนาคม คศ  เมื่ออายุได้  ปี", "language": "Thai"},
-      {"id": 26, "text": "cavum magni sepulturae loci teoumae in efate insula in vanuatu siti anno  inventi triginta sex corpora in viginti quinque sepulcris cum urnis sepulturae in medium protulit omnes sceleti capitibus carebant calvariis post primam sepulturam remotis anulisque ex testis conorum substitutis capita iterum humata sunt sepultura cuiusdam senis tria calvaria supra pectus habebat una urna sepulturae quattuor aves in urnam spectantis vehementius monstrabat computatio radiocarbonica testarum in hoc sepulturae loco positarum tempus circa  acn indicat", "language": "Latin"},
-      {"id": 27, "text": "la date et le déroulement des faits demeurent incertains car ils se placent durant la période pour laquelle les livres de lannaliste romain tite-live ont été perdus les textes qui nous sont parvenus se rapportant à la campagne romaine contre les sénons peuvent être classés en trois catégories dabord il y a le récit de polybe historien grec seul auteur qui mentionne explicitement la bataille darretium mais ce dernier napporte pas beaucoup de détails et replace la bataille dans un contexte plus général son récit repose très probablement sur celui de fabius pictor on trouve ensuite des sources qui dérivent vraisemblablement dune tradition annalistique plus tardive datant de lépoque syllanienne et dont tite-live eutrope et florus ainsi quaugustin et orose sont tributaires enfin on dispose de textes dappien et de denys dhalicarnasse qui abordent ces mêmes évènements apportant des détails inédits mais qui ne font pas de référence explicite à la bataille darretium ni au général romain metellus appien semble faire une synthèse des deux traditions précédentes mais son récit demeure confus et difficile à interpréter tous ces récits antiques divergent sur certains points notamment le statut de lucius caecilius metellus denter et lintervention de manius curius dentatus et ne permettent pas de", "language": "French"},
-      {"id": 28, "text": "las sentencias eran largas hasta  años y frecuentemente se extendían indefinidamente sin juicio ni consulta los presos en virtud del artículo  se conocían como \"politichesky\" политический политический заключённый \"politиchesky zakliuchenny\" o \"prisionero político\" en contraposición a los delincuentes comunes \"ugolovnik\" уголовник tras su liberación el prisionero sería enviado a un exilio en rusia sin el derecho a establecerse a menos de  km de las grandes ciudades", "language": "Spanish"},
-      {"id": 29, "text": "年（年）月、北漢の忻州と代州が離反して後周につくと、撻烈は都統として西南道軍を率いて北漢を救援した。後周の符彦卿らを忻口で討ち、史彦超を捕らえた。後周軍が撤退すると、撻烈は後周に落とされた城邑を回復した。年（年）月、宋の李継勲らが北漢の遼州・石州を攻撃すると、撻烈は万の軍を率いて北漢を救援した。年（年）月、宋軍が太原を包囲すると、撻烈は行軍都統となり、諸道の兵を発して北漢を救援した。雁門に進出すると、宋軍は報を知って撤退した。", "language": "Japanese"}
+      {
+        "id": 0,
+        "text": "следует отметить балетмейстеров-постановщиков заслуженного артиста украины петроса малхасянц заслуженного артиста бурятии михаила заславского народного артиста украины герман олексійович нину поспелову сергея наенко галину клещеву",
+        "language": "Russian"
+      },
+      {
+        "id": 1,
+        "text": "lucia trandafir s-a născut în  ca fiică a lui vasile trandafir profesor în învățământul secundar a avut doi frați vasile și ion legionar și membru al decemvirilor un grup de zece legionari care l-au asasinat și ciopârțít pe ziaristul legionar anti-codrenist mihai stelescu",
+        "language": "Romanian"
+      },
+      {
+        "id": 2,
+        "text": "de b begint weer in het noorden van de stad halle op een kruising met de l en de lb de bb loopt als een vierbaans stadsweg in zuidoostelijke richting door halle op een kruising bij halle-haupbahnhof slaat de b in westelijke richting terwijl de b hier begint en samen met de b naar een zuidelijker gelegen kruispunt loopt op dit bewuste kruispunt slaat de b af en loopt in zuidoostelijke richting de stad uit de weg loopt langs gröbers en großkugel waarna net voor de a de deelstaatgrens met saksen volgt",
+        "language": "Dutch"
+      },
+      {
+        "id": 3,
+        "text": "現在の「衣笠キャンパス」周辺は、金閣寺、龍安寺、仁和寺、等持院などが点在する京都屈指の観光名所として知られる。キャンパス北側にはこれら名刹を結ぶ観光道路「きぬかけの路」が通る。中でも隣接する等持院の墓地には、室町幕府将軍の足利尊氏、足利義量および足利義勝、映画監督の牧野省三や衣笠貞之助、画家・山元春挙、木島桜谷、役者・尾上松之助、学園創立者・中川小十郎が眠っている。",
+        "language": "Japanese"
+      },
+      {
+        "id": 4,
+        "text": "the soundtrack for truck turner was composed by isaac hayes although many regard it as shafts equal in composition the soundtrack never managed to reach the mass popularity of the shaft soundtrack mainly due to the financial decline of stax records and was originally released on a double record album on vinyl which are mostly found in the \"bargain bins\" however in  it was released in a double-cd album alongside hayes other lesser-known soundtrack for the movie three tough guys and again released on its own cd in  some of the music score was used by filmmaker quentin tarantino in the kill bill series",
+        "language": "English"
+      },
+      {
+        "id": 5,
+        "text": "bij de volkstelling in  werd het aantal inwoners vastgesteld op  in  is het aantal inwoners door het united states census bureau geschat op  een stijging van  ",
+        "language": "Dutch"
+      },
+      {
+        "id": 6,
+        "text": "نخستین کتابخانهٔ شخصی در کرمانشاه در  با نام کتابخانه و قرائتخانهٔ نجابت تأسیس شد و کتابخانهٔ دولتشاه واقع در کاخ محمد علی میرزا دولتشاه فرزند ارشد فتحعلی شاه و حاکم وقت کرمانشاه که نسخی نایاب و نادر را در خود خود داشت از اولین کتابخانه‌های شخصی در این منطقه هستند و دیگر کتابخانه‌های شخصی که در کرمانشاه تأسیس شدند شامل کتابخانهٔ آل آقا در مسجد جامع کرمانشاه کتابخانهٔ سردار کابلی کتابخانهٔ فیض مهدوی با حدود  جلد کتابخانهٔ سید محمود کزازی در حال حاضر در متعلق به جلال الدین کزازی است کتابخانهٔ مرتضی نجومی با  جلد کتابخانهٔ عبدالجلیل جلیلی که در سال  تأسیس شد و شامل  نسخه خطی و چاپی بود که در سال  با کتابخانهٔ محمدحسین جلیلی تبدیل به یک کتابخانه شد",
+        "language": "Persian"
+      },
+      {
+        "id": 7,
+        "text": "تپندۍ د خټگرۍ يوه وسپنيزه آله ده چې د خټو سيمټو د تپلو او د خښتو نيمولو لپاره کارېږي دې ته په مختلفو گړدودونو کې رمبی هم وايي  په باغونو کې د خاورې نرمولو  خټو جوړولو  خښتو ماتولو او منظمولو لپاره د همدغې عالې څخه کار اخیستل کېږي ",
+        "language": "Pushto"
+      },
+      {
+        "id": 8,
+        "text": "في  أبريل م قدم الزعيم مصطفى النحاس مذكرة للسفير البريطاني ليحملها إلى الحكومة البريطانية فيها يطلب أن تصرح بريطانيا من الآن بأن القوات البريطانية ستنسحب من الأراضي المصرية فور انتهاء الحرب وأن مصر ستشارك في مفاوضات الصلح وسيتم الاعتراف بحقوق مصر في السودان وإلغاء الاحكام العرفية وقوبلت هذه المذكرة بارتياح كبيرة من فئات الشعب",
+        "language": "Arabic"
+      },
+      {
+        "id": 9,
+        "text": "作品はインスタレーションから絵画、彫刻、壁画、写真、映画にまで様々なスタイルに至り、多くの作品が抽象的かつ、反芸術的な色合いが濃いもので、実体の無い影のみを描いた作品「影」シリーズが脚光を浴び、石や木などの自然物に僅かに手を加えただけの作品、遠近法を完全に逆にした作品など、あえて「思考させる」「思考する」ことにより、作品と世界との間に新しい関係を作りだすことに成功し、年代以降の日本におけるコンセプチュアル・アートに大きな影響を与えた。",
+        "language": "Japanese"
+      },
+      {
+        "id": 10,
+        "text": "in  werd de gemeente kethel en spaland geannexeerd waardoor er ruimte was voor grootschalige woningbouw ten noorden van schiedam hier liggen nu de wijken tuindorp kethel groenoord woudhoek en spaland",
+        "language": "Dutch"
+      },
+      {
+        "id": 11,
+        "text": "kūh-e rīvāseh persiska کوه ريواسه är ett berg i iran det ligger i provinsen fars i den centrala delen av landet  km söder om huvudstaden teheran toppen på kūh-e rīvāseh är   meter över havet",
+        "language": "Swedish"
+      },
+      {
+        "id": 12,
+        "text": "मस्तिष्क ज्वर के दौरान बड़े स्तर पर सबअर्कनॉएड स्पेस में होने वाली सूजन बैक्टीरिया संक्रमण का प्रत्यक्ष परिणाम नहीं होता है बल्कि इसे बैक्टीरिया के केन्द्रीय तंत्रिका तंत्र में प्रवेश के कारण प्रतिरक्षा तंत्र की प्रतिक्रिया का परिणाम होता है। जब बैक्टीरिया संक्रमित कोशिका झिल्ली के घटक मस्तिष्क की प्रतिरोधक कोशिकाओं ऐस्ट्रोकाइट और माइक्रॉग्लिया द्वारा पहचाने जाते हैं तो वे हार्मोन जैसे मध्यस्थ साइटोकाइन की बड़ी मात्रा मुक्त करके प्रतिक्रिया करते हैं जो अन्य प्रतिरक्षा कोशिकाओं को नियुक्त करते हैं और दूसरे ऊतकों को प्रतिरक्षा प्रतिक्रिया में भाग लेने के लिये उकसाते हैं। रक्त-मस्तिष्क बाधा पारगम्य हो जाती है जिसके कारण \"वैसोजेनिक\" सेरेब्रेल एडीमा रक्त केशिकाओं से द्रव्य रिसाव के कारण मस्तिष्क की सूजन हो जाता है। श्वेत रक्त कणिकाओं की बड़ी मात्रा csf में प्रवेश कर जाती है जिसके कारण मस्तिष्क आवरण में सूजन हो जाती है और जिससे \"इंटरटिस्शल\" एडीमा कोशिकाओं को बीच द्रव्य के कारण सूजन हो जाता है। इसके अतिरिक्त रक्त केशिकाओं की दीवारें अपने आप सूज जाती है सेरेब्रल वेस्क्युलिटिस जिससे रक्त का प्रवाह कम हो जाता है और एक तीसरे तरह का एडीमा \"साइटोटॉक्सिक\" एडीमा हो जाता है। सेरेब्रल एडीमा के सभी तीन प्रकार एडीमा के कारण अंतःकपालीय दाब बढ़ जाता है जिसके साथ गंभीर संक्रमण में घटे रक्तचाप स",
+        "language": "Hindi"
+      },
+      {
+        "id": 13,
+        "text": "a obra apresenta uma série de modelos elaborado com base na capacidade matemática e estatística dos autores apoiada em uma múltipla e larga amostra de dados relevante acerca de carreiras criminais individuais os modelos então criados a partir dessa análise matemática estatística dos dados poderá ser aplicado em outros países visto que a maioria apresenta dados acerca de condenações prisões entre outros dados úteis à análise importante estudo portanto para o desenvolvimento racional do sistema criminal em escala global",
+        "language": "Portugese"
+      },
+      {
+        "id": 14,
+        "text": "sungai-sungai yang utama ialah sungai paraguay bermejo colorado uruguay dan sungai terbesar yaitu sungai paraná  yang terakhir mengalir bertama sebelum bertemu samudra atlantik membentuk estuaria di rio de la plata sungai perak iklim argentina terutama sedang dengan perbedaan yang besar dari subtropis di utara sampai keringsub-antartika di selatan",
+        "language": "Indonesian"
+      },
+      {
+        "id": 15,
+        "text": "بلینڈرانگریزی blender ایک پیشہورانہ مفت اور آزاد مصدر d کمپیوٹر گرافک سوفٹویئر ہے جو اینیمیٹڈ فلمیںبصری اثرات انگریزی visual effectsفنd پرنٹنگانٹرایکٹو تھری ڈی ایپلیکشنز interactive d applications اور ویڈیو گیمز بنانے کے لیے استعمال ہوتا ہے۔d ماڈلنگ یو وی انریپنگانگریزی uv unwrapping ٹیکسچرںگانگریزی texturing راسٹر گرافکس ایڈیٹنگ رگںگ اور سکنّگ مائع اور دھوئیں کی سیمولیشن پارٹیکل سیمولیشن سافٹ باڈی سیمولیشن ڈیجیٹل مجسمہ سازی اینیمیٹنگ کیمرا ٹریکںگ رینڈرنگانگریزی rendering ویڈیو ایڈیٹںگ وغیرہ بلینڈر کے فیچرز ہیں۔ اس کے اندر ایک گیم انجن بھی موجود ہے۔",
+        "language": "Urdu"
+      },
+      {
+        "id": 16,
+        "text": "அனுமான்காட் மாவட்டம் hanumangarh district - இந்தி हनुमानगढ़ ज़िला மேற்கு இந்தியாவில் அமைந்துள்ள இராஜஸ்தான் மாநிலத்தின்  மாவட்டங்களில் ஒன்றாகும் இம்மாவட்டத் தலைமையிட நகரம் அனுமான்காட் ஆகும் இ ராஜஸ்தான் மாநிலத்தின் வடக்குப் பகுதியில் பஞ்சாப் மற்றும் அரியானா மாநில எல்லைப்புறத்தில் அமைந்த இம்மாவட்டம் பிகானேர் கோட்டத்தில் உள்ளது",
+        "language": "Tamil"
+      },
+      {
+        "id": 17,
+        "text": "年（平成年） - びわこ・くさつキャンパスに「食マネジメント学部」（college of gastronomy management）を開設予定。理工学部の都市システム工学科と環境システム工学科を統合し「環境都市システム工学科」を開設予定。衣笠キャンパスの国際関係学部に「アメリカン大学・立命館大学国際連携学科」を開設予定。",
+        "language": "Japanese"
+      },
+      {
+        "id": 18,
+        "text": "seitsmeaastase sõja järel  aastal läks saar suurbritannia valdusse ja dominical moodustati esimene esindusorgan prantslased üritasid aastatel –  kolmel korral tulutult dominicale tungida  rajati dominical briti koloonia  lõpetati kogu briti impeeriumis orjandus  pääsesid esimesed mustanahalised saare esindusorganisse ja  aastal sai saarel esimese briti kolooniana seadusandliku võimu kohalik aafrika päritolu elanikkonna enamus  kuulutati dominica briti kroonikolooniaks – oli dominica lääne-india föderatsiooni provints",
+        "language": "Estonian"
+      },
+      {
+        "id": 19,
+        "text": "philocaenus jinjaensis is een vliesvleugelig insect uit de familie pteromalidae de wetenschappelijke naam is voor het eerst geldig gepubliceerd in  door van noort",
+        "language": "Dutch"
+      },
+      {
+        "id": 20,
+        "text": "文部科学副大臣としての在任日数が最も多いのは、池坊保子である。池坊は安倍内閣にて文部科学副大臣に任命され、それ以来、安倍改造内閣、福田康夫内閣の計内閣にて文部科学副大臣を務めた。また、文部科学副大臣としての就任回数が最も多いのは、鈴木寛である。池坊の在任日数には及ばないものの、鈴木は鳩山由紀夫内閣にて文部科学副大臣に任命され、それ以来、菅内閣、菅第次改造内閣、菅第次改造内閣の計内閣にて文部科学副大臣を務めた。",
+        "language": "Japanese"
+      },
+      {
+        "id": 21,
+        "text": "win is de -bit api voor moderne versies van windows de api bestaat uit functies die net zoals bij win geïmplementeerd zijn in systeem-dll-bestanden de kern-dll-bestanden van win zijn kerneldll userdll en gdidll win werd geïntroduceerd met windows nt de win-versie die bij windows  kwam werd aanvankelijk winc genoemd met de \"c\" die stond voor \"compatibiliteit\" maar deze term moest van microsoft plaatsmaken voor de naam \"win\"",
+        "language": "Dutch"
+      },
+      {
+        "id": 22,
+        "text": "年－年，由于苏联国家规定的粮食价格太低，农民并不急于卖粮，使粮食收购出现短缺。斯大林认为造成危机的原因是富农阶层的蓄意破坏，他不顾布哈林等人的反对，一方面采用特殊手段打击富农，强迫他们按指定价格卖出余粮；另一方面推行农业集体化政策。年月，斯大林又提出“消灭富农”的口号，命令没收富农的财产并将他们放逐，不准他们加入集体公社。由于对“富农”概念缺乏准确界限，集体化开始时国内“富农”占农户总数不到，而最后被剥夺的农户却达到农户总数的－，部分中农和贫农也被当作富农剥夺。年月苏共中央全会通过决议开始全盘集体化，从此集体农庄的规模以惊人的速度增长（两个月内集体农庄的比例从增长到），执行过程中，底层执行者经常采用威胁、恐吓等手段强迫农民入社。年月日，斯大林在《真理报》发表《胜利冲昏头脑》一文，批评全盘集体化运动中违反农民自愿原则的过火行为，于是引发大规模退社的浪潮。年月，集体农庄比例已由降到，斯大林不得不在月召开的苏共第十六次代表大会上再次改变态度，赞扬全盘集体化的成就并批评反对者是“和共产主义的敌人勾结在一起的人”，又一次掀起集体化运动的高潮。到年底未加入集体农庄的农户仅占，至此全盘集体化的目标基本实现。",
+        "language": "Chinese"
+      },
+      {
+        "id": 23,
+        "text": "dizinin pilot bölümü kanalın kurulduğu  yılından beri en fazla izlenen pilot bölüm olmuştur i̇lk sezon ortalama  milyon izleyici tarafından takip edilmiştir dizi başlarda ortalama bir izlenme payına sahipken eleştirmenlerin de kabul ettiği gibi sezonun ortalarına doğru izlenme payı artmıştır ve ikinci sezonun ilk bölümü genellikle çok iyi eleştiriler almıştır dizi birçok ödüle aday gösterilmiş - yıllarında düzenlenen teen choice awardsda toplam on iki ödül kazanmıştır dizinin dördüncü sezonunun ilk bölümü  ekim de yayınlanmıştır",
+        "language": "Turkish"
+      },
+      {
+        "id": 24,
+        "text": "그럼에도 불구하고 바그너의 작품은 이스라엘에서 사실상 연주 금지되어 왔으며 그리고 극히 적은 수의 공연이 행해지기는 했으나 엄청난 찬반 논란을 일으켰다 바그너의 곡은 사실 공영 라디오와 텔레비전 방송국에서는 흔히 방송되고 있지만 공공 공연으로 무대에 올리려는 시도는 반대 시위 특히 유대인 대학살 생존자들에 의해 저지되어 오고 있다 예를 들어 다니엘 바렌보임이 트리스탄과 이졸데의 한 소절을 년 이스라엘 축제의 앙코르로 연주한 뒤에 의회의 위원회는 지휘자를 쫓아내야 한다고 목소리를 높였고 결국 처음에는 계획되어 있었던 발퀴레 공연을 포기해야 했다 다른 경우에 주빈 메타는 관중석의 항의성 퇴장과 야유에도 불구하고 이스라엘에서 바그너를 연주했다바그너와 그의 음악이 일으키는 반응의 복잡함을 반영하는 수많은 역설 중 하나는 현대 시오니즘의 창시자인 theodore herzl이 바그너의 작품에 대한 열렬한 숭배자였다는 것이다",
+        "language": "Korean"
+      },
+      {
+        "id": 25,
+        "text": "แอ็ชเชอร์สมรสกับเยททา อูมีเคอร์ เมื่อปี คศ  และอาศัยอยู่ในกรุงโรมประเทศอิตาลี กระทั่งปี คศ  จากนั้น สถานการณ์ทางการเมืองทำให้ต้องย้ายไปยังสวิตเซอร์แลนด์ และต่อมาไปยังเบลเยียม ครั้นปี คศ  ขณะเกิดสงครามโลกครั้งที่  กองทัพเยอรมันยึดกรุงบรัสเซลส์ แอ็ชเชอร์จึงเดินทางกลับไปยังเนเธอร์แลนด์ และอาศัยในเมืองบาร์น baarn และลาเริน laren และทำงานที่นั่นกระทั่งเสียชีวิตเมื่อวันที่  มีนาคม คศ  เมื่ออายุได้  ปี",
+        "language": "Thai"
+      },
+      {
+        "id": 26,
+        "text": "cavum magni sepulturae loci teoumae in efate insula in vanuatu siti anno  inventi triginta sex corpora in viginti quinque sepulcris cum urnis sepulturae in medium protulit omnes sceleti capitibus carebant calvariis post primam sepulturam remotis anulisque ex testis conorum substitutis capita iterum humata sunt sepultura cuiusdam senis tria calvaria supra pectus habebat una urna sepulturae quattuor aves in urnam spectantis vehementius monstrabat computatio radiocarbonica testarum in hoc sepulturae loco positarum tempus circa  acn indicat",
+        "language": "Latin"
+      },
+      {
+        "id": 27,
+        "text": "la date et le déroulement des faits demeurent incertains car ils se placent durant la période pour laquelle les livres de lannaliste romain tite-live ont été perdus les textes qui nous sont parvenus se rapportant à la campagne romaine contre les sénons peuvent être classés en trois catégories dabord il y a le récit de polybe historien grec seul auteur qui mentionne explicitement la bataille darretium mais ce dernier napporte pas beaucoup de détails et replace la bataille dans un contexte plus général son récit repose très probablement sur celui de fabius pictor on trouve ensuite des sources qui dérivent vraisemblablement dune tradition annalistique plus tardive datant de lépoque syllanienne et dont tite-live eutrope et florus ainsi quaugustin et orose sont tributaires enfin on dispose de textes dappien et de denys dhalicarnasse qui abordent ces mêmes évènements apportant des détails inédits mais qui ne font pas de référence explicite à la bataille darretium ni au général romain metellus appien semble faire une synthèse des deux traditions précédentes mais son récit demeure confus et difficile à interpréter tous ces récits antiques divergent sur certains points notamment le statut de lucius caecilius metellus denter et lintervention de manius curius dentatus et ne permettent pas de",
+        "language": "French"
+      },
+      {
+        "id": 28,
+        "text": "las sentencias eran largas hasta  años y frecuentemente se extendían indefinidamente sin juicio ni consulta los presos en virtud del artículo  se conocían como \"politichesky\" политический политический заключённый \"politиchesky zakliuchenny\" o \"prisionero político\" en contraposición a los delincuentes comunes \"ugolovnik\" уголовник tras su liberación el prisionero sería enviado a un exilio en rusia sin el derecho a establecerse a menos de  km de las grandes ciudades",
+        "language": "Spanish"
+      },
+      {
+        "id": 29,
+        "text": "年（年）月、北漢の忻州と代州が離反して後周につくと、撻烈は都統として西南道軍を率いて北漢を救援した。後周の符彦卿らを忻口で討ち、史彦超を捕らえた。後周軍が撤退すると、撻烈は後周に落とされた城邑を回復した。年（年）月、宋の李継勲らが北漢の遼州・石州を攻撃すると、撻烈は万の軍を率いて北漢を救援した。年（年）月、宋軍が太原を包囲すると、撻烈は行軍都統となり、諸道の兵を発して北漢を救援した。雁門に進出すると、宋軍は報を知って撤退した。",
+        "language": "Japanese"
+      }
     ]
   },
   "chemicals": {
@@ -160,86 +292,88 @@
         "primary_key": true
       }
     ],
-      "data": [
-        {
-          "name": "Water",
-          "warning": "No Warning"
-        },
-        {
-          "name": "Sulfuric Acid",
-          "warning": "Highly Corrosive"
-        },
-        {
-          "name": "Methanol",
-          "warning": "Toxic"
-        },
-        {
-          "name": "Methanol",
-          "warning": "Flammable"
-        },
-        {
-          "name": "Hydrochloric Acid",
-          "warning": "Highly Corrosive"
-        },
-        {
-          "name": "Muriatic Acid",
-          "warning": "Toxic"
-        },
-        {
-          "name": "Ammonia",
-          "warning": "Toxic"
-        },
-        {
-          "name": "Ammonia",
-          "warning": "Irritant"
-        },
-        {
-          "name": "Ethanol",
-          "warning": "Flammable"
-        },
-        {
-          "name": "Drinking Alcohol",
-          "warning": "Mildly Toxic"
-        },
-        {
-          "name": "Benzene",
-          "warning": "Carcinogenic"
-        },
-        {
-          "name": "Benzene",
-          "warning": "Flammable"
-        },
-        {
-          "name": "Chlorine",
-          "warning": "Highly Toxic"
-        },
-        {
-          "name": "Acetone",
-          "warning": "Highly Flammable"
-        },
-        {
-          "name": "Acetone",
-          "warning": "Toxic"
-        },
-        {
-          "name": "Sodium Hydroxide",
-          "warning": "Highly Corrosive"
-        },
-        {
-          "name": "Caffeine",
-          "warning": "No Warnings"
-        }
-      ]
+    "data": [
+      {
+        "name": "Water",
+        "warning": "No Warning"
+      },
+      {
+        "name": "Sulfuric Acid",
+        "warning": "Highly Corrosive"
+      },
+      {
+        "name": "Methanol",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Methanol",
+        "warning": "Flammable"
+      },
+      {
+        "name": "Hydrochloric Acid",
+        "warning": "Highly Corrosive"
+      },
+      {
+        "name": "Muriatic Acid",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Ammonia",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Ammonia",
+        "warning": "Irritant"
+      },
+      {
+        "name": "Ethanol",
+        "warning": "Flammable"
+      },
+      {
+        "name": "Drinking Alcohol",
+        "warning": "Mildly Toxic"
+      },
+      {
+        "name": "Benzene",
+        "warning": "Carcinogenic"
+      },
+      {
+        "name": "Benzene",
+        "warning": "Flammable"
+      },
+      {
+        "name": "Chlorine",
+        "warning": "Highly Toxic"
+      },
+      {
+        "name": "Acetone",
+        "warning": "Highly Flammable"
+      },
+      {
+        "name": "Acetone",
+        "warning": "Toxic"
+      },
+      {
+        "name": "Sodium Hydroxide",
+        "warning": "Highly Corrosive"
+      },
+      {
+        "name": "Caffeine",
+        "warning": "No Warnings"
+      }
+    ]
   },
   "elements": {
     "schema": [
       {
         "name": "atomic_number",
-        "type": "number"
+        "type": "number",
+        "primary_key": true
       },
       {
         "name": "element",
-        "type": "text"
+        "type": "text",
+        "primary_key": false
       }
     ],
     "data": [
@@ -721,11 +855,13 @@
     "schema": [
       {
         "name": "symbol",
-        "type": "text"
+        "type": "text",
+        "primary_key": true
       },
       {
         "name": "phase",
-        "type": "text"
+        "type": "text",
+        "primary_key": false
       }
     ],
     "data": [
@@ -3089,71 +3225,88 @@
     "schema": [
       {
         "name": "Patient ID",
-        "type": "integer"
+        "type": "integer",
+        "primary_key": true
       },
       {
         "name": "Heart Rate",
-        "type": "integer"
+        "type": "integer",
+        "primary_key": false
       },
       {
         "name": "Respiratory Rate",
-        "type": "integer"
+        "type": "integer",
+        "primary_key": false
       },
       {
         "name": "Timestamp",
-        "type": "string"
+        "type": "string",
+        "primary_key": false
       },
       {
         "name": "Body Temperature",
-        "type": "number"
+        "type": "number",
+        "primary_key": false
       },
       {
         "name": "Oxygen Saturation",
-        "type": "number"
+        "type": "number",
+        "primary_key": false
       },
       {
         "name": "Systolic Blood Pressure",
-        "type": "integer"
+        "type": "integer",
+        "primary_key": false
       },
       {
         "name": "Diastolic Blood Pressure",
-        "type": "integer"
+        "type": "integer",
+        "primary_key": false
       },
       {
         "name": "Age",
-        "type": "integer"
+        "type": "integer",
+        "primary_key": false
       },
       {
         "name": "Gender",
-        "type": "string"
+        "type": "string",
+        "primary_key": false
       },
       {
         "name": "Weight (kg)",
-        "type": "number"
+        "type": "number",
+        "primary_key": false
       },
       {
         "name": "Height (m)",
-        "type": "number"
+        "type": "number",
+        "primary_key": false
       },
       {
         "name": "Derived_HRV",
-        "type": "number"
+        "type": "number",
+        "primary_key": false
       },
       {
         "name": "Derived_Pulse_Pressure",
-        "type": "integer"
+        "type": "integer",
+        "primary_key": false
       },
       {
         "name": "Derived_BMI",
-        "type": "number"
+        "type": "number",
+        "primary_key": false
       },
       {
         "name": "Derived_MAP",
-        "type": "number"
+        "type": "number",
+        "primary_key": false
       },
       {
         "name": "Risk Category",
-        "type": "string"
+        "type": "string",
+        "primary_key": false
       }
     ],
     "data": [
@@ -3346,6 +3499,3694 @@
         "Derived_BMI": 32.1177257187,
         "Derived_MAP": 97.3333333333,
         "Risk Category": "High Risk"
+      }
+    ]
+  },
+  "companies_1": {
+    "citation": "https://www.kaggle.com/datasets/winston56/fortune-500-data-2021",
+    "schema": [
+      {
+        "name": "company",
+        "type": "string",
+        "primary_key": "true"
+      },
+      {
+        "name": "rank",
+        "type": "integer",
+        "primary_key": "false"
+      },
+      {
+        "name": "rank_change",
+        "type": "number",
+        "primary_key": "false"
+      },
+      {
+        "name": "revenue",
+        "type": "number",
+        "primary_key": "false"
+      },
+      {
+        "name": "profit",
+        "type": "number",
+        "primary_key": "false"
+      },
+      {
+        "name": "num. of employees",
+        "type": "number",
+        "primary_key": "false"
+      },
+      {
+        "name": "sector",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "city",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "newcomer",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "ceo_founder",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "ceo_woman",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "profitable",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "prev_rank",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "CEO",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Website",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Ticker",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Market Cap",
+        "type": "string",
+        "primary_key": "false"
+      }
+    ],
+    "data": [
+      {
+        "company": "Valvoline",
+        "rank": 837,
+        "rank_change": 0.0,
+        "revenue": 2981.0,
+        "profit": 420.0,
+        "num. of employees": 9800.0,
+        "sector": "Chemicals",
+        "city": "Lexington",
+        "state": "KY",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": " ",
+        "CEO": "Samuel J. Mitchell Jr.",
+        "Website": "https:\/\/www.valvoline.com",
+        "Ticker": "VVV",
+        "Market Cap": "5660.5"
+      },
+      {
+        "company": "Costco Wholesale",
+        "rank": 11,
+        "rank_change": 1.0,
+        "revenue": 195929.0,
+        "profit": 5007.0,
+        "num. of employees": 288000.0,
+        "sector": "Retailing",
+        "city": "Issaquah",
+        "state": "WA",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": "12.0",
+        "CEO": "W. Craig Jelinek",
+        "Website": "www.costco.com",
+        "Ticker": "COST",
+        "Market Cap": "230443"
+      },
+      {
+        "company": "NRG Energy",
+        "rank": 133,
+        "rank_change": 200.0,
+        "revenue": 26989.0,
+        "profit": 2187.0,
+        "num. of employees": 6635.0,
+        "sector": "Energy",
+        "city": "Houston",
+        "state": "TX",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": "333.0",
+        "CEO": "Mauricio Gutierrez",
+        "Website": "https:\/\/www.nrg.com",
+        "Ticker": "NRG",
+        "Market Cap": "9855"
+      },
+      {
+        "company": "Universal Health Services",
+        "rank": 297,
+        "rank_change": -27.0,
+        "revenue": 12642.1,
+        "profit": 991.6,
+        "num. of employees": 78850.0,
+        "sector": "Health Care",
+        "city": "King of Prussia",
+        "state": "PA",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": "270.0",
+        "CEO": "Marc D. Miller",
+        "Website": "https:\/\/www.uhsinc.com",
+        "Ticker": "UHS",
+        "Market Cap": "10843.1"
+      },
+      {
+        "company": "Dow",
+        "rank": 64,
+        "rank_change": 18.0,
+        "revenue": 54968.0,
+        "profit": 6311.0,
+        "num. of employees": 35700.0,
+        "sector": "Chemicals",
+        "city": "Midland",
+        "state": "MI",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": "82.0",
+        "CEO": "James R. Fitterling",
+        "Website": "www.dow.com",
+        "Ticker": "DOW",
+        "Market Cap": "38189"
+      },
+      {
+        "company": "Nexstar Media Group",
+        "rank": 637,
+        "rank_change": 0.0,
+        "revenue": 4648.4,
+        "profit": 834.6,
+        "num. of employees": 11817.0,
+        "sector": "Media",
+        "city": "Irving",
+        "state": "TX",
+        "newcomer": "no",
+        "ceo_founder": "yes",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": " ",
+        "CEO": "Perry Sook",
+        "Website": "https:\/\/www.nexstar.tv",
+        "Ticker": "NXST",
+        "Market Cap": "6883"
+      },
+      {
+        "company": "Nike",
+        "rank": 83,
+        "rank_change": 2.0,
+        "revenue": 44538.0,
+        "profit": 5727.0,
+        "num. of employees": 73300.0,
+        "sector": "Apparel",
+        "city": "Beaverton",
+        "state": "OR",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": "85.0",
+        "CEO": "John J. Donahoe II",
+        "Website": "www.nike.com",
+        "Ticker": "NKE",
+        "Market Cap": "171840"
+      },
+      {
+        "company": "AbbVie",
+        "rank": 63,
+        "rank_change": 5.0,
+        "revenue": 56197.0,
+        "profit": 11542.0,
+        "num. of employees": 50000.0,
+        "sector": "Health Care",
+        "city": "North Chicago",
+        "state": "IL",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": "68.0",
+        "CEO": "Richard A. Gonzalez",
+        "Website": "www.abbvie.com",
+        "Ticker": "ABBV",
+        "Market Cap": "264607"
+      },
+      {
+        "company": "Coty",
+        "rank": 554,
+        "rank_change": 0.0,
+        "revenue": 5616.2,
+        "profit": -201.3,
+        "num. of employees": 11430.0,
+        "sector": "Household Products",
+        "city": "New York",
+        "state": "NY",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "yes",
+        "profitable": "no",
+        "prev_rank": " ",
+        "CEO": "Sue Y. Nabi",
+        "Website": "https:\/\/www.coty.com",
+        "Ticker": "COTY",
+        "Market Cap": "7540.6"
+      },
+      {
+        "company": "Ingredion",
+        "rank": 476,
+        "rank_change": -13.0,
+        "revenue": 6894.0,
+        "profit": 117.0,
+        "num. of employees": 12000.0,
+        "sector": "Food, Beverages & Tobacco",
+        "city": "Westchester",
+        "state": "IL",
+        "newcomer": "no",
+        "ceo_founder": "no",
+        "ceo_woman": "no",
+        "profitable": "yes",
+        "prev_rank": "463.0",
+        "CEO": "James P. Zallie",
+        "Website": "https:\/\/www.ingredion.com",
+        "Ticker": "INGR",
+        "Market Cap": "5814.2"
+      }
+    ]
+  },
+  "companies_2": {
+    "citation": "https://www.kaggle.com/datasets/peopledatalabssf/free-7-million-company-dataset",
+    "schema": [
+      {
+        "name": "name",
+        "type": "string",
+        "primary_key": "true"
+      },
+      {
+        "name": "domain",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "year founded",
+        "type": "number",
+        "primary_key": "false"
+      },
+      {
+        "name": "industry",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "size range",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "locality",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "country",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "linkedin url",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "current employee estimate",
+        "type": "integer",
+        "primary_key": "false"
+      },
+      {
+        "name": "total employee estimate",
+        "type": "integer",
+        "primary_key": "false"
+      }
+    ],
+    "data": [
+      {
+        "name": "valvoline inc",
+        "domain": null,
+        "year founded": null,
+        "industry": "oil & energy",
+        "size range": "1 - 10",
+        "locality": "portland, oregon, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/valvoline-inc",
+        "current employee estimate": 4,
+        "total employee estimate": 6
+      },
+      {
+        "name": "costco wholesale canada",
+        "domain": "costco.ca",
+        "year founded": 1983.0,
+        "industry": "wholesale",
+        "size range": "1001 - 5000",
+        "locality": "ottawa, ontario, canada",
+        "country": "canada",
+        "linkedin url": "linkedin.com\\/company\\/costco-wholesale-canada",
+        "current employee estimate": 1451,
+        "total employee estimate": 3041
+      },
+      {
+        "name": "nrg energy",
+        "domain": "nrg.com",
+        "year founded": 1989.0,
+        "industry": "oil & energy",
+        "size range": "5001 - 10000",
+        "locality": "princeton, new jersey, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/nrg-energy",
+        "current employee estimate": 3278,
+        "total employee estimate": 6320
+      },
+      {
+        "name": "universal health services private limited",
+        "domain": null,
+        "year founded": null,
+        "industry": "hospital & health care",
+        "size range": "1 - 10",
+        "locality": null,
+        "country": null,
+        "linkedin url": "linkedin.com\\/company\\/universal-health-services-private-limited",
+        "current employee estimate": 2,
+        "total employee estimate": 2
+      },
+      {
+        "name": "the dow chemical company",
+        "domain": "dow.com",
+        "year founded": 1897.0,
+        "industry": "chemicals",
+        "size range": "10001+",
+        "locality": "midland, michigan, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/dow-chemical",
+        "current employee estimate": 20706,
+        "total employee estimate": 45769
+      },
+      {
+        "name": "nexstar media group, inc.",
+        "domain": "nexstar.tv",
+        "year founded": 1996.0,
+        "industry": "broadcast media",
+        "size range": "1001 - 5000",
+        "locality": "irving, texas, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/nexstar-broadcasting-group",
+        "current employee estimate": 1123,
+        "total employee estimate": 2416
+      },
+      {
+        "name": "nike ecuador - equinox s.a.",
+        "domain": "equinoxltd.com",
+        "year founded": 1986.0,
+        "industry": "sporting goods",
+        "size range": "1 - 10",
+        "locality": "williamsport, pennsylvania, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/equinox-ltd.",
+        "current employee estimate": 0,
+        "total employee estimate": 1
+      },
+      {
+        "name": "nike",
+        "domain": "nike.com",
+        "year founded": 1972.0,
+        "industry": "sporting goods",
+        "size range": "10001+",
+        "locality": "beaverton, oregon, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/nike",
+        "current employee estimate": 29731,
+        "total employee estimate": 73269
+      },
+      {
+        "name": "abbvie deutschland gmbh & co. kg",
+        "domain": null,
+        "year founded": null,
+        "industry": "biotechnology",
+        "size range": "11 - 50",
+        "locality": null,
+        "country": null,
+        "linkedin url": "linkedin.com\\/company\\/abbvie-deutschland-gmbh-&-co-kg",
+        "current employee estimate": 13,
+        "total employee estimate": 27
+      },
+      {
+        "name": "abbvie biotherapeutics inc.",
+        "domain": null,
+        "year founded": null,
+        "industry": "biotechnology",
+        "size range": "11 - 50",
+        "locality": "redwood city, california, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/abbvie-biotherapeutics-inc-",
+        "current employee estimate": 11,
+        "total employee estimate": 16
+      },
+      {
+        "name": "abbvie bioresearch center inc.",
+        "domain": null,
+        "year founded": null,
+        "industry": "pharmaceuticals",
+        "size range": "11 - 50",
+        "locality": null,
+        "country": null,
+        "linkedin url": "linkedin.com\\/company\\/abbvie-bioresearch-center-inc-",
+        "current employee estimate": 8,
+        "total employee estimate": 10
+      },
+      {
+        "name": "coty",
+        "domain": "coty.com",
+        "year founded": 1904.0,
+        "industry": "cosmetics",
+        "size range": "10001+",
+        "locality": "new york, new york, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/coty",
+        "current employee estimate": 7430,
+        "total employee estimate": 16400
+      },
+      {
+        "name": "coty uk - beauty, celebrated & liberated",
+        "domain": "heinzegypt.com",
+        "year founded": null,
+        "industry": "food & beverages",
+        "size range": "201 - 500",
+        "locality": "cairo, al qahirah, egypt",
+        "country": "egypt",
+        "linkedin url": "linkedin.com\\/company\\/cairo-food-industries",
+        "current employee estimate": 84,
+        "total employee estimate": 131
+      },
+      {
+        "name": "coty germany gmbh",
+        "domain": "cotyprestige.de",
+        "year founded": null,
+        "industry": "cosmetics",
+        "size range": "11 - 50",
+        "locality": null,
+        "country": null,
+        "linkedin url": "linkedin.com\\/company\\/coty-germany-gmbh",
+        "current employee estimate": 13,
+        "total employee estimate": 23
+      },
+      {
+        "name": "ingredion incorporated",
+        "domain": "ingredion.com",
+        "year founded": 1906.0,
+        "industry": "food & beverages",
+        "size range": "1001 - 5000",
+        "locality": "westchester, illinois, united states",
+        "country": "united states",
+        "linkedin url": "linkedin.com\\/company\\/ingredion-incorporated",
+        "current employee estimate": 2416,
+        "total employee estimate": 4648
+      }
+    ]
+  },
+  "user_data": {
+    "citation": "https://www.kaggle.com/datasets/kashishparmar02/social-media-sentiments-analysis-dataset",
+    "schema": [
+      {
+        "name": "Text",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Sentiment",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Timestamp",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "User",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Platform",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Hashtags",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Retweets",
+        "type": "number",
+        "primary_key": "false"
+      },
+      {
+        "name": "Likes",
+        "type": "number",
+        "primary_key": "false"
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Year",
+        "type": "integer",
+        "primary_key": "false"
+      },
+      {
+        "name": "Month",
+        "type": "integer",
+        "primary_key": "false"
+      },
+      {
+        "name": "Day",
+        "type": "integer",
+        "primary_key": "false"
+      },
+      {
+        "name": "Hour",
+        "type": "integer",
+        "primary_key": "false"
+      }
+    ],
+    "data": [
+      {
+        "Text": "Coding a new project with enthusiasm.",
+        "Sentiment": "Positive",
+        "Timestamp": "2023-01-25 13:15:00",
+        "User": "CodeEnthusiast",
+        "Platform": "Facebook",
+        "Hashtags": "#Coding #Enthusiasm",
+        "Retweets": 30,
+        "Likes": 60,
+        "Country": "USA",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 25,
+        "Hour": 13
+      },
+      {
+        "Text": "Attending a live music concert tonight.",
+        "Sentiment": "Positive",
+        "Timestamp": "2023-01-27 20:00:00",
+        "User": "MusicLover",
+        "Platform": "Instagram",
+        "Hashtags": "#Music #ConcertNight",
+        "Retweets": 18,
+        "Likes": 35,
+        "Country": "USA",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 27,
+        "Hour": 20
+      },
+      {
+        "Text": "Convinced the teacher to have class outdoors. Learning equations with a side of fresh air!",
+        "Sentiment": "Positive",
+        "Timestamp": "2023-08-06 14:00:00",
+        "User": "OutdoorClassHighSchool",
+        "Platform": "Facebook",
+        "Hashtags": "#OutdoorClassroom #HighSchoolExplorer",
+        "Retweets": 28,
+        "Likes": 55,
+        "Country": "USA",
+        "Year": 2023,
+        "Month": 8,
+        "Day": 6,
+        "Hour": 14
+      },
+      {
+        "Text": "Exploring the city\\'s hidden gems.",
+        "Sentiment": "Positive",
+        "Timestamp": "2023-01-18 14:50:00",
+        "User": "UrbanExplorer",
+        "Platform": "Facebook",
+        "Hashtags": "#CityExplore #HiddenGems",
+        "Retweets": 12,
+        "Likes": 25,
+        "Country": "UK",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 18,
+        "Hour": 14
+      },
+      {
+        "Text": "Amidst the tulip fields of Keukenhof, a tapestry of colors that paints the soul with springtime joy.",
+        "Sentiment": "Joy",
+        "Timestamp": "2021-04-02 18:20:00",
+        "User": "KeukenhofAdventurer",
+        "Platform": "Instagram",
+        "Hashtags": "#Joy #SpringtimeColors",
+        "Retweets": 35,
+        "Likes": 70,
+        "Country": "Netherlands",
+        "Year": 2021,
+        "Month": 4,
+        "Day": 2,
+        "Hour": 18
+      },
+      {
+        "Text": "Participated in a local theater production, proving that the stage belongs to every age. #TheaterProduction #SeniorActor",
+        "Sentiment": "Joy",
+        "Timestamp": "2023-07-09 22:30:00",
+        "User": "SeniorActor",
+        "Platform": "Facebook",
+        "Hashtags": "#StagePassion #SeniorTheater",
+        "Retweets": 20,
+        "Likes": 40,
+        "Country": "USA",
+        "Year": 2023,
+        "Month": 7,
+        "Day": 9,
+        "Hour": 22
+      },
+      {
+        "Text": "Surrounded by the colors of joy, a canvas painted with laughter and endless smiles.",
+        "Sentiment": "Joy",
+        "Timestamp": "2019-07-02 17:00:00",
+        "User": "ColorfulLaughter",
+        "Platform": "Instagram",
+        "Hashtags": "#Joy #EndlessSmiles",
+        "Retweets": 40,
+        "Likes": 80,
+        "Country": "Canada",
+        "Year": 2019,
+        "Month": 7,
+        "Day": 2,
+        "Hour": 17
+      },
+      {
+        "Text": "Attended a wine tasting event, savoring the richness of flavors that age like fine wine. Cheers to the golden years! #WineTasting #SeniorWineLover",
+        "Sentiment": "Joy",
+        "Timestamp": "2023-07-13 20:00:00",
+        "User": "SeniorWineConnoisseur",
+        "Platform": "Instagram",
+        "Hashtags": "#AgedToPerfection #SeniorCheers",
+        "Retweets": 35,
+        "Likes": 70,
+        "Country": "UK",
+        "Year": 2023,
+        "Month": 7,
+        "Day": 13,
+        "Hour": 20
+      },
+      {
+        "Text": "Embarking on a mission to find the best burger joint in town. Burger connoisseur: Reporting for duty!",
+        "Sentiment": "Excitement",
+        "Timestamp": "2023-08-31 20:15:00",
+        "User": "BurgerQuestHighSchool",
+        "Platform": "Twitter",
+        "Hashtags": "#BurgerQuest #HighSchoolFoodie",
+        "Retweets": 24,
+        "Likes": 42,
+        "Country": "UK",
+        "Year": 2023,
+        "Month": 8,
+        "Day": 31,
+        "Hour": 20
+      },
+      {
+        "Text": "Attempting to beat the record for the most consecutive cartwheels. Cartwheel challenge: Underway!",
+        "Sentiment": "Excitement",
+        "Timestamp": "2023-09-05 12:30:00",
+        "User": "CartwheelMasterHighSchool",
+        "Platform": "Twitter",
+        "Hashtags": "#CartwheelChallenge #HighSchoolAthlete",
+        "Retweets": 27,
+        "Likes": 52,
+        "Country": "Canada",
+        "Year": 2023,
+        "Month": 9,
+        "Day": 5,
+        "Hour": 12
+      },
+      {
+        "Text": "Got my hands on the latest fantasy novel. Diving into realms of magic and adventure!",
+        "Sentiment": "Excitement",
+        "Timestamp": "2023-08-13 20:00:00",
+        "User": "FantasyBookNerdHighSchool",
+        "Platform": "Instagram",
+        "Hashtags": "#FantasyBookNerd #HighSchoolReader",
+        "Retweets": 35,
+        "Likes": 70,
+        "Country": "UK",
+        "Year": 2023,
+        "Month": 8,
+        "Day": 13,
+        "Hour": 20
+      },
+      {
+        "Text": "In the heart of New York City, Times Square dazzles with lights, a vibrant spectacle of urban energy.",
+        "Sentiment": "Excitement",
+        "Timestamp": "2022-07-20 21:45:00",
+        "User": "TimesSquareExplorer",
+        "Platform": "Instagram",
+        "Hashtags": "#Excitement #UrbanEnergy",
+        "Retweets": 35,
+        "Likes": 70,
+        "Country": "USA",
+        "Year": 2022,
+        "Month": 7,
+        "Day": 20,
+        "Hour": 21
+      },
+      {
+        "Text": "Embracing the beauty of nature, a moment of contentment.",
+        "Sentiment": "Contentment",
+        "Timestamp": "2011-06-20 14:45:00",
+        "User": "NatureLover2",
+        "Platform": "Facebook",
+        "Hashtags": "#Contentment #Nature",
+        "Retweets": 25,
+        "Likes": 50,
+        "Country": "India",
+        "Year": 2011,
+        "Month": 6,
+        "Day": 20,
+        "Hour": 14
+      },
+      {
+        "Text": "In the garden of contentment, each bloom whispers tales of inner peace and joy.",
+        "Sentiment": "Contentment",
+        "Timestamp": "2022-02-15 12:20:00",
+        "User": "GardenOfJoy",
+        "Platform": "Facebook",
+        "Hashtags": "#Contentment #InnerPeace",
+        "Retweets": 25,
+        "Likes": 50,
+        "Country": "UK",
+        "Year": 2022,
+        "Month": 2,
+        "Day": 15,
+        "Hour": 12
+      },
+      {
+        "Text": "Reconnecting with old friends over a cup of tea. Friendship, the true essence of companionship. #OldFriends #Companionship",
+        "Sentiment": "Contentment",
+        "Timestamp": "2023-06-18 11:30:00",
+        "User": "TeaTimeSenior",
+        "Platform": "Twitter",
+        "Hashtags": "#FriendshipGoals #SeniorBonding",
+        "Retweets": 28,
+        "Likes": 55,
+        "Country": "UK",
+        "Year": 2023,
+        "Month": 6,
+        "Day": 18,
+        "Hour": 11
+      },
+      {
+        "Text": "Hosted a picnic in the park, basking in the warmth of friendship and sunshine. Simple joys, timeless memories. #ParkPicnic #SeniorJoy",
+        "Sentiment": "Contentment",
+        "Timestamp": "2023-07-08 16:00:00",
+        "User": "SeniorPicnicHost",
+        "Platform": "Twitter",
+        "Hashtags": "#FriendshipSunshine #SeniorMemories",
+        "Retweets": 30,
+        "Likes": 60,
+        "Country": "Canada",
+        "Year": 2023,
+        "Month": 7,
+        "Day": 8,
+        "Hour": 16
+      },
+      {
+        "Text": "Trying out a new recipe for dinner tonight.",
+        "Sentiment": "Neutral",
+        "Timestamp": "2023-01-15 19:55:00",
+        "User": "ChefCook",
+        "Platform": "Instagram",
+        "Hashtags": "#Cooking #Food",
+        "Retweets": 12,
+        "Likes": 25,
+        "Country": "Australia",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 15,
+        "Hour": 19
+      },
+      {
+        "Text": "Missing summer vibes and beach days.",
+        "Sentiment": "Neutral",
+        "Timestamp": "2023-01-17 12:20:00",
+        "User": "BeachLover",
+        "Platform": "Facebook",
+        "Hashtags": "#Summer #BeachDays",
+        "Retweets": 18,
+        "Likes": 35,
+        "Country": "Australia",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 17,
+        "Hour": 12
+      },
+      {
+        "Text": "Attending a workshop on time management to enhance organizational skills. Striving for efficiency.",
+        "Sentiment": "Neutral",
+        "Timestamp": "2023-10-12 18:20:00",
+        "User": "TimeManagementWorkshopHighSchool",
+        "Platform": "Twitter",
+        "Hashtags": "#EfficiencyGoals #HighSchoolSkills",
+        "Retweets": 23,
+        "Likes": 44,
+        "Country": "Canada",
+        "Year": 2023,
+        "Month": 10,
+        "Day": 12,
+        "Hour": 18
+      },
+      {
+        "Text": "Volunteering at a local charity event to give back to the community. Contributing to social causes.",
+        "Sentiment": "Neutral",
+        "Timestamp": "2023-10-13 12:30:00",
+        "User": "CharityEventVolunteerHighSchool",
+        "Platform": "Instagram",
+        "Hashtags": "#CommunityService #HighSchoolVolunteer",
+        "Retweets": 20,
+        "Likes": 39,
+        "Country": "UK",
+        "Year": 2023,
+        "Month": 10,
+        "Day": 13,
+        "Hour": 12
+      },
+      {
+        "Text": "Achieving a personal best in a track and field competition. The thrill of victory and self-improvement!",
+        "Sentiment": "Happy",
+        "Timestamp": "2016-09-14 12:30:00",
+        "User": "TrackFieldSuccessHighSchool",
+        "Platform": "Twitter",
+        "Hashtags": "#AthleticAchievement #HighSchoolSports",
+        "Retweets": 26,
+        "Likes": 51,
+        "Country": "Canada",
+        "Year": 2016,
+        "Month": 9,
+        "Day": 14,
+        "Hour": 12
+      },
+      {
+        "Text": "Participating in a multicultural festival, celebrating diversity with music, dance, and delicious food!",
+        "Sentiment": "Happy",
+        "Timestamp": "2020-02-29 20:45:00",
+        "User": "MulticulturalFestivalJoyHighSchool",
+        "Platform": "Facebook",
+        "Hashtags": "#CulturalCelebration #HighSchoolUnity",
+        "Retweets": 21,
+        "Likes": 43,
+        "Country": "UK",
+        "Year": 2020,
+        "Month": 2,
+        "Day": 29,
+        "Hour": 20
+      },
+      {
+        "Text": "Receiving a heartfelt letter from a pen pal in another country. Connecting across the globe!",
+        "Sentiment": "Happy",
+        "Timestamp": "2023-10-21 17:30:00",
+        "User": "PenPalConnectionHighSchool",
+        "Platform": "Facebook",
+        "Hashtags": "#GlobalFriendship #HighSchoolCorrespondence",
+        "Retweets": 23,
+        "Likes": 45,
+        "Country": "Canada",
+        "Year": 2023,
+        "Month": 10,
+        "Day": 21,
+        "Hour": 17
+      },
+      {
+        "Text": "Successfully completing a challenging coding project. Excitement for overcoming coding hurdles!",
+        "Sentiment": "Happy",
+        "Timestamp": "2023-10-17 12:30:00",
+        "User": "CodingSuccessHighSchool",
+        "Platform": "Twitter",
+        "Hashtags": "#CodingTriumph #HighSchoolTech",
+        "Retweets": 24,
+        "Likes": 48,
+        "Country": "USA",
+        "Year": 2023,
+        "Month": 10,
+        "Day": 17,
+        "Hour": 12
+      },
+      {
+        "Text": "Traffic was terrible this morning.",
+        "Sentiment": "Negative",
+        "Timestamp": "2023-01-15 08:45:00",
+        "User": "CommuterX",
+        "Platform": "Twitter",
+        "Hashtags": "#Traffic #Morning",
+        "Retweets": 5,
+        "Likes": 10,
+        "Country": "Canada",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 15,
+        "Hour": 8
+      },
+      {
+        "Text": "Winter blues got me feeling low.",
+        "Sentiment": "Negative",
+        "Timestamp": "2023-01-20 15:15:00",
+        "User": "WinterBlues",
+        "Platform": "Instagram",
+        "Hashtags": "#WinterBlues #Mood",
+        "Retweets": 8,
+        "Likes": 15,
+        "Country": "USA",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 20,
+        "Hour": 15
+      },
+      {
+        "Text": "Feeling a bit under the weather today.",
+        "Sentiment": "Negative",
+        "Timestamp": "2023-01-18 10:30:00",
+        "User": "WellnessCheck",
+        "Platform": "Twitter",
+        "Hashtags": "#SickDay #Health",
+        "Retweets": 7,
+        "Likes": 15,
+        "Country": "Canada",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 18,
+        "Hour": 10
+      },
+      {
+        "Text": "Political discussions heating up on the timeline.",
+        "Sentiment": "Negative",
+        "Timestamp": "2023-01-17 08:00:00",
+        "User": "DebateTalk",
+        "Platform": "Twitter",
+        "Hashtags": "#Politics #Debate",
+        "Retweets": 30,
+        "Likes": 60,
+        "Country": "USA",
+        "Year": 2023,
+        "Month": 1,
+        "Day": 17,
+        "Hour": 8
+      }
+    ]
+  },
+  "random_countries": {
+    "citation": "https://public.opendatasoft.com/explore/dataset/countries-territories-taxonomy-mvp-ct-taxonomy-with-hxl-tags1/table/",
+    "schema": [
+      {
+        "name": "Alpha3",
+        "type": "string",
+        "primary_key": "true"
+      },
+      {
+        "name": "random_country",
+        "type": "string",
+        "primary_key": "false"
+      }
+    ],
+    "data": [
+      {
+        "Alpha3": "COL",
+        "random_country": "\u0643\u0648\u0644\u0648\u0645\u0628\u064a\u0627"
+      },
+      {
+        "Alpha3": "NER",
+        "random_country": "\u0627\u0644\u0646\u064a\u062c\u0631"
+      },
+      {
+        "Alpha3": "OMN",
+        "random_country": "\u041e\u043c\u0430\u043d"
+      },
+      {
+        "Alpha3": "PHL",
+        "random_country": "Philippines (les) [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "BEL",
+        "random_country": "Belgique (la)"
+      },
+      {
+        "Alpha3": "HND",
+        "random_country": "Honduras (le)"
+      },
+      {
+        "Alpha3": "HUN",
+        "random_country": "\u5308\u7259\u5229"
+      },
+      {
+        "Alpha3": "IRL",
+        "random_country": "\u0418\u0440\u043b\u0430\u043d\u0434\u0438\u044f"
+      },
+      {
+        "Alpha3": "NZL",
+        "random_country": "Nueva Zelandia"
+      },
+      {
+        "Alpha3": "SAU",
+        "random_country": "\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0639\u0631\u0628\u064a\u0629 \u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629"
+      },
+      {
+        "Alpha3": "ZWE",
+        "random_country": "Zimbabwe"
+      },
+      {
+        "Alpha3": "CHN",
+        "random_country": "\u4e2d\u56fd"
+      },
+      {
+        "Alpha3": "CZE",
+        "random_country": "R\u00e9publique tch\u00e8que (la)"
+      },
+      {
+        "Alpha3": "DNK",
+        "random_country": "Danemark (le)"
+      },
+      {
+        "Alpha3": "SLV",
+        "random_country": "\u0421\u0430\u043b\u044c\u0432\u0430\u0434\u043e\u0440"
+      },
+      {
+        "Alpha3": "TJK",
+        "random_country": "Tadjikistan (le)"
+      },
+      {
+        "Alpha3": "TON",
+        "random_country": "\u062a\u0648\u0646\u063a\u0627"
+      },
+      {
+        "Alpha3": "BEN",
+        "random_country": "B\u00e9nin (le)"
+      },
+      {
+        "Alpha3": "BTN",
+        "random_country": "\u0628\u0648\u062a\u0627\u0646"
+      },
+      {
+        "Alpha3": "DEU",
+        "random_country": "\u0623\u0644\u0645\u0627\u0646\u064a\u0627"
+      },
+      {
+        "Alpha3": "IRN",
+        "random_country": "Iran"
+      },
+      {
+        "Alpha3": "KNA",
+        "random_country": "\u0633\u0627\u0646\u062a \u0643\u064a\u062a\u0633 \u0648\u0646\u064a\u0641\u0633"
+      },
+      {
+        "Alpha3": "LCA",
+        "random_country": "Sainte-Lucie [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "VCT",
+        "random_country": "Saint-Vincent-et-les Grenadines [f\u00e9m.]"
+      },
+      {
+        "Alpha3": null,
+        "random_country": "Channel Islands"
+      },
+      {
+        "Alpha3": "CAF",
+        "random_country": "Rep\u00fablica Centroafricana (la)"
+      },
+      {
+        "Alpha3": "DOM",
+        "random_country": "\u591a\u7c73\u5c3c\u52a0"
+      },
+      {
+        "Alpha3": "ECU",
+        "random_country": "\u5384\u74dc\u591a\u5c14"
+      },
+      {
+        "Alpha3": "LAO",
+        "random_country": "\u041b\u0430\u043e\u0441\u0441\u043a\u0430\u044f \u041d\u0430\u0440\u043e\u0434\u043d\u043e-\u0414\u0435\u043c\u043e\u043a\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430"
+      },
+      {
+        "Alpha3": "RWA",
+        "random_country": "Rwanda (le)"
+      },
+      {
+        "Alpha3": "BDI",
+        "random_country": "Burundi (le)"
+      },
+      {
+        "Alpha3": "CIV",
+        "random_country": "\u0643\u0648\u062a \u062f\u064a\u0641\u0648\u0627\u0631"
+      },
+      {
+        "Alpha3": "HRV",
+        "random_country": "Croatie (la)"
+      },
+      {
+        "Alpha3": "DMA",
+        "random_country": "\u062f\u0648\u0645\u064a\u0646\u064a\u0643\u0627"
+      },
+      {
+        "Alpha3": "GRC",
+        "random_country": "\u0413\u0440\u0435\u0446\u0438\u044f"
+      },
+      {
+        "Alpha3": "HTI",
+        "random_country": "\u0413\u0430\u0438\u0442\u0438"
+      },
+      {
+        "Alpha3": "MHL",
+        "random_country": "\u041c\u0430\u0440\u0448\u0430\u043b\u043b\u043e\u0432\u044b \u041e\u0441\u0442\u0440\u043e\u0432\u0430"
+      },
+      {
+        "Alpha3": "FSM",
+        "random_country": "\u041c\u0438\u043a\u0440\u043e\u043d\u0435\u0437\u0438\u044f (\u0424\u0435\u0434\u0435\u0440\u0430\u0442\u0438\u0432\u043d\u044b\u0435 \u0428\u0442\u0430\u0442\u044b)"
+      },
+      {
+        "Alpha3": "STP",
+        "random_country": "\u0633\u0627\u0646 \u062a\u0648\u0645\u064a \u0648\u0628\u0631\u064a\u0646\u0633\u064a\u0628\u064a"
+      },
+      {
+        "Alpha3": "SRB",
+        "random_country": "\u0635\u0631\u0628\u064a\u0627"
+      },
+      {
+        "Alpha3": "SWZ",
+        "random_country": "Eswatini (l')"
+      },
+      {
+        "Alpha3": "ATG",
+        "random_country": "\u5b89\u63d0\u74dc\u548c\u5df4\u5e03\u8fbe"
+      },
+      {
+        "Alpha3": "AZE",
+        "random_country": "\u0623\u0630\u0631\u0628\u064a\u062c\u0627\u0646"
+      },
+      {
+        "Alpha3": "BIH",
+        "random_country": "\u0411\u043e\u0441\u043d\u0438\u044f \u0438 \u0413\u0435\u0440\u0446\u0435\u0433\u043e\u0432\u0438\u043d\u0430"
+      },
+      {
+        "Alpha3": "GAB",
+        "random_country": "\u0413\u0430\u0431\u043e\u043d"
+      },
+      {
+        "Alpha3": "GUY",
+        "random_country": "Guyana"
+      },
+      {
+        "Alpha3": "IRQ",
+        "random_country": "\u4f0a\u62c9\u514b"
+      },
+      {
+        "Alpha3": "ITA",
+        "random_country": "Italia"
+      },
+      {
+        "Alpha3": "NCL",
+        "random_country": "New Caledonia"
+      },
+      {
+        "Alpha3": "NIC",
+        "random_country": "\u0646\u064a\u0643\u0627\u0631\u0627\u063a\u0648\u0627"
+      },
+      {
+        "Alpha3": "PCN",
+        "random_country": "Pitcairn"
+      },
+      {
+        "Alpha3": "AUS",
+        "random_country": "Australia"
+      },
+      {
+        "Alpha3": "JAM",
+        "random_country": "\u062c\u0627\u0645\u0627\u064a\u0643\u0627"
+      },
+      {
+        "Alpha3": "MDG",
+        "random_country": "Madagascar [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "MMR",
+        "random_country": "\u0645\u064a\u0627\u0646\u0645\u0627\u0631"
+      },
+      {
+        "Alpha3": "UKR",
+        "random_country": "Ucrania"
+      },
+      {
+        "Alpha3": "VNM",
+        "random_country": "\u8d8a\u5357"
+      },
+      {
+        "Alpha3": "BRN",
+        "random_country": "\u6587\u83b1\u8fbe\u9c81\u8428\u5170\u56fd"
+      },
+      {
+        "Alpha3": "COD",
+        "random_country": "\u0414\u0435\u043c\u043e\u043a\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430 \u041a\u043e\u043d\u0433\u043e"
+      },
+      {
+        "Alpha3": "GEO",
+        "random_country": "Georgia"
+      },
+      {
+        "Alpha3": "IMN",
+        "random_country": "Isle of Man"
+      },
+      {
+        "Alpha3": "MRT",
+        "random_country": "Mauritania"
+      },
+      {
+        "Alpha3": "TUV",
+        "random_country": "\u56fe\u74e6\u5362"
+      },
+      {
+        "Alpha3": "COM",
+        "random_country": "\u062c\u0632\u0631 \u0627\u0644\u0642\u0645\u0631"
+      },
+      {
+        "Alpha3": "COK",
+        "random_country": "Cook Islands"
+      },
+      {
+        "Alpha3": "GMB",
+        "random_country": "Gambie (la)"
+      },
+      {
+        "Alpha3": "IDN",
+        "random_country": "Indon\u00e9sie (l') [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "LVA",
+        "random_country": "\u0644\u0627\u062a\u0641\u064a\u0627"
+      },
+      {
+        "Alpha3": "SVK",
+        "random_country": "Eslovaquia"
+      },
+      {
+        "Alpha3": "UGA",
+        "random_country": "Uganda"
+      },
+      {
+        "Alpha3": "BOL",
+        "random_country": "Bolivia (Estado Plurinacional de)"
+      },
+      {
+        "Alpha3": "PRT",
+        "random_country": "\u0627\u0644\u0628\u0631\u062a\u063a\u0627\u0644"
+      },
+      {
+        "Alpha3": null,
+        "random_country": "Azores Islands"
+      },
+      {
+        "Alpha3": "COG",
+        "random_country": "\u041a\u043e\u043d\u0433\u043e"
+      },
+      {
+        "Alpha3": "CYP",
+        "random_country": "\u585e\u6d66\u8def\u65af"
+      },
+      {
+        "Alpha3": "ETH",
+        "random_country": "\u00c9thiopie (l') [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "GRL",
+        "random_country": "Greenland"
+      },
+      {
+        "Alpha3": "MYS",
+        "random_country": "Malaysia"
+      },
+      {
+        "Alpha3": "NAM",
+        "random_country": "Namibia"
+      },
+      {
+        "Alpha3": "WSM",
+        "random_country": "\u8428\u6469\u4e9a"
+      },
+      {
+        "Alpha3": "SVN",
+        "random_country": "Slov\u00e9nie (la)"
+      },
+      {
+        "Alpha3": "SUR",
+        "random_country": "Suriname"
+      },
+      {
+        "Alpha3": "ARE",
+        "random_country": "United Arab Emirates"
+      },
+      {
+        "Alpha3": "URY",
+        "random_country": "\u0623\u0648\u0631\u0648\u063a\u0648\u0627\u064a"
+      },
+      {
+        "Alpha3": "BGD",
+        "random_country": "Bangladesh"
+      },
+      {
+        "Alpha3": "TCD",
+        "random_country": "Chad"
+      },
+      {
+        "Alpha3": "EGY",
+        "random_country": "Egipto"
+      },
+      {
+        "Alpha3": "GIN",
+        "random_country": "Guinea"
+      },
+      {
+        "Alpha3": "KAZ",
+        "random_country": "\u54c8\u8428\u514b\u65af\u5766"
+      },
+      {
+        "Alpha3": "NLD",
+        "random_country": "\u041d\u0438\u0434\u0435\u0440\u043b\u0430\u043d\u0434\u044b"
+      },
+      {
+        "Alpha3": "GBR",
+        "random_country": "Reino Unido de Gran Breta\u00f1a e Irlanda del Norte (el)"
+      },
+      {
+        "Alpha3": "UZB",
+        "random_country": "Uzbekist\u00e1n"
+      },
+      {
+        "Alpha3": "BRB",
+        "random_country": "Barbados"
+      },
+      {
+        "Alpha3": "BLR",
+        "random_country": "\u0628\u064a\u0644\u0627\u0631\u0648\u0633"
+      },
+      {
+        "Alpha3": "BLZ",
+        "random_country": "\u0628\u0644\u064a\u0632"
+      },
+      {
+        "Alpha3": "KIR",
+        "random_country": "\u57fa\u91cc\u5df4\u65af"
+      },
+      {
+        "Alpha3": "KGZ",
+        "random_country": "Kirghizistan (le)"
+      },
+      {
+        "Alpha3": "LSO",
+        "random_country": "\u0644\u064a\u0633\u0648\u062a\u0648"
+      },
+      {
+        "Alpha3": "LBR",
+        "random_country": "Liberia"
+      },
+      {
+        "Alpha3": "PLW",
+        "random_country": "Palau"
+      },
+      {
+        "Alpha3": "PSE",
+        "random_country": "Palestine"
+      },
+      {
+        "Alpha3": "SLB",
+        "random_country": "\u6240\u7f57\u95e8\u7fa4\u5c9b"
+      },
+      {
+        "Alpha3": "SYR",
+        "random_country": "Syria"
+      },
+      {
+        "Alpha3": "BWA",
+        "random_country": "\u535a\u8328\u74e6\u7eb3"
+      },
+      {
+        "Alpha3": "FRA",
+        "random_country": "\u0641\u0631\u0646\u0633\u0627"
+      },
+      {
+        "Alpha3": "MAR",
+        "random_country": "\u041c\u0430\u0440\u043e\u043a\u043a\u043e"
+      },
+      {
+        "Alpha3": "NOR",
+        "random_country": "Norv\u00e8ge (la)"
+      },
+      {
+        "Alpha3": "ROU",
+        "random_country": "\u0631\u0648\u0645\u0627\u0646\u064a\u0627"
+      },
+      {
+        "Alpha3": "SWE",
+        "random_country": "\u745e\u5178"
+      },
+      {
+        "Alpha3": "BGR",
+        "random_country": "\u0628\u0644\u063a\u0627\u0631\u064a\u0627"
+      },
+      {
+        "Alpha3": "CUW",
+        "random_country": "Curacao"
+      },
+      {
+        "Alpha3": "PRK",
+        "random_country": "R\u00e9publique populaire d\u00e9mocratique de Cor\u00e9e (la)"
+      },
+      {
+        "Alpha3": "LBY",
+        "random_country": "\u041b\u0438\u0432\u0438\u044f"
+      },
+      {
+        "Alpha3": "MDV",
+        "random_country": "\u9a6c\u5c14\u4ee3\u592b"
+      },
+      {
+        "Alpha3": "MEX",
+        "random_country": "\u58a8\u897f\u54e5"
+      },
+      {
+        "Alpha3": "MNE",
+        "random_country": "Montenegro"
+      },
+      {
+        "Alpha3": "PER",
+        "random_country": "Peru"
+      },
+      {
+        "Alpha3": "ZAF",
+        "random_country": "\u062c\u0646\u0648\u0628 \u0623\u0641\u0631\u064a\u0642\u064a\u0627"
+      },
+      {
+        "Alpha3": "GHA",
+        "random_country": "\u063a\u0627\u0646\u0627"
+      },
+      {
+        "Alpha3": "GRD",
+        "random_country": "\u0413\u0440\u0435\u043d\u0430\u0434\u0430"
+      },
+      {
+        "Alpha3": "ISL",
+        "random_country": "Islande (l') [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "JPN",
+        "random_country": "Jap\u00f3n (el)"
+      },
+      {
+        "Alpha3": "LTU",
+        "random_country": "Lithuania"
+      },
+      {
+        "Alpha3": "PNG",
+        "random_country": "Papua New Guinea"
+      },
+      {
+        "Alpha3": "RUS",
+        "random_country": "\u4fc4\u7f57\u65af\u8054\u90a6"
+      },
+      {
+        "Alpha3": "SLE",
+        "random_country": "Sierra Leona"
+      },
+      {
+        "Alpha3": "TZA",
+        "random_country": "Rep\u00fablica Unida de Tanzan\u00eda (la)"
+      },
+      {
+        "Alpha3": "TGO",
+        "random_country": "\u0422\u043e\u0433\u043e"
+      },
+      {
+        "Alpha3": "ARM",
+        "random_country": "\u0623\u0631\u0645\u064a\u0646\u064a\u0627"
+      },
+      {
+        "Alpha3": "BHS",
+        "random_country": "\u062c\u0632\u0631 \u0627\u0644\u0628\u0647\u0627\u0645\u0627"
+      },
+      {
+        "Alpha3": "LUX",
+        "random_country": "\u041b\u044e\u043a\u0441\u0435\u043c\u0431\u0443\u0440\u0433"
+      },
+      {
+        "Alpha3": "MWI",
+        "random_country": "Malawi (le)"
+      },
+      {
+        "Alpha3": "PAK",
+        "random_country": "Pakist\u00e1n (el)"
+      },
+      {
+        "Alpha3": "TLS",
+        "random_country": "\u062a\u064a\u0645\u0648\u0631- \u0644\u064a\u0634\u062a\u064a"
+      },
+      {
+        "Alpha3": "ISR",
+        "random_country": "\u4ee5\u8272\u5217"
+      },
+      {
+        "Alpha3": "NGA",
+        "random_country": "Nigeria"
+      },
+      {
+        "Alpha3": "PAN",
+        "random_country": "Panam\u00e1"
+      },
+      {
+        "Alpha3": "POL",
+        "random_country": "\u041f\u043e\u043b\u044c\u0448\u0430"
+      },
+      {
+        "Alpha3": "SGP",
+        "random_country": "Singapore"
+      },
+      {
+        "Alpha3": "SOM",
+        "random_country": "Somalia"
+      },
+      {
+        "Alpha3": "ESP",
+        "random_country": "\u897f\u73ed\u7259"
+      },
+      {
+        "Alpha3": "CHE",
+        "random_country": "Suisse (la)"
+      },
+      {
+        "Alpha3": "ZMB",
+        "random_country": "\u0632\u0627\u0645\u0628\u064a\u0627"
+      },
+      {
+        "Alpha3": "ALB",
+        "random_country": "Albanie (l') [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "AND",
+        "random_country": "Andorra"
+      },
+      {
+        "Alpha3": "BRA",
+        "random_country": "\u5df4\u897f"
+      },
+      {
+        "Alpha3": "FJI",
+        "random_country": "Fiji"
+      },
+      {
+        "Alpha3": "FIN",
+        "random_country": "Finlande (la)"
+      },
+      {
+        "Alpha3": "GNB",
+        "random_country": "\u063a\u064a\u0646\u064a\u0627 - \u0628\u064a\u0633\u0627\u0648"
+      },
+      {
+        "Alpha3": "JOR",
+        "random_country": "Jordanie (la)"
+      },
+      {
+        "Alpha3": "KEN",
+        "random_country": "Kenya (le)"
+      },
+      {
+        "Alpha3": "MCO",
+        "random_country": "\u6469\u7eb3\u54e5"
+      },
+      {
+        "Alpha3": "MOZ",
+        "random_country": "Mozambique"
+      },
+      {
+        "Alpha3": "SYC",
+        "random_country": "Seychelles"
+      },
+      {
+        "Alpha3": "TUN",
+        "random_country": "\u7a81\u5c3c\u65af"
+      },
+      {
+        "Alpha3": "AFG",
+        "random_country": "Afghanistan (l') [masc.]"
+      },
+      {
+        "Alpha3": "AGO",
+        "random_country": "Angola"
+      },
+      {
+        "Alpha3": "ARG",
+        "random_country": "\u963f\u6839\u5ef7"
+      },
+      {
+        "Alpha3": "CPV",
+        "random_country": "\u0643\u0627\u0628\u0648 \u0641\u064a\u0631\u062f\u064a"
+      },
+      {
+        "Alpha3": "ERI",
+        "random_country": "Eritrea"
+      },
+      {
+        "Alpha3": "VAT",
+        "random_country": "Saint-Si\u00e8ge (le)"
+      },
+      {
+        "Alpha3": "HKG",
+        "random_country": "Hong Kong"
+      },
+      {
+        "Alpha3": "KWT",
+        "random_country": "Kuwait"
+      },
+      {
+        "Alpha3": "MYT",
+        "random_country": "Mayotte"
+      },
+      {
+        "Alpha3": "SSD",
+        "random_country": "\u042e\u0436\u043d\u044b\u0439 \u0421\u0443\u0434\u0430\u043d"
+      },
+      {
+        "Alpha3": "YEM",
+        "random_country": "\u0627\u0644\u064a\u0645\u0646"
+      },
+      {
+        "Alpha3": "DZA",
+        "random_country": "\u963f\u5c14\u53ca\u5229\u4e9a"
+      },
+      {
+        "Alpha3": "AUT",
+        "random_country": "\u0627\u0644\u0646\u0645\u0633\u0627"
+      },
+      {
+        "Alpha3": "CHL",
+        "random_country": "\u0427\u0438\u043b\u0438"
+      },
+      {
+        "Alpha3": "DJI",
+        "random_country": "\u062c\u064a\u0628\u0648\u062a\u064a"
+      },
+      {
+        "Alpha3": "CRI",
+        "random_country": "\u54e5\u65af\u8fbe\u9ece\u52a0"
+      },
+      {
+        "Alpha3": "GTM",
+        "random_country": "\u0413\u0432\u0430\u0442\u0435\u043c\u0430\u043b\u0430"
+      },
+      {
+        "Alpha3": "MUS",
+        "random_country": "Mauritius"
+      },
+      {
+        "Alpha3": "THA",
+        "random_country": "Tailandia"
+      },
+      {
+        "Alpha3": "TTO",
+        "random_country": "\u0422\u0440\u0438\u043d\u0438\u0434\u0430\u0434 \u0438 \u0422\u043e\u0431\u0430\u0433\u043e"
+      },
+      {
+        "Alpha3": "BHR",
+        "random_country": "Bahre\u00efn [masc.]"
+      },
+      {
+        "Alpha3": "MNG",
+        "random_country": "\u041c\u043e\u043d\u0433\u043e\u043b\u0438\u044f"
+      },
+      {
+        "Alpha3": "PRY",
+        "random_country": "\u5df4\u62c9\u572d"
+      },
+      {
+        "Alpha3": "BFA",
+        "random_country": "Burkina Faso (le)"
+      },
+      {
+        "Alpha3": "KHM",
+        "random_country": "Cambodge (le)"
+      },
+      {
+        "Alpha3": "EST",
+        "random_country": "Estonia"
+      },
+      {
+        "Alpha3": "FRO",
+        "random_country": "Faeroe Islands"
+      },
+      {
+        "Alpha3": "MLT",
+        "random_country": "\u041c\u0430\u043b\u044c\u0442\u0430"
+      },
+      {
+        "Alpha3": "NRU",
+        "random_country": "\u0646\u0627\u0648\u0631\u0648"
+      },
+      {
+        "Alpha3": "VUT",
+        "random_country": "Vanuatu"
+      },
+      {
+        "Alpha3": "GNQ",
+        "random_country": "\u8d64\u9053\u51e0\u5185\u4e9a"
+      },
+      {
+        "Alpha3": "IND",
+        "random_country": "\u5370\u5ea6"
+      },
+      {
+        "Alpha3": "KOR",
+        "random_country": "\u062c\u0645\u0647\u0648\u0631\u064a\u0629 \u0643\u0648\u0631\u064a\u0627"
+      },
+      {
+        "Alpha3": "LIE",
+        "random_country": "Liechtenstein"
+      },
+      {
+        "Alpha3": "MKD",
+        "random_country": "Macedonia"
+      },
+      {
+        "Alpha3": "MLI",
+        "random_country": "\u041c\u0430\u043b\u0438"
+      },
+      {
+        "Alpha3": "MDA",
+        "random_country": "Moldova"
+      },
+      {
+        "Alpha3": "NPL",
+        "random_country": "\u5c3c\u6cca\u5c14"
+      },
+      {
+        "Alpha3": "NIU",
+        "random_country": "\u0646\u064a\u0648\u064a"
+      },
+      {
+        "Alpha3": "SMR",
+        "random_country": "\u5723\u9a6c\u529b\u8bfa"
+      },
+      {
+        "Alpha3": "SEN",
+        "random_country": "\u0421\u0435\u043d\u0435\u0433\u0430\u043b"
+      },
+      {
+        "Alpha3": "LKA",
+        "random_country": "Sri Lanka [f\u00e9m.]"
+      },
+      {
+        "Alpha3": "SDN",
+        "random_country": "\u0627\u0644\u0633\u0648\u062f\u0627\u0646"
+      },
+      {
+        "Alpha3": "TKM",
+        "random_country": "\u0422\u0443\u0440\u043a\u043c\u0435\u043d\u0438\u0441\u0442\u0430\u043d"
+      },
+      {
+        "Alpha3": "CMR",
+        "random_country": "Camer\u00fan (el)"
+      },
+      {
+        "Alpha3": "CUB",
+        "random_country": "Cuba"
+      },
+      {
+        "Alpha3": "USA",
+        "random_country": "United States"
+      },
+      {
+        "Alpha3": "VEN",
+        "random_country": "Venezuela (Rep\u00fablica Bolivariana de)"
+      },
+      {
+        "Alpha3": "CAN",
+        "random_country": "\u041a\u0430\u043d\u0430\u0434\u0430"
+      },
+      {
+        "Alpha3": "LBN",
+        "random_country": "\u9ece\u5df4\u5ae9"
+      },
+      {
+        "Alpha3": "QAT",
+        "random_country": "Qatar"
+      },
+      {
+        "Alpha3": "TUR",
+        "random_country": "\u0422\u0443\u0440\u0446\u0438\u044f"
+      }
+    ]
+  },
+  "countries": {
+    "citatrion": "https://public.opendatasoft.com/explore/dataset/countries-territories-taxonomy-mvp-ct-taxonomy-with-hxl-tags1/table/",
+    "schema": [
+      {
+        "name": "Alpha3",
+        "type": "string",
+        "primary_key": "true"
+      },
+      {
+        "name": "Alpha2",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Preferred Term",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Region Name",
+        "type": "string",
+        "primary_key": "false"
+      },
+      {
+        "name": "Sub-region Name",
+        "type": "string",
+        "primary_key": "false"
+      }
+    ],
+    "data": [
+      {
+        "Alpha3": "ATA",
+        "Alpha2": "AQ",
+        "Preferred Term": "Antarctica",
+        "Region Name": null,
+        "Sub-region Name": null
+      },
+      {
+        "Alpha3": "COL",
+        "Alpha2": "CO",
+        "Preferred Term": "Colombia",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "MTQ",
+        "Alpha2": "MQ",
+        "Preferred Term": "Martinique",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "NER",
+        "Alpha2": "NE",
+        "Preferred Term": "Niger",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "OMN",
+        "Alpha2": "OM",
+        "Preferred Term": "Oman",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "PHL",
+        "Alpha2": "PH",
+        "Preferred Term": "Philippines",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "MAF",
+        "Alpha2": "MF",
+        "Preferred Term": "Saint Martin (French part)",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "BEL",
+        "Alpha2": "BE",
+        "Preferred Term": "Belgium",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "HND",
+        "Alpha2": "HN",
+        "Preferred Term": "Honduras",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "HUN",
+        "Alpha2": "HU",
+        "Preferred Term": "Hungary",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "IRL",
+        "Alpha2": "IE",
+        "Preferred Term": "Ireland",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "MSR",
+        "Alpha2": "MS",
+        "Preferred Term": "Montserrat",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "NZL",
+        "Alpha2": "NZ",
+        "Preferred Term": "New Zealand",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Australia and New Zealand"
+      },
+      {
+        "Alpha3": "NFK",
+        "Alpha2": "NF",
+        "Preferred Term": "Norfolk Island",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Australia and New Zealand"
+      },
+      {
+        "Alpha3": "SAU",
+        "Alpha2": "SA",
+        "Preferred Term": "Saudi Arabia",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "ZWE",
+        "Alpha2": "ZW",
+        "Preferred Term": "Zimbabwe",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "BES",
+        "Alpha2": "BQ",
+        "Preferred Term": "Bonaire, Sint Eustatius and Saba",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "CHN",
+        "Alpha2": "CN",
+        "Preferred Term": "China",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": "CZE",
+        "Alpha2": "CZ",
+        "Preferred Term": "Czechia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "DNK",
+        "Alpha2": "DK",
+        "Preferred Term": "Denmark",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "SLV",
+        "Alpha2": "SV",
+        "Preferred Term": "El Salvador",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "TJK",
+        "Alpha2": "TJ",
+        "Preferred Term": "Tajikistan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Central Asia"
+      },
+      {
+        "Alpha3": "TON",
+        "Alpha2": "TO",
+        "Preferred Term": "Tonga",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "MNP",
+        "Alpha2": "MP",
+        "Preferred Term": "Northern Mariana Islands",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "BEN",
+        "Alpha2": "BJ",
+        "Preferred Term": "Benin",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "BTN",
+        "Alpha2": "BT",
+        "Preferred Term": "Bhutan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "DEU",
+        "Alpha2": "DE",
+        "Preferred Term": "Germany",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "IRN",
+        "Alpha2": "IR",
+        "Preferred Term": "Iran (Islamic Republic of)",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "KNA",
+        "Alpha2": "KN",
+        "Preferred Term": "Saint Kitts and Nevis",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "LCA",
+        "Alpha2": "LC",
+        "Preferred Term": "Saint Lucia",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "VCT",
+        "Alpha2": "VC",
+        "Preferred Term": "Saint Vincent and The Grenadines",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "ESH",
+        "Alpha2": "EH",
+        "Preferred Term": "Western Sahara",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": null,
+        "Alpha2": null,
+        "Preferred Term": "Channel Islands",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "CAF",
+        "Alpha2": "CF",
+        "Preferred Term": "Central African Republic",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "DOM",
+        "Alpha2": "DO",
+        "Preferred Term": "Dominican Republic",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "ECU",
+        "Alpha2": "EC",
+        "Preferred Term": "Ecuador",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "LAO",
+        "Alpha2": "LA",
+        "Preferred Term": "Lao People's Democratic Republic",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "RWA",
+        "Alpha2": "RW",
+        "Preferred Term": "Rwanda",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "SJM",
+        "Alpha2": "SJ",
+        "Preferred Term": "Svalbard and Jan Mayen Islands",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "UMI",
+        "Alpha2": "UM",
+        "Preferred Term": "United States Minor Outlying Islands (the)",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "ASM",
+        "Alpha2": "AS",
+        "Preferred Term": "American Samoa",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "IOT",
+        "Alpha2": "IO",
+        "Preferred Term": "British Indian Ocean Territory",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "BDI",
+        "Alpha2": "BI",
+        "Preferred Term": "Burundi",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "CIV",
+        "Alpha2": "CI",
+        "Preferred Term": "C\u00f4te d'Ivoire",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "HRV",
+        "Alpha2": "HR",
+        "Preferred Term": "Croatia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "DMA",
+        "Alpha2": "DM",
+        "Preferred Term": "Dominica",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GRC",
+        "Alpha2": "GR",
+        "Preferred Term": "Greece",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "HTI",
+        "Alpha2": "HT",
+        "Preferred Term": "Haiti",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "MHL",
+        "Alpha2": "MH",
+        "Preferred Term": "Marshall Islands",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "FSM",
+        "Alpha2": "FM",
+        "Preferred Term": "Micronesia (Federated States of)",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "STP",
+        "Alpha2": "ST",
+        "Preferred Term": "Sao Tome and Principe",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "SRB",
+        "Alpha2": "RS",
+        "Preferred Term": "Serbia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "SWZ",
+        "Alpha2": "SZ",
+        "Preferred Term": "Kingdom of Eswatini",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "ATG",
+        "Alpha2": "AG",
+        "Preferred Term": "Antigua and Barbuda",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "AZE",
+        "Alpha2": "AZ",
+        "Preferred Term": "Azerbaijan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "BIH",
+        "Alpha2": "BA",
+        "Preferred Term": "Bosnia and Herzegovina",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "CYM",
+        "Alpha2": "KY",
+        "Preferred Term": "Cayman Islands",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GAB",
+        "Alpha2": "GA",
+        "Preferred Term": "Gabon",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "GUY",
+        "Alpha2": "GY",
+        "Preferred Term": "Guyana",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "IRQ",
+        "Alpha2": "IQ",
+        "Preferred Term": "Iraq",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "ITA",
+        "Alpha2": "IT",
+        "Preferred Term": "Italy",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "MAC",
+        "Alpha2": "MO",
+        "Preferred Term": "China, Macao Special Administrative Region",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": "NCL",
+        "Alpha2": "NC",
+        "Preferred Term": "New Caledonia",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Melanesia"
+      },
+      {
+        "Alpha3": "NIC",
+        "Alpha2": "NI",
+        "Preferred Term": "Nicaragua",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "PCN",
+        "Alpha2": "PN",
+        "Preferred Term": "Pitcairn",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "SGS",
+        "Alpha2": "GS",
+        "Preferred Term": "South Georgia and the South Sandwich Islands",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "AUS",
+        "Alpha2": "AU",
+        "Preferred Term": "Australia",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Australia and New Zealand"
+      },
+      {
+        "Alpha3": "JAM",
+        "Alpha2": "JM",
+        "Preferred Term": "Jamaica",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "MDG",
+        "Alpha2": "MG",
+        "Preferred Term": "Madagascar",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "MMR",
+        "Alpha2": "MM",
+        "Preferred Term": "Myanmar",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "UKR",
+        "Alpha2": "UA",
+        "Preferred Term": "Ukraine",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "VNM",
+        "Alpha2": "VN",
+        "Preferred Term": "Viet Nam",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "VGB",
+        "Alpha2": "VG",
+        "Preferred Term": "British Virgin Islands",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "BRN",
+        "Alpha2": "BN",
+        "Preferred Term": "Brunei Darussalam",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "COD",
+        "Alpha2": "CD",
+        "Preferred Term": "Democratic Republic of the Congo",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "GEO",
+        "Alpha2": "GE",
+        "Preferred Term": "Georgia",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "IMN",
+        "Alpha2": "IM",
+        "Preferred Term": "Isle of Man",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "MRT",
+        "Alpha2": "MR",
+        "Preferred Term": "Mauritania",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "TKL",
+        "Alpha2": "TK",
+        "Preferred Term": "Tokelau",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "TUV",
+        "Alpha2": "TV",
+        "Preferred Term": "Tuvalu",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "COM",
+        "Alpha2": "KM",
+        "Preferred Term": "Comoros",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "COK",
+        "Alpha2": "CK",
+        "Preferred Term": "Cook Islands",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "GMB",
+        "Alpha2": "GM",
+        "Preferred Term": "Gambia",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "IDN",
+        "Alpha2": "ID",
+        "Preferred Term": "Indonesia",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "LVA",
+        "Alpha2": "LV",
+        "Preferred Term": "Latvia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "SHN",
+        "Alpha2": "SH",
+        "Preferred Term": "Saint Helena",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "SVK",
+        "Alpha2": "SK",
+        "Preferred Term": "Slovakia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "UGA",
+        "Alpha2": "UG",
+        "Preferred Term": "Uganda",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "BOL",
+        "Alpha2": "BO",
+        "Preferred Term": "Bolivia (Plurinational State of)",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "PRT",
+        "Alpha2": "PT",
+        "Preferred Term": "Portugal",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "TWN",
+        "Alpha2": "TW",
+        "Preferred Term": "Taiwan (Province of China)",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": null,
+        "Alpha2": null,
+        "Preferred Term": "Azores Islands (Portugal)",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "COG",
+        "Alpha2": "CG",
+        "Preferred Term": "Congo",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "CYP",
+        "Alpha2": "CY",
+        "Preferred Term": "Cyprus",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "ETH",
+        "Alpha2": "ET",
+        "Preferred Term": "Ethiopia",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "GRL",
+        "Alpha2": "GL",
+        "Preferred Term": "Greenland",
+        "Region Name": "Americas",
+        "Sub-region Name": "Northern America"
+      },
+      {
+        "Alpha3": "MYS",
+        "Alpha2": "MY",
+        "Preferred Term": "Malaysia",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "NAM",
+        "Alpha2": null,
+        "Preferred Term": "Namibia",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": null,
+        "Alpha2": null,
+        "Preferred Term": "Netherlands Antilles",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "WSM",
+        "Alpha2": "WS",
+        "Preferred Term": "Samoa",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "SVN",
+        "Alpha2": "SI",
+        "Preferred Term": "Slovenia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "SUR",
+        "Alpha2": "SR",
+        "Preferred Term": "Suriname",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "ARE",
+        "Alpha2": "AE",
+        "Preferred Term": "United Arab Emirates",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "URY",
+        "Alpha2": "UY",
+        "Preferred Term": "Uruguay",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "BGD",
+        "Alpha2": "BD",
+        "Preferred Term": "Bangladesh",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "TCD",
+        "Alpha2": "TD",
+        "Preferred Term": "Chad",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "EGY",
+        "Alpha2": "EG",
+        "Preferred Term": "Egypt",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": "FLK",
+        "Alpha2": "FK",
+        "Preferred Term": "Falkland Islands (Malvinas)",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "PYF",
+        "Alpha2": "PF",
+        "Preferred Term": "French Polynesia",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "GIN",
+        "Alpha2": "GN",
+        "Preferred Term": "Guinea",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "KAZ",
+        "Alpha2": "KZ",
+        "Preferred Term": "Kazakhstan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Central Asia"
+      },
+      {
+        "Alpha3": "NLD",
+        "Alpha2": "NL",
+        "Preferred Term": "Netherlands",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "SPM",
+        "Alpha2": "PM",
+        "Preferred Term": "Saint Pierre and Miquelon",
+        "Region Name": "Americas",
+        "Sub-region Name": "Northern America"
+      },
+      {
+        "Alpha3": "TCA",
+        "Alpha2": "TC",
+        "Preferred Term": "Turks and Caicos Islands",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GBR",
+        "Alpha2": "GB",
+        "Preferred Term": "United Kingdom of Great Britain and Northern Ireland",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "UZB",
+        "Alpha2": "UZ",
+        "Preferred Term": "Uzbekistan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Central Asia"
+      },
+      {
+        "Alpha3": "BRB",
+        "Alpha2": "BB",
+        "Preferred Term": "Barbados",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "BLR",
+        "Alpha2": "BY",
+        "Preferred Term": "Belarus",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "BLZ",
+        "Alpha2": "BZ",
+        "Preferred Term": "Belize",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GIB",
+        "Alpha2": "GI",
+        "Preferred Term": "Gibraltar",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "KIR",
+        "Alpha2": "KI",
+        "Preferred Term": "Kiribati",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "KGZ",
+        "Alpha2": "KG",
+        "Preferred Term": "Kyrgyzstan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Central Asia"
+      },
+      {
+        "Alpha3": "LSO",
+        "Alpha2": "LS",
+        "Preferred Term": "Lesotho",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "LBR",
+        "Alpha2": "LR",
+        "Preferred Term": "Liberia",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "PLW",
+        "Alpha2": "PW",
+        "Preferred Term": "Palau",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "PSE",
+        "Alpha2": "PS",
+        "Preferred Term": "State of Palestine",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "BLM",
+        "Alpha2": "BL",
+        "Preferred Term": "Saint Barth\u00e9lemy",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "SLB",
+        "Alpha2": "SB",
+        "Preferred Term": "Solomon Islands",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Melanesia"
+      },
+      {
+        "Alpha3": "SYR",
+        "Alpha2": "SY",
+        "Preferred Term": "Syrian Arab Republic",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "BWA",
+        "Alpha2": "BW",
+        "Preferred Term": "Botswana",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "FRA",
+        "Alpha2": "FR",
+        "Preferred Term": "France",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "MAR",
+        "Alpha2": "MA",
+        "Preferred Term": "Morocco",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": "NOR",
+        "Alpha2": "NO",
+        "Preferred Term": "Norway",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "ROU",
+        "Alpha2": "RO",
+        "Preferred Term": "Romania",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "SWE",
+        "Alpha2": "SE",
+        "Preferred Term": "Sweden",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "VIR",
+        "Alpha2": "VI",
+        "Preferred Term": "United States Virgin Islands",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "ABW",
+        "Alpha2": "AW",
+        "Preferred Term": "Aruba",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "BGR",
+        "Alpha2": "BG",
+        "Preferred Term": "Bulgaria",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "CUW",
+        "Alpha2": "CW",
+        "Preferred Term": "Cura\u00e7ao",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "PRK",
+        "Alpha2": "KP",
+        "Preferred Term": "Democratic People's Republic of Korea",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": "LBY",
+        "Alpha2": "LY",
+        "Preferred Term": "Libya",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": "MDV",
+        "Alpha2": "MV",
+        "Preferred Term": "Maldives",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "MEX",
+        "Alpha2": "MX",
+        "Preferred Term": "Mexico",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "MNE",
+        "Alpha2": "ME",
+        "Preferred Term": "Montenegro",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "PER",
+        "Alpha2": "PE",
+        "Preferred Term": "Peru",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "ZAF",
+        "Alpha2": "ZA",
+        "Preferred Term": "South Africa",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "AIA",
+        "Alpha2": "AI",
+        "Preferred Term": "Anguilla",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "CXR",
+        "Alpha2": "CX",
+        "Preferred Term": "Christmas Island",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Australia and New Zealand"
+      },
+      {
+        "Alpha3": "CCK",
+        "Alpha2": "CC",
+        "Preferred Term": "Cocos (Keeling) Islands",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Australia and New Zealand"
+      },
+      {
+        "Alpha3": "GHA",
+        "Alpha2": "GH",
+        "Preferred Term": "Ghana",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "GRD",
+        "Alpha2": "GD",
+        "Preferred Term": "Grenada",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "HMD",
+        "Alpha2": "HM",
+        "Preferred Term": "Heard Island and McDonald Islands",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Australia and New Zealand"
+      },
+      {
+        "Alpha3": "ISL",
+        "Alpha2": "IS",
+        "Preferred Term": "Iceland",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "JPN",
+        "Alpha2": "JP",
+        "Preferred Term": "Japan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": "LTU",
+        "Alpha2": "LT",
+        "Preferred Term": "Lithuania",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "PNG",
+        "Alpha2": "PG",
+        "Preferred Term": "Papua New Guinea",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Melanesia"
+      },
+      {
+        "Alpha3": "RUS",
+        "Alpha2": "RU",
+        "Preferred Term": "Russian Federation",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "SLE",
+        "Alpha2": "SL",
+        "Preferred Term": "Sierra Leone",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "TZA",
+        "Alpha2": "TZ",
+        "Preferred Term": "United Republic of Tanzania",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "TGO",
+        "Alpha2": "TG",
+        "Preferred Term": "Togo",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "ARM",
+        "Alpha2": "AM",
+        "Preferred Term": "Armenia",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "BHS",
+        "Alpha2": "BS",
+        "Preferred Term": "Bahamas",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "LUX",
+        "Alpha2": "LU",
+        "Preferred Term": "Luxembourg",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "MWI",
+        "Alpha2": "MW",
+        "Preferred Term": "Malawi",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "PAK",
+        "Alpha2": "PK",
+        "Preferred Term": "Pakistan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "TLS",
+        "Alpha2": "TL",
+        "Preferred Term": "Timor-Leste",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "ISR",
+        "Alpha2": "IL",
+        "Preferred Term": "Israel",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "NGA",
+        "Alpha2": "NG",
+        "Preferred Term": "Nigeria",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "PAN",
+        "Alpha2": "PA",
+        "Preferred Term": "Panama",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "POL",
+        "Alpha2": "PL",
+        "Preferred Term": "Poland",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "SGP",
+        "Alpha2": "SG",
+        "Preferred Term": "Singapore",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "SOM",
+        "Alpha2": "SO",
+        "Preferred Term": "Somalia",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "ESP",
+        "Alpha2": "ES",
+        "Preferred Term": "Spain",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "CHE",
+        "Alpha2": "CH",
+        "Preferred Term": "Switzerland",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "ZMB",
+        "Alpha2": "ZM",
+        "Preferred Term": "Zambia",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "ALB",
+        "Alpha2": "AL",
+        "Preferred Term": "Albania",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "AND",
+        "Alpha2": "AD",
+        "Preferred Term": "Andorra",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "BRA",
+        "Alpha2": "BR",
+        "Preferred Term": "Brazil",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "FJI",
+        "Alpha2": "FJ",
+        "Preferred Term": "Fiji",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Melanesia"
+      },
+      {
+        "Alpha3": "FIN",
+        "Alpha2": "FI",
+        "Preferred Term": "Finland",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "GNB",
+        "Alpha2": "GW",
+        "Preferred Term": "Guinea-Bissau",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "JOR",
+        "Alpha2": "JO",
+        "Preferred Term": "Jordan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "KEN",
+        "Alpha2": "KE",
+        "Preferred Term": "Kenya",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "MCO",
+        "Alpha2": "MC",
+        "Preferred Term": "Monaco",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "MOZ",
+        "Alpha2": "MZ",
+        "Preferred Term": "Mozambique",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "SYC",
+        "Alpha2": "SC",
+        "Preferred Term": "Seychelles",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "TUN",
+        "Alpha2": "TN",
+        "Preferred Term": "Tunisia",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": "WLF",
+        "Alpha2": "WF",
+        "Preferred Term": "Wallis and Futuna Islands",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "AFG",
+        "Alpha2": "AF",
+        "Preferred Term": "Afghanistan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "AGO",
+        "Alpha2": "AO",
+        "Preferred Term": "Angola",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "ARG",
+        "Alpha2": "AR",
+        "Preferred Term": "Argentina",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "CPV",
+        "Alpha2": "CV",
+        "Preferred Term": "Cabo Verde",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "ERI",
+        "Alpha2": "ER",
+        "Preferred Term": "Eritrea",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "VAT",
+        "Alpha2": "VA",
+        "Preferred Term": "Holy See",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "HKG",
+        "Alpha2": "HK",
+        "Preferred Term": "China, Hong Kong Special Administrative Region",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": "KWT",
+        "Alpha2": "KW",
+        "Preferred Term": "Kuwait",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "MYT",
+        "Alpha2": "YT",
+        "Preferred Term": "Mayotte",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "REU",
+        "Alpha2": "RE",
+        "Preferred Term": "R\u00e9union",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "SSD",
+        "Alpha2": "SS",
+        "Preferred Term": "South Sudan",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "YEM",
+        "Alpha2": "YE",
+        "Preferred Term": "Yemen",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": null,
+        "Alpha2": null,
+        "Preferred Term": "Galapagos Islands (Ecuador)",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "ALA",
+        "Alpha2": "AX",
+        "Preferred Term": "\u00c5land Islands",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "DZA",
+        "Alpha2": "DZ",
+        "Preferred Term": "Algeria",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": "AUT",
+        "Alpha2": "AT",
+        "Preferred Term": "Austria",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "CHL",
+        "Alpha2": "CL",
+        "Preferred Term": "Chile",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "DJI",
+        "Alpha2": "DJ",
+        "Preferred Term": "Djibouti",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "GLP",
+        "Alpha2": "GP",
+        "Preferred Term": "Guadeloupe",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GUM",
+        "Alpha2": "GU",
+        "Preferred Term": "Guam",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "BMU",
+        "Alpha2": "BM",
+        "Preferred Term": "Bermuda",
+        "Region Name": "Americas",
+        "Sub-region Name": "Northern America"
+      },
+      {
+        "Alpha3": "CRI",
+        "Alpha2": "CR",
+        "Preferred Term": "Costa Rica",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GUF",
+        "Alpha2": "GF",
+        "Preferred Term": "French Guiana",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GTM",
+        "Alpha2": "GT",
+        "Preferred Term": "Guatemala",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "MUS",
+        "Alpha2": "MU",
+        "Preferred Term": "Mauritius",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "THA",
+        "Alpha2": "TH",
+        "Preferred Term": "Thailand",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "TTO",
+        "Alpha2": "TT",
+        "Preferred Term": "Trinidad and Tobago",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "BHR",
+        "Alpha2": "BH",
+        "Preferred Term": "Bahrain",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "ATF",
+        "Alpha2": "TF",
+        "Preferred Term": "French Southern and Antarctic Territories",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "MNG",
+        "Alpha2": "MN",
+        "Preferred Term": "Mongolia",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": "PRY",
+        "Alpha2": "PY",
+        "Preferred Term": "Paraguay",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": null,
+        "Alpha2": null,
+        "Preferred Term": "Canary Islands (Spain)",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": "BVT",
+        "Alpha2": "BV",
+        "Preferred Term": "Bouvet Island",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "BFA",
+        "Alpha2": "BF",
+        "Preferred Term": "Burkina Faso",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "KHM",
+        "Alpha2": "KH",
+        "Preferred Term": "Cambodia",
+        "Region Name": "Asia",
+        "Sub-region Name": "South-eastern Asia"
+      },
+      {
+        "Alpha3": "EST",
+        "Alpha2": "EE",
+        "Preferred Term": "Estonia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "FRO",
+        "Alpha2": "FO",
+        "Preferred Term": "Faroe Islands",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "MLT",
+        "Alpha2": "MT",
+        "Preferred Term": "Malta",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "NRU",
+        "Alpha2": "NR",
+        "Preferred Term": "Nauru",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Micronesia"
+      },
+      {
+        "Alpha3": "VUT",
+        "Alpha2": "VU",
+        "Preferred Term": "Vanuatu",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Melanesia"
+      },
+      {
+        "Alpha3": "GNQ",
+        "Alpha2": "GQ",
+        "Preferred Term": "Equatorial Guinea",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "IND",
+        "Alpha2": "IN",
+        "Preferred Term": "India",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "KOR",
+        "Alpha2": "KR",
+        "Preferred Term": "Republic of Korea",
+        "Region Name": "Asia",
+        "Sub-region Name": "Eastern Asia"
+      },
+      {
+        "Alpha3": "LIE",
+        "Alpha2": "LI",
+        "Preferred Term": "Liechtenstein",
+        "Region Name": "Europe",
+        "Sub-region Name": "Western Europe"
+      },
+      {
+        "Alpha3": "MKD",
+        "Alpha2": "MK",
+        "Preferred Term": "Republic of North Macedonia",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "MLI",
+        "Alpha2": "ML",
+        "Preferred Term": "Mali",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "MDA",
+        "Alpha2": "MD",
+        "Preferred Term": "Republic of Moldova",
+        "Region Name": "Europe",
+        "Sub-region Name": "Eastern Europe"
+      },
+      {
+        "Alpha3": "NPL",
+        "Alpha2": "NP",
+        "Preferred Term": "Nepal",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "NIU",
+        "Alpha2": "NU",
+        "Preferred Term": "Niue",
+        "Region Name": "Oceania",
+        "Sub-region Name": "Polynesia"
+      },
+      {
+        "Alpha3": "SMR",
+        "Alpha2": "SM",
+        "Preferred Term": "San Marino",
+        "Region Name": "Europe",
+        "Sub-region Name": "Southern Europe"
+      },
+      {
+        "Alpha3": "SEN",
+        "Alpha2": "SN",
+        "Preferred Term": "Senegal",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "LKA",
+        "Alpha2": "LK",
+        "Preferred Term": "Sri Lanka",
+        "Region Name": "Asia",
+        "Sub-region Name": "Southern Asia"
+      },
+      {
+        "Alpha3": "SDN",
+        "Alpha2": "SD",
+        "Preferred Term": "Sudan",
+        "Region Name": "Africa",
+        "Sub-region Name": "Northern Africa"
+      },
+      {
+        "Alpha3": "TKM",
+        "Alpha2": "TM",
+        "Preferred Term": "Turkmenistan",
+        "Region Name": "Asia",
+        "Sub-region Name": "Central Asia"
+      },
+      {
+        "Alpha3": "CMR",
+        "Alpha2": "CM",
+        "Preferred Term": "Cameroon",
+        "Region Name": "Africa",
+        "Sub-region Name": "Sub-Saharan Africa"
+      },
+      {
+        "Alpha3": "CUB",
+        "Alpha2": "CU",
+        "Preferred Term": "Cuba",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "GGY",
+        "Alpha2": "GG",
+        "Preferred Term": "Guernsey",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "SXM",
+        "Alpha2": "SX",
+        "Preferred Term": "Sint Maarten (Dutch part)",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "USA",
+        "Alpha2": "US",
+        "Preferred Term": "United States of America",
+        "Region Name": "Americas",
+        "Sub-region Name": "Northern America"
+      },
+      {
+        "Alpha3": "VEN",
+        "Alpha2": "VE",
+        "Preferred Term": "Venezuela (Bolivarian Republic of)",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "CAN",
+        "Alpha2": "CA",
+        "Preferred Term": "Canada",
+        "Region Name": "Americas",
+        "Sub-region Name": "Northern America"
+      },
+      {
+        "Alpha3": "JEY",
+        "Alpha2": "JE",
+        "Preferred Term": "Jersey",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
+      },
+      {
+        "Alpha3": "LBN",
+        "Alpha2": "LB",
+        "Preferred Term": "Lebanon",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "PRI",
+        "Alpha2": "PR",
+        "Preferred Term": "Puerto Rico",
+        "Region Name": "Americas",
+        "Sub-region Name": "Latin America and the Caribbean"
+      },
+      {
+        "Alpha3": "QAT",
+        "Alpha2": "QA",
+        "Preferred Term": "Qatar",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": "TUR",
+        "Alpha2": "TR",
+        "Preferred Term": "Turkey",
+        "Region Name": "Asia",
+        "Sub-region Name": "Western Asia"
+      },
+      {
+        "Alpha3": null,
+        "Alpha2": null,
+        "Preferred Term": "Sark",
+        "Region Name": "Europe",
+        "Sub-region Name": "Northern Europe"
       }
     ]
   }
