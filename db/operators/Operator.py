@@ -14,7 +14,7 @@ class Operator(Iterator):
     def __str__(self) -> str:
         raise NotImplementedError()
 
-    def open(self) -> None:
+    def open(self) -> 'Operator':
         raise NotImplementedError()
 
     def next_vectorized(self) -> list[dict]:
@@ -28,3 +28,9 @@ class Operator(Iterator):
 
     def get_structure(self) -> tuple[str, list] | str:
         return f"{id(self)}:{self.get_description()}"
+
+    def fetch_all(self):
+        return list(self)
+
+    def fetch_one(self):
+        return next(self)

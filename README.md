@@ -111,6 +111,13 @@ source .venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+## Usage
+
+To create a query, the operators have to be assembled as relational algebra. Hence   
+
+## Evaluation
+
+
 ## Configuration
 
 ```ini
