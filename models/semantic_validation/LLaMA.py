@@ -7,7 +7,7 @@ from models.semantic_validation.Model import SemanticValidationModel
 from models import ModelMgr
 
 class LLaMAValidationModel(SemanticValidationModel):
-    DEFAULT_SYSTEM_PROMPT = "You are a validator. You get a statement and need to validate it. Answer with \"yes\" and \"no\" only!"
+    DEFAULT_SYSTEM_PROMPT = "You are a validator. Validate the following statement using \"no\" and \"yes\" only!"
     DEFAULT_MODEL = "meta-llama/Llama-3.2-3B-Instruct"
 
     def __init__(self, model_mgr: ModelMgr, system_prompt=DEFAULT_SYSTEM_PROMPT, model_path=DEFAULT_MODEL, temperature: float | None = None):

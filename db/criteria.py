@@ -1,19 +1,30 @@
 import logging
 
-from models.semantic_validation.Model import SemanticValidationModel
+from abc import ABC, abstractmethod
+
 from utils import Measure, CosineSimilarity
+
+from models.semantic_validation.Model import SemanticValidationModel
 from models.embedding.Model import EmbeddingModel
-from .structure import Column, Constant
+
+from db.structure import Column, Constant
 
 
-class Criteria:
+class Criteria(ABC):
+    """
+    Abstract base class for criteria
+    """
     def __init__(self, crit):
         self.crit = crit
 
+    @abstractmethod
     def eval(self, record) -> bool:
         raise NotImplemented()
 
 class Negation(Criteria):
+    """
+    Returns the negation of an input criterion
+    """
     def __init__(self, crit: Criteria) -> None:
         super().__init__(crit)
 
@@ -25,6 +36,9 @@ class Negation(Criteria):
 
 
 class ConjunctiveCriteria(Criteria):
+    """
+    Evaluates input criteria. Returns true if ALL are fulfilled
+    """
     def __init__(self, crit: list[Criteria]):
         super().__init__(crit)
 
@@ -36,6 +50,9 @@ class ConjunctiveCriteria(Criteria):
 
 
 class DisjunctiveCriteria(Criteria):
+    """
+    Evaluates input criteria. Returns true if AT LEAST ONE is fulfilled
+    """
     def __init__(self, crit: list[Criteria]):
         super().__init__(crit)
 
@@ -47,6 +64,9 @@ class DisjunctiveCriteria(Criteria):
 
 
 class HardEqual(Criteria):
+    """
+    Evaluates if two inputs (Column Value or constant) are equal. E.g. name = 'Robert' or 15.0 = price
+    """
     def __init__(self, left: Column | Constant, right: Column | Constant):
         super().__init__([left, right])
 
@@ -58,6 +78,9 @@ class HardEqual(Criteria):
 
 
 class IsNull(Criteria):
+    """
+    Evaluates if an input is null
+    """
     def __init__(self, left: Column | Constant):
         super().__init__([left, None])
 
@@ -69,6 +92,9 @@ class IsNull(Criteria):
 
 
 class IsNotNull(Criteria):
+    """
+    Evaluates if an input is NOT null
+    """
     def __init__(self, left: Column | Constant):
         super().__init__([left, None])
 
@@ -85,21 +111,37 @@ class FuzzyEqual:
 
 
 class SoftEqual(Criteria):
+    """
+    Evaluation Left ≈ Right:
+        Evaluates if the distance (or similarity score) of the embedded of two
+        serialized inputs (Constant, Column Value, list of Column Values, Entire Record)
+        is below (or above for similarly ) a threshold
+
+    E.g. movie_title ≈ 'Menu', [movie_title, description] ≈ 'toys that come to life'
+
+    Attributes:
+        left (Column | Constant | list[str] | None): Left input (None -> serialize Entire Record)
+        right (Column | Constant | list[str] | None):  Right input (None -> serialize Entire Record)
+        em (EmbeddingModel): The model to embedd a serialized database table
+        measure (Measure): CosineSimilarity / L2 Distance/ ...
+        threshold (float)
+    """
     def __init__(self,
                  left: Column | Constant | list[str] | None,
                  right: Column | Constant | list[str] | None,
-                 em: EmbeddingModel, distance: Measure = CosineSimilarity(), threshold: float = 0.9):
+                 em: EmbeddingModel, measure: Measure = CosineSimilarity(), threshold: float = 0.9):
         super().__init__([left, right])
         self.em: EmbeddingModel = em
-        self.distance: Measure = distance
+        self.measure: Measure = measure
         self.threshold: float = threshold
 
     def eval(self, t) -> bool:
-        emb_str_left = self._get_embedding_string(t, self.crit[0])
-        emb_str_right = self._get_embedding_string(t, self.crit[1])
+        emb_str_left = self._serialize_input(t, self.crit[0])
+        emb_str_right = self._serialize_input(t, self.crit[1])
 
+        # Eval Metric: If distance -> d(v1, v2) < threshold; If Similarity -> s(v1, v2) < threshold
         embeddings = self.em([str(emb_str_left), str(emb_str_right)])
-        result = self.distance(embeddings[0], embeddings[1], self.threshold)
+        result = self.measure(embeddings[0], embeddings[1], self.threshold)
         logging.debug(f"{emb_str_left} ≈ {emb_str_right}: {result}")
         return result
 
@@ -114,26 +156,37 @@ class SoftEqual(Criteria):
 
 
     @staticmethod
-    def _get_embedding_string(record, target):
-
+    def _serialize_input(record, target):
         if target is None:
-            return str(record)
-        if isinstance(target, list):
-            return str({x: record[x] for x in record if x in target})
+            return str(record) # Serialize Entire Record
+        elif isinstance(target, list):
+            return str({x: record[x] for x in record if x in target}) # Serialize reduced record (assigned columns)
         else:
-            return target.get(record)
+            return target.get(record) # Column -> record[Column], Constant -> ConstantValue
 
 
 class SoftValidate(Criteria):
-    def __init__(self, template: str, sv: SemanticValidationModel, full_record: bool = True):
+    """
+    Evaluation ✓(template):
+        Instructs an LLM with the prompt generated from template and the tuple. The template must be a format string.
+        Evaluate if the response of the LLM is yes/ no.
+
+
+    E.g. ✓("Is the movie {movie_title} is about toys that come to life?") for the record {"movie_title": "Toy Story"}
+        would evaluate to ✓("Is the movie Toy Story is about toys that come to life?") -> True
+
+    Attributes:
+        template (str): Format String
+        sv (SemanticValidationModel): The generative model which will be instructed
+    """
+    def __init__(self, template: str, sv: SemanticValidationModel):
         super().__init__(None)
         self.template: str | None = template
         self.sv: SemanticValidationModel = sv
-        self.full_record = full_record
 
 
     def eval(self, t) -> bool:
-        prompt = self.template.format(str(t)) if self.full_record else self.template.format(**t)
+        prompt = self.template.format(**t)
         result = self.sv(prompt)
         logging.debug(f"{prompt}: {result}")
         return result

@@ -39,24 +39,29 @@ class Scan(Operator):
     TABLE_SCHEMA_PATTERN = r'\b([a-zA-Z_][a-zA-Z0-9_]*)\.([a-zA-Z_][a-zA-Z0-9_]*)\b'
 
     def __init__(
-            self, name: str, db: DBConnector, em: EmbeddingModel, sv: SemanticValidationModel,
-            vector_index_class: Type[faiss.IndexFlat] = faiss.IndexFlatIP, threshold: float = .8,
+            self, name: str, db: DBConnector,
+            use_semantic_table_search: bool = True, em: EmbeddingModel = None, threshold: float = .8,
+            use_semantic_validation: bool = True, sv: SemanticValidationModel = None,
+            vector_index_class: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
             limit: str | int = None,
-            sql_annex: str | None = None,
-            use_semantic_table_search: bool = True,
-            use_semantic_validation: bool = True) -> None:
+            sql_annex: str | None = None) -> None:
 
         self.name: str = name
-        self.threshold: float = threshold
-        self.limit: int = limit
         self.db: DBConnector = db
-        self.em: EmbeddingModel = em
-        self.sv: SemanticValidationModel = sv
+
         self.use_semantic_table_search = use_semantic_table_search
-        self.vector_index = vector_index_class(self.em.get_embedding_size())  # Instantiate vector index
-        # IndexFlatIP ->CosineSimilarity => Similarity, L2 -> Euclidian Distance => Distance
-        self.is_distance = self.vector_index.metric_type == faiss.METRIC_L2
         self.use_semantic_validation = use_semantic_validation
+
+        if self.use_semantic_table_search:
+            self.em: EmbeddingModel = em
+            self.threshold: float = threshold
+            self.vector_index = vector_index_class(self.em.get_embedding_size())  # Instantiate vector index
+            # IndexFlatIP ->CosineSimilarity => Similarity, L2 -> Euclidian Distance => Distance
+            self.is_distance = self.vector_index.metric_type == faiss.METRIC_L2
+
+        if self.use_semantic_validation:
+            self.sv: SemanticValidationModel = sv
+
         table, confidence = self._get_table() # Semantic Search for table
 
         assert table is not None, "No table found"
@@ -139,8 +144,13 @@ class Scan(Operator):
         _, distances, idxs = self.vector_index.range_search(np.array([embeddings[0]]), thresh=self.threshold)
         assert len(distances) > 0, f"No table found for name '{self.name}', available tables: {table_names}"
 
+        # np.argsort sorts ascending -> good for distance, if its similarity score: sort descending
+        indices = np.argsort(distances)
+        if not self.is_distance:
+            indices = indices[::-1]
+
         # Retrieve tables with the closest embedding to name
-        for i in np.argsort(distances):
+        for i in indices:
             distance, idx = distances[i], idxs[i]
 
             sql_table = self.db.tables[table_names[idx]]
@@ -149,7 +159,13 @@ class Scan(Operator):
                 return sql_table, distance
 
             # Semantic validate using LLM
-            if self.sv(f"Does this SQL Table '{sql_table}' describe entities for '{self.name}'?"):
+            #f"Does this SQL Table '{sql_table.table_schema}.{sql_table.table_name}' describe entities for '{self.name}'?"
+            prompt = (f"Does the table name '{sql_table.table_schema}.{sql_table.table_name}'"
+                f"match the intent of the search query '{self.name}'"
+                "\nConsider semantic similarity, synonyms, abbreviations, and language variations."
+            )
+
+            if self.sv(prompt):
                 return sql_table, distance
 
-        Exception(f"No table found for name '{self.name}', available tables: {table_names}")
+        raise Exception(f"No table found for name '{self.name}', available tables: {table_names}")

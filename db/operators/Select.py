@@ -1,7 +1,7 @@
 from typing import List
 
-from .Operator import Operator
-from ..criteria import Criteria
+from db.operators.Operator import Operator
+from db.criteria import Criteria
 
 # TODO: Increase Performance using Lookup Tables
 # # When selecting on a categorical field and |categories| << n -> build Lookup Table {Category -> bool}
@@ -9,7 +9,12 @@ from ..criteria import Criteria
 
 class Select(Operator):
     """
-    Filters tuples according to a provided criteria
+    Filters tuples according to a provided criterion
+    Construct criterion using the criteria in db.criteria.py
+
+    Attributes:
+        child_operator (Operator): The operator that generates the records for filtering
+        criteria (Criteria): The criteria to filter on
     """
 
     def __init__(self, child_operator: Operator, criteria: Criteria) -> None:
@@ -18,6 +23,7 @@ class Select(Operator):
         super().__init__(self.child_operator.table, self.child_operator.num_tuples)
 
     def __next__(self) -> dict:
+        # Fetches a next tuple from the child operator until the criteria is fulfilled
         for t in self.child_operator:
             if self.criteria.eval(t):
                 return t
@@ -27,8 +33,9 @@ class Select(Operator):
     def __str__(self) -> str:
         return f"{self.get_description()} ({self.child_operator})"
 
-    def open(self) -> None:
+    def open(self) -> Operator:
         self.child_operator.open()
+        return self
 
     def next_vectorized(self) -> List[dict]:
         data = self.child_operator.next_vectorized()
