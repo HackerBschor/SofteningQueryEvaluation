@@ -24,9 +24,9 @@ The criterion can be constructed using the following functions criteria:
    6) SoftEqual $a \approx b$: Checks for semantic equality using an LLM. E.g. Lady Gaga $\approx$ Stefani Joanne Angelina Germanotta
    7) SoftValidate $\checkmark_{\text{template}}$: Validates a text using an LLM. The text is constructed by filling a template with data. E.g. The validation of $\checkmark_{\text{Is the movie '{title}' about toys? }}$ for the record {title: 'Toy Story'} instructs a LLM with the prompt "Is the movie '{title}' about toys?"
 4) Project $\pi_{x_1, x_2, ..., x_n}$: Re-maps the record according to the mapping functions $x_1, x_2, ..., x_n$. For all mapping functions, the operator performs a semantic search for the stated columns. We've added the following mapping functions: 
-   1) Identity: Returning the record with the respective column. E.g. $\pi_{\text{title}}({\text{\{'original\_title'': 'Toy Story', ...\}}}) \rightarrow \text{\{'title': 'Toy Story'\}}$
-   2) Rename: Retuning the record with a renamed column name. E.g. $\pi_{\text{title}\rightarrow\text{new\_title}}({\text{\{'original\_title'': 'Toy Story', ...\}}}) \rightarrow \text{\{'new\_title': 'Toy Story'\}}$
-   3) Math Operation: Applies a mathematical function to a record. E.g. $\pi_{\text{price} \cdot 5, \text{amount} + 1}({\text{\{'price': 10, 'order\_amount': 2 ...\}}}) \rightarrow \text{\{'price': 50, 'amount': 3\}}$
+   1) Identity: Returning the record with the respective column. E.g. $\pi_{\text{title}}({\text{\{'originaltitle'': 'Toy Story', ...\}}}) \rightarrow \text{\{'title': 'Toy Story'\}}$
+   2) Rename: Retuning the record with a renamed column name. E.g. $\pi_{\text{title}\rightarrow\text{newtitle}}({\text{\{'originaltitle'': 'Toy Story', ...\}}}) \rightarrow \text{\{'newtitle': 'Toy Story'\}}$
+   3) Math Operation: Applies a mathematical function to a record. E.g. $\pi_{\text{price} \cdot 5, \text{amount} + 1}({\text{\{'price': 10, 'orderamount': 2 ...\}}}) \rightarrow \text{\{'price': 50, 'amount': 3\}}$
    4) String Concat: Concatenates column values to a single column. E.g. $\pi_{\text{CONCAT('Hello {name}, good to see you')}\rightarrow\text{greeting}}({\text{\{'name': 'Robert', ...\}}}) \rightarrow \text{\{'greeting': 'Hello Robert, good to see you'\}}$
    5) TextGeneration: Instructs an LLM with a prompt generated from the record. Can be used for a full in-database RAG pipeline. E.g. $\pi_{\text{LLM('Hello {name}, good to see you')}\rightarrow\text{greeting}}({\text{\{'name': 'Robert', ...\}}}) \rightarrow \text{\{'greeting': 'I'm not actually Robert, but I'll play along. It's nice to meet you! How can I assist you today?'\}}$
 5) Join $L \bowtie_{\text{condition}} R$: Joins two relations according a certain condition.  This operator can be compared to `JOIN` in SQL. We implemented 3 types of Joins:
@@ -34,13 +34,14 @@ The criterion can be constructed using the following functions criteria:
    2) HashJoin: Implements an InnerEquiJoin $L \bowtie_{L.x = R.y} R$ by building a hash table on the join attributes and returning the merged tuples in the same buckets 
    3) SoftJoin: Implements an InnerSoftEquiJoin $L \bowtie_{L.x \approx R.y} R$ by building a vector index on the embedded join attributes and returning the merged tuples within the same radius. Optionally, a semantic entity matching can be added. ([Example](#soft-join))  
 6) Aggregate $(g_1, g_2, ..., g_n)\gamma_{f_1 \rightarrow c_1, f_2 \rightarrow c_2, ..., f_m \rightarrow c_m}(R)$: Aggregates the records in relation according to the variables $g_1, g_2, ..., g_n$ and executes the aggregation functions on the records list $f_1, f_2, ..., f_m$ (stores them as $c_1, c_2, ..., c_m$. Returns the tuple $\{g_1, g_2, g_m, ..., c_1, c_2, ..., c_m\}$ We've implemented aggregation function such as SumAggregate (`SUM(x)`), \[Distinct\]CountAggregate (`COUNT(x)`, `COUNT(DISTINCT x)`) and Min-/ MaxAggregate (`MIN`) (`MAX`). This operator can be compared to `GROUP BY` in SQL. We've implemented 2 types of Aggregation methods:
-   1) HashAggregate: Default aggregate implementation (softens schema bindings by semantic searching for stated columns). Aggregates the records in a hash table and applies the aggregation for all values for a key. E.g.: $(\text{category}, \text{name})\gamma_{SUM(\text{amount}) \rightarrow \text{orders\_amount}, COUNT(\text{order_id}) \text{total_orders}}(\text{{category: 'Food', name: 'Coffee', amount: 1, order_id: 0}, {category: 'Food', name: 'Coffee Kart', amount: 3, order_id: 1}}) \rightarrow \text{{category: 'Food', name: 'Coffee', orders_amount: 4, total_orders: 2}}$     
+   1) HashAggregate: Default aggregate implementation (softens schema bindings by semantic searching for stated columns). Aggregates the records in a hash table and applies the aggregation for all values for a key. E.g.: $(\text{category}, \text{name})\gamma_{SUM(\text{amount}) \rightarrow \text{ordersamount}, COUNT(\text{orderid}) \text{totalorders}}(\text{{category: 'Food', name: 'Coffee', amount: 1, orderid: 0}, {category: 'Food', name: 'Coffee Kart', amount: 3, orderid: 1}}) \rightarrow \text{{category: 'Food', name: 'Coffee', ordersamount: 4, totalorders: 2}}$     
    2) SoftAggregate: Performs a semantic aggregation by embedding the serialized key values using a LLM. To generate buckets, the vector space is clustered and the set of keys and the set of aggregates values is returned. ([Example](#soft-aggregate))      
 7) Union $\cup$: Union set operation on tuples/records. This operator can be compared to `UNION` in SQL.
 
 ### Soft Join 
 
 Here, we demonstrate how SoftJoin creates joins for the example query: 
+
 $$
    (\text{Companies1 c1})\bowtie_{\text{name,address}}(\text{Companies2 c2})
 $$
@@ -77,8 +78,9 @@ A $\tau = 0$ is equal to $\sigma_{\checkmark (R \approx L)}(R \times L)$.
 ### Soft Aggregate 
 
 Here, we demonstrate how SoftAggregate creates aggregations for the example query: 
+
 $$
-   (\text{Title}, \text{Studio})\gamma_{SUM(\text{Revenue \$}) \rightarrow \text{total\_revenue}}(\text{Movies})
+   (\text{Title}, \text{Studio})\gamma_{SUM(\text{Revenue}) \rightarrow \text{totalrevenue}}(\text{Movies})
 $$
 
 The first step is the serialization of the key values. 
