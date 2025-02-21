@@ -41,6 +41,8 @@ class LLaMAValidationModel(SemanticValidationModel):
         system_prompt = system_prompt if system_prompt else self._system_prompt
         chat_template = [ {'content': system_prompt, 'role': 'system'}, {'content': prompt, 'role': 'user'} ]
 
+        logging.debug(f"Chat template: {chat_template}")
+
         prompt_tok: torch.Tensor = self._tokenizer.apply_chat_template(
             chat_template, add_generation_prompt=True, return_tensors="pt")
 

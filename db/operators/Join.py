@@ -13,6 +13,19 @@ from models.semantic_validation.Model import SemanticValidationModel
 
 
 class Join(Operator):
+    """
+    Implementation of NestedLoopJoin that evaluate a criteria.
+    Construct criterion using the criteria in db.criteria.py
+
+    Renames columns with same name from both relations.
+    E.g. L.columns = {x, y}, R.columns = {y, z} -> returns tuples of {x, L.y, R.y, z}
+
+    Attributes:
+        child_left (Operator): Left Relation
+        child_right (Operator): Right Relation
+        criteria (Criteria): Join Criteria
+    """
+
     def __init__(self, child_left: Operator, child_right: Operator, criteria: Criteria | None):
         self.child_left: Operator = child_left
         self.child_right: Operator = child_right
@@ -21,20 +34,25 @@ class Join(Operator):
 
         name = f"{self.child_left.table.table_name}+{self.child_right.table.table_name}"
 
-        # builds columns map: a = {x, y} & b = {y, z} -> columns_map = {left: {x: x, y: a.y}, right: {z: z, y: b.y}}
+        # Renames columns of the same name:
+        # L = {x, y} & R = {y, z} -> columns_map = {left: {x: x, y: L.y}, right: {z: z, y: R.y}}
         columns_left = {x.column_name for x in self.child_left.table.table_structure}
         columns_right = {x.column_name for x in self.child_right.table.table_structure}
+        # Intercepting column Names: {y}
         columns_intersect = columns_left & columns_right
-        # a = {x, y} & b = {y, z} -> columns_map = {left: {x: x}, right: {z: z}}
+
+        # builds columns map for unambiguous columns {left: {x: x}, right: {z: z}
         self.columns_map = {
             "left": {x:x for x in (columns_left-columns_intersect)},
             "right": {x:x for x in (columns_right-columns_intersect)}
         }
 
+        # Add renames to column map: left.put({y->L.y}), right.put({y->R.y})
         for col in columns_intersect:
             self.columns_map["left"][col] = f"{self.child_left.table.table_name}.{col}"
             self.columns_map["right"][col] = f"{self.child_right.table.table_name}.{col}"
 
+        # Builds new structure for renamed column map
         columns: list[SQLColumn] = []
         for col in self.child_left.table.table_structure:
             col_name_new = self.columns_map["left"][col.column_name]
@@ -47,26 +65,37 @@ class Join(Operator):
         super().__init__(SQLTable("", name, columns), min(self.child_right.num_tuples, self.child_right.num_tuples))
 
     def __next__(self) -> dict:
+        """
+        Iterate over left relation and fix the record.
+        Iterate over right relation until the criteria is fulfilled
+            -> rename (according to columns_map) records -> return merged records
+        If the right relation is exhausted, fix next record from left relation and repeat
+        If left relation is exhausted -> close()
+        """
         while True:
+            # Fix next left record
             if self.current_tuple is None:
                 self.current_tuple = next(self.child_left)
 
             try:
+                # Gen next record form right relation and check criteria
                 rec_right = next(self.child_right)
-                joined_record = self._build_joined_record(self.current_tuple, rec_right)
+                joined_record = self._build_joined_record(self.current_tuple, rec_right) # join record & rename columns
                 if self.criteria.eval(joined_record):
                     return joined_record
 
             except StopIteration:
+                # Right relation is exhausted -> fix next left record from relation
                 self.current_tuple = None
                 self.child_right.open()
 
     def __str__(self) -> str:
         return f"{self.get_description()}({self.child_left}, {self.child_right})"
 
-    def open(self) -> None:
+    def open(self) -> Operator:
         self.child_left.open()
         self.child_right.open()
+        return self
 
     def next_vectorized(self) -> list[dict]:
         raise NotImplementedError()
@@ -84,51 +113,89 @@ class Join(Operator):
         return super().get_structure(), [structure_left, structure_right]
 
     def _remap_record(self, side: str, rec: dict):
+        """
+        Remap record to remove ambiguous columns
+        columns_map = {left: {x: x, y: L.y}, right: {z: z, y: R.y}}
+        E.g. left record {"x": 1, "y": 2} -> {"x": 1, "L.y": 2}
+        """
         return {self.columns_map[side][k]: v for k, v in rec.items()}
 
     def _build_joined_record(self, left: dict, right: dict) -> dict:
+        """
+        Remap records to remove ambiguous columns & Merge
+        E.g. left={"x": 1, "y": 2}, right={"y": 2, "z": 3} -> {"x": 1, "L.y": 2, "R.y": 2, "z": 3}
+        """
         return self._remap_record("left", left) | self._remap_record("right", right)
 
 
 class InnerHashJoin(Join):
+    """
+    Implementation of HashJoin on equality of columns.
+
+    Renames columns with same name from both relations.
+    E.g. L.columns = {x, y}, R.columns = {y, z} -> returns tuples of {x, L.y, R.y, z}
+
+    Attributes:
+        child_left (Operator): Left Relation
+        child_right (Operator): Right Relation
+        column_left (Column): Left Join Column
+        column_right (Column): Right Join Column
+    """
+
     def __init__(self, child_left: Operator, child_right: Operator, column_left: Column, column_right: Column):
         self.column_left: Column = column_left
         self.column_right: Column = column_right
-        self.ht: dict[Any, dict[Any, Any]] = {}
-        self.tuple_right: None | tuple = None
-        self.tuples_left: None | list[tuple] = None
+        self.ht: dict[Any, list[dict]] = {}
+        self.record_right: None | tuple = None
+        self.records_left: None | list[tuple] = None
         self.index_left: None | int = None
         super().__init__(child_left, child_right, None)
 
-    def open(self) -> None:
+    def open(self) -> Operator:
+        """ Iterate over left relation and insert tuples in HashTable {JoinValue -> list[records]}"""
         self.child_left.open()
         self.ht = {}
         for rec in self.child_left:
             rec = self._remap_record("left", rec)
-            key = self.column_left.get(rec)
-            self.ht.setdefault(key, []).append(rec)
+            key = self.column_left.get(rec) # HashTable Key
+            self.ht.setdefault(key, []).append(rec) # Append record to list for ht[key]
 
         self.child_right.open()
+        return self
 
     def __next__(self) -> dict:
-        while True:
-            if self.tuple_right is None:
-                self.tuple_right = self._remap_record("right", next(self.child_right))
-                key = self.column_right.get(self.tuple_right)
+        """
+        Iterate over right relation and fix the record. Load all matching records (left relation) from hash table
 
-                if key not in self.ht:
+        Retrieve next record from the matching records list
+            -> rename (according to columns_map) records -> return merged records
+
+        If the matching records list is exhausted, fix next record from right relation and repeat
+        If right relation is exhausted -> close()
+        """
+
+        while True:
+            if self.record_right is None:
+                # Fix next right record
+                self.record_right = self._remap_record("right", next(self.child_right))
+                key = self.column_right.get(self.record_right) # HashTable key
+
+                if key not in self.ht: # No matches found
                     continue
 
-                self.tuples_left = self.ht[key]
+                # Retrieve matching records from left relation
+                self.records_left = self.ht[key]
                 self.index_left = 0
 
             try:
-                tuple_left = self.tuples_left[self.index_left]
+                # Retrieve matching record from matching records list
+                record_left = self.records_left[self.index_left]
                 self.index_left += 1
-                return tuple_left | self.tuple_right
+                return record_left | self.record_right # Return merged records
 
             except IndexError:
-                self.tuple_right = None
+                # matching records list is exhausted -> repeat with next right record
+                self.record_right = None
 
     def next_vectorized(self) -> list[dict]:
         raise NotImplementedError()
@@ -143,13 +210,45 @@ class InnerTFIDFJoin(Join):
 
 
 class InnerFuzzyJoin(Join):
+    # TODO: Implement for comparison
     # Fuzzy string matching (Levenshtein, Jaccard, Jaro-Winkler)
     pass
 
 
 class InnerSoftJoin(Join):
-    # TODO: add Attributes to System Prompt
-    ZERO_SHOT_SYSTEM_PROMPT = "Given the attributes of the two records, are they the same?. Answer with \"yes\" and \"no\" only!"
+    """
+    Implements the novel SoftJoin Operator, that joins records on semantic equality.
+
+    General Functionality:
+    Iterate over left relation and insert the embeddings of serialized records into a vector index.
+    Then, iterate over right relation, serialize and embedd record. Then perform a range query on the vector index.
+    For all records within a threshold, perform entity matching using an LLM.
+    If the entity matching passes, return merged tuple.
+
+    Renames columns with same name from both relations.
+    E.g. L.columns = {x, y}, R.columns = {y, z} -> returns tuples of {x, L.y, R.y, z}
+
+    Attributes:
+        child_left (Operator): Left Relation
+        child_right (Operator): Right Relation
+        method (threshold, zero-shot-prompting, both): Rely only on threshold/ Zero shot prompting/ combination
+        embedding_method (FULL_SERIALIZED, FIELD_SERIALIZED): How the record should be serialized
+        serialization_embedding: Callable[[dict], str]: Function for serialization (embeddings)
+        vector_store_type (faiss.IndexFlat): vector index (E.g. IndexFlatIP -> Cosine Similarity)
+        threshold (float): threshold for range query
+        columns_left (None | list[str]): Left Join Columns (None -> Serialize entire Record)
+        columns_right (None | list[str]): Right Join Columns (None -> Serialize entire Record)
+        em (EmbeddingModel): The model to embedd a serialized record
+        sv (SemanticValidationModel): The model which performs a semantic validation if both records match
+        zs_system_prompt (str): System Prompt for semantic validation,
+        zs_template (str): Prompt for semantic validation,
+        serialization_zero_shot_prompting: Function for serialization (zero-shot-prompting)
+    """
+
+    # TODO: Add Attributes to System Prompt
+    ZERO_SHOT_SYSTEM_PROMPT = ("You are a validator. Validate if Record A is semantically equal to Record B following "
+                               "statement using \"no\" and \"yes\" only!")
+
     ZERO_SHOT_PROMPTING_TEMPLATE = "Record A is {a}\nRecord B is {b}"
 
     @staticmethod
@@ -158,7 +257,7 @@ class InnerSoftJoin(Join):
 
     @staticmethod
     def default_serialization_zero_shot_prompting(x: dict) -> str:
-        return ', '.join([v for k, v in x.items() if v is not None])
+        return ', '.join([str(v) for k, v in x.items() if v is not None])
 
     def __init__(
             self,
@@ -187,7 +286,7 @@ class InnerSoftJoin(Join):
             self.em = em
             self.threshold = threshold
             self.embedding_method: str = embedding_method
-            self.vector_store = vector_store_type(em.get_embedding_size())
+            self.vector_index = vector_store_type(em.get_embedding_size()) # Init Vector Index
             self.serialization_embedding: Callable[[dict], str] = serialization_embedding
 
         if self.method in ("zero-shot-prompting", "both"):
@@ -201,8 +300,8 @@ class InnerSoftJoin(Join):
         self.embeddings: np.array = None
         self.embeddings_map: dict[Any, np.array] = {}
 
-        self.columns_left: None | list[str] | list[SQLColumn] = None
-        self.columns_left: None | list[str] | list[SQLColumn] = None
+        self.join_columns_left: None | list[str] | list[SQLColumn] = None
+        self.join_columns_right: None | list[str] | list[SQLColumn] = None
 
         self.records_left: Optional[list[dict]] = []
         self.record_right: Optional[dict] = None
@@ -213,79 +312,110 @@ class InnerSoftJoin(Join):
 
         super().__init__(child_left, child_right, None)
 
+        # Load left & right join columns for serialization with remapped column names
+        #   (Uses column map build in Super-Class)
+        # E.g. keys-left: [y], keys-right: [y] -> join_columns_left->[L.y], join_columns_right->[R.y]
         columns_left, columns_right = self._build_join_columns(columns_left, columns_right)
-        self.columns_left: list[SQLColumn] = columns_left
-        self.columns_right: list[SQLColumn] = columns_right
+        self.join_columns_left: list[SQLColumn] = columns_left
+        self.join_columns_right: list[SQLColumn] = columns_right
 
 
-    def open(self) -> None:
+    def open(self) -> Operator:
         self.child_left.open()
 
         logging.debug("Loading records")
+        # Iterate over left relation -> store remap records [x, y]->[x, L.y]
         self.records_left = [self._remap_record("left", row) for row in self.child_left]
 
-        if self.method in ("threshold", "both") and len(self.columns_left) > 0:
-            self.vector_store.reset()
+        if self.method in ("threshold", "both") and len(self.join_columns_left) > 0:
+            self.vector_index.reset()
 
             logging.debug("Embedding records")
-            self.embeddings = self._create_left_embeddings()
+            self.embeddings = self._create_left_embeddings() # Serialize and embedd left records
 
             logging.debug("Save to vector store")
             # noinspection PyArgumentList
-            self.vector_store.add(self.embeddings)
+            self.vector_index.add(self.embeddings) # Insert left records in vector store
 
         self.child_left.close()
         self.child_right.open()
+        return self
 
     def __next__(self) -> dict:
-        if len(self.records_left) == 0:
+        if len(self.records_left) == 0: # No left records -> no matches
             self.close()
             raise StopIteration
 
         while True:
             if self.record_right is None:
+                # Fix next right remapped ([y, z] -> [R.y, z]) record
                 self.record_right = self._remap_record("right", next(self.child_right))
 
                 if self.method in ("threshold", "both"):
+                    # Embedd fixed (right) record
+
                     if self.embedding_method == "FULL_SERIALIZED":
-                        key = str({col.column_name: self.record_right[col.column_name] for col in self.columns_right})
+                        # Embedd entire record
+                        # LLM.embedd(serialize(record))
+                        key = str({col.column_name: self.record_right[col.column_name] for col in self.join_columns_right})
                         embedding_right = self.em(key)
                     else:
-                        key_elements = list({str(self.record_right[col.column_name]) for col in self.columns_right})
+                        # Embedd every column separately -> build average
+                        # AVG(LLM.embedd(serialize(record.column1)), LLM.embedd(serialize(record.column2)), ...)
+                        key_elements = list({str(self.record_right[col.column_name]) for col in self.join_columns_right})
                         key_elements = list(km for km in key_elements if km not in self.embeddings_map)
                         if len(key_elements) > 0:
+                            # Fills embedding map {key -> embedding}, so the same data is not embedded multiple times
                             for km, emb in zip(key_elements, self.em(key_elements)):
                                 self.embeddings_map[km] = emb
-                        embedding_right = np.average([self.embeddings_map[str(self.record_right[col.column_name])] for col in self.columns_right], axis=0)
 
+                        embedding_right = np.average(
+                            [self.embeddings_map[str(self.record_right[col.column_name])] for col in self.join_columns_right],
+                            axis=0)
+
+                    # Perform range query on vector Store
                     # noinspection PyArgumentList
-                    _, distances, indices = self.vector_store.range_search(x=np.array([embedding_right]), thresh=self.threshold)
+                    _, distances, indices = self.vector_index.range_search(x=np.array([embedding_right]), thresh=self.threshold)
                     self.indices = list(indices)
                     self.distances = list(distances)
                 else:
-                    self.indices = [i for i in range(len(self.columns_left))]
+                    # indices to left records within the range of threshold
+                    self.indices = [i for i in range(len(self.join_columns_left))]
 
                 self.index_left = 0
 
             try:
+                # Retrieve next left record from potential matches
                 idx = self.indices[self.index_left]
-                distance = self.distances[self.index_left]
 
                 self.index_left += 1
-                rec = self.records_left[idx] | self.record_right
+                rec = self.records_left[idx] | self.record_right # Merge records
 
-                logging.debug(f"Joined record {rec} distance {distance}")
+                debug_msg = f"Joined record {rec}"
+                if self.method in ("threshold", "both"):
+                    debug_msg += f" distance {self.distances[self.index_left-1]}"
 
+                logging.debug( debug_msg)
+
+                # Use LLM for entity matching ("Is record A: ... equal to record B: ...")
                 if self.method in ("zero-shot-prompting", "both"):
-                    rec_a = {col.column_name: self.records_left[idx][col.column_name] for col in self.columns_left}
-                    rec_b = {col.column_name: self.record_right[col.column_name] for col in self.columns_right}
-                    prompt = self.zs_template.format(a = self.serialization_zero_shot_prompting(rec_a), b = self.serialization_zero_shot_prompting(rec_b))
+                    # Reduce record to key columns
+                    rec_a = {col.column_name: self.records_left[idx][col.column_name] for col in self.join_columns_left}
+                    rec_b = {col.column_name: self.record_right[col.column_name] for col in self.join_columns_right}
+
+                    # Fill template with serialized record
+                    prompt = self.zs_template.format(
+                        a = self.serialization_zero_shot_prompting(rec_a),
+                        b = self.serialization_zero_shot_prompting(rec_b))
+
+                    # entity matching not passing -> continue with next left record
                     if not self.sv(prompt, system_prompt=self.zs_system_prompt):
                         logging.debug(f"Prompt: \"{prompt}\" filed in semantic validation")
                         continue
 
                 return rec
 
+            # Left records exhausted -> continue with next right record
             except IndexError:
                 self.record_right = None
 
@@ -293,13 +423,14 @@ class InnerSoftJoin(Join):
         raise NotImplementedError()
 
     def get_description(self) -> str:
-        return f"⋈_{{{', '.join(map(str, self.columns_left))} ≈ {', '.join(map(str, self.columns_right))}}}"
+        return f"⋈_{{{', '.join(map(str, self.join_columns_left))} ≈ {', '.join(map(str, self.join_columns_right))}}}"
 
     def _build_join_columns(self, columns_left, columns_right):
         # TODO: Soft Search For Join Columns
         join_columns_left: list[SQLColumn] = []
         join_columns_right: list[SQLColumn] = []
 
+        # When no columns provided -> use entire record
         if columns_left is None:
             columns_left = [self.columns_map["left"][col.column_name] for col in self.child_left.table.table_structure]
         else:
@@ -310,6 +441,7 @@ class InnerSoftJoin(Join):
         else:
             columns_right = [self.columns_map["right"][col] if col in self.columns_map["right"] else col for col in columns_right]
 
+        # search join columns from structure
         columns_found = set({})
         for col in self.table.table_structure:
             if col.column_name in columns_left:
@@ -320,6 +452,7 @@ class InnerSoftJoin(Join):
                 join_columns_right.append(col)
                 columns_found.add(col.column_name)
 
+        # Check availability of key-columns
         missing_columns_left = [col for col in columns_left if col not in columns_found]
         missing_columns_right = [col for col in columns_left if col not in columns_found]
 
@@ -332,13 +465,17 @@ class InnerSoftJoin(Join):
 
     def _create_left_embeddings(self) -> np.array:
         if self.embedding_method == "FULL_SERIALIZED":
-            keys = [self.serialization_embedding({col.column_name: rec[col.column_name] for col in self.columns_left}) for rec in self.records_left]
+            # Embedd entire record
+            # LLM.embedd(serialize(record))
+            keys = [self.serialization_embedding({col.column_name: rec[col.column_name] for col in self.join_columns_left}) for rec in self.records_left]
             return self.em(keys)
         else:
-            key_elements_set = list({str(rec[col.column_name]) for col in self.columns_left for rec in self.records_left})
+            # Embedd every column separately -> build average
+            # AVG(LLM.embedd(serialize(record.column1)), LLM.embedd(serialize(record.column2)), ...)
+            key_elements_set = list({str(rec[col.column_name]) for col in self.join_columns_left for rec in self.records_left})
             self.embeddings_map = {key: embedding for key, embedding in zip(key_elements_set, self.em(key_elements_set))}
             key_elements_embeddings = np.array([
-                [self.embeddings_map[str(rec[col.column_name])] for col in self.columns_left]
+                [self.embeddings_map[str(rec[col.column_name])] for col in self.join_columns_left]
                 for rec in self.records_left
             ])
             return np.average(key_elements_embeddings, axis=1)
