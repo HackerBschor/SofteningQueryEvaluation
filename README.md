@@ -113,7 +113,13 @@ pip3 install -r requirements.txt
 
 ## Usage
 
-To create a query, the operators have to be assembled as relational algebra. Hence   
+To create a query, the operators have to be assembled as relational algebra. 
+The soft operators usually require an embedding model or a semantic validation.  
+
+To achieve good results, a threshold $\tau$ for semantic equality has to be selected. 
+This parameter vary among tasks and data. 
+
+We've provided example queries in the [Demo notebook](Demo.ipynb)
 
 ## Evaluation
 
