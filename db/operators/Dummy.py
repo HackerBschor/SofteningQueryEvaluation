@@ -29,10 +29,11 @@ class Dummy(Operator):
             self.close()
             raise StopIteration
 
-    def open(self) -> None:
+    def open(self) -> Operator:
         # Reset Iterator
         self.iter: Iterator[dict] | None = iter(self.data)
         self.idx: int | None = 0
+        return self
 
     def next_vectorized(self) -> list[dict]:
         if self.idx is None:

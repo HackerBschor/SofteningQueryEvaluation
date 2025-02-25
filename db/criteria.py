@@ -1,6 +1,7 @@
 import logging
 
 from abc import ABC, abstractmethod
+from typing import Literal, Callable
 
 from utils import Measure, CosineSimilarity
 
@@ -121,29 +122,71 @@ class SoftEqual(Criteria):
 
     Attributes:
         left (Column | Constant | list[str] | None): Left input (None -> serialize Entire Record)
-        right (Column | Constant | list[str] | None):  Right input (None -> serialize Entire Record)
-        em (EmbeddingModel): The model to embedd a serialized database table
+        right (Column | Constant | list[str] | None): Right input (None -> serialize Entire Record)
+        em (EmbeddingModel): The model to embed a serialized record
+        sv (SemanticValidationModel): The model which performs a semantic validation,
+        method (threshold, zero-shot-prompting, both): Rely only on threshold/ Zero-/Few-Shot Prompting/ combination
+        serialize (Callable[[dict], str]): How to convert the record to a string
+        measure (Measure): The similarity/ distance function is applied to the embeddings
+        threshold (float): Threshold for the similarity between both embeddings
+        zfs_prompt_template (str): Format string, which is formatted to the input prompt for the SemanticValidationModel
+        zfs_system_prompt (str): System prompt which is used for the SemanticValidationModel
+
+
         measure (Measure): CosineSimilarity / L2 Distance/ ...
         threshold (float)
     """
+    # https://arxiv.org/pdf/2310.11244
+    # ZFS_PROMPT = "Do the two entity descriptions match?\nEntity 1: {}\nEntity 2: {}"
+    ZFS_PROMPT = "Do the two entity descriptions refer to the same real-world entity?\nEntity 1: {}\nEntity 2: {}"
+
     def __init__(self,
                  left: Column | Constant | list[str] | None,
                  right: Column | Constant | list[str] | None,
-                 em: EmbeddingModel, measure: Measure = CosineSimilarity(), threshold: float = 0.9):
+                 em: EmbeddingModel, sv: SemanticValidationModel,
+                 method: Literal['threshold', 'zero-few-shot', 'both'] = 'both',
+                 serialize: Callable[[dict], str] = lambda x: ", ".join(x.values()),
+                 measure: Measure = CosineSimilarity(), threshold: float = 0.9,
+                 zfs_prompt_template: str = ZFS_PROMPT, zfs_system_prompt: str = None):
+
+        self.method = method
+
+        if self.method == 'threshold' or self.method == 'both':
+            assert em is not None and threshold is not None and measure is not None
+            self.em: EmbeddingModel = em
+            self.threshold: float = threshold
+            self.measure: Measure = measure
+
+        if self.method == 'zero-few-shot' or self.method == 'both':
+            assert sv is not None and zfs_prompt_template is not None
+            self.sv: SemanticValidationModel = sv
+            self.zfs_prompt_template: str = zfs_prompt_template
+            self.zfs_system_prompt: str = zfs_system_prompt
+
+        if isinstance(left, list) or left is None or isinstance(right, list) or right is None:
+            assert serialize is not None
+            self.serialize = serialize
+
         super().__init__([left, right])
-        self.em: EmbeddingModel = em
-        self.measure: Measure = measure
-        self.threshold: float = threshold
+
 
     def eval(self, t) -> bool:
-        emb_str_left = self._serialize_input(t, self.crit[0])
-        emb_str_right = self._serialize_input(t, self.crit[1])
+        left_str = self._serialize_input(t, self.crit[0])
+        right_str = self._serialize_input(t, self.crit[1])
 
-        # Eval Metric: If distance -> d(v1, v2) < threshold; If Similarity -> s(v1, v2) < threshold
-        embeddings = self.em([str(emb_str_left), str(emb_str_right)])
-        result = self.measure(embeddings[0], embeddings[1], self.threshold)
-        logging.debug(f"{emb_str_left} ≈ {emb_str_right}: {result}")
-        return result
+        result_emb, result_zfs = True, True
+        if self.method in ('threshold', 'both') :
+            # Eval Metric: If distance -> d(v1, v2) < threshold; If Similarity -> s(v1, v2) < threshold
+            embeddings = self.em([str(left_str), str(right_str)])
+            _, result_emb = self.measure(embeddings[0], embeddings[1], self.threshold)
+            logging.debug(f"{left_str} ≈ {right_str}: {result_emb}")
+
+        if self.method in ('zero-few-shot', 'both'):
+            prompt = self.zfs_prompt_template.format(left_str, right_str)
+            result_zfs = self.sv(prompt, self.zfs_system_prompt)
+            logging.debug(f"✓{prompt}: {result_zfs}")
+
+        return result_emb and result_zfs
 
     def __str__(self):
         if self.crit[0] is None or self.crit[1] is None:
@@ -155,14 +198,15 @@ class SoftEqual(Criteria):
         return f"{left} ≈ {right}"
 
 
-    @staticmethod
-    def _serialize_input(record, target):
-        if target is None:
-            return str(record) # Serialize Entire Record
-        elif isinstance(target, list):
-            return str({x: record[x] for x in record if x in target}) # Serialize reduced record (assigned columns)
-        else:
-            return target.get(record) # Column -> record[Column], Constant -> ConstantValue
+    def _serialize_input(self, record, target) -> str:
+        if isinstance(target, Column) or isinstance(target, Constant):
+            return str(target.get(record)) # Column -> record[Column], Constant -> ConstantValue
+
+        # Serialize Entire Record (target is None) or Reduced Record (assigned columns)
+        if isinstance(target, list):
+            record = {x: record[x] for x in record if x in target}
+
+        return self.serialize(record)
 
 
 class SoftValidate(Criteria):

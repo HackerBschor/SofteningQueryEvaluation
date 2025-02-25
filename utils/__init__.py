@@ -19,12 +19,14 @@ class Measure:
         self.is_distance: bool = is_distance
         self.similarity: float | None = None
 
-    def __call__(self, u: np.array, v: np.array, threshold: float | None = None) -> float | bool:
+    def __call__(self, u: np.array, v: np.array, threshold: float | None = None) -> [float, bool]:
+        result = None
         self.similarity: float = self._calc(u, v)
+
         if threshold is not None:
-            return self.similarity <= threshold if self.is_distance else self.similarity >= threshold
-        else:
-            return self.similarity
+            result = self.similarity <= threshold if self.is_distance else self.similarity >= threshold
+
+        return self.similarity, result
 
     def _calc(self, u: np.array, v: np.array) -> float:
         raise NotImplementedError()
