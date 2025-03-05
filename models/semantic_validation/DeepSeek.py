@@ -34,8 +34,12 @@ class DeepSeekValidationModel(SemanticValidationModel):
         messages.append({'role': 'user', 'content': prompt})
 
         response: ChatResponse = chat(model='deepseek-r1:7b', messages=messages)
-        answer = response.message.content.split("</think>")[1].lower().strip()
-        if answer not in ("yes", "no"):
-            logging.error(f"{answer} is not a valid answer")
+        answer = response.message.content
 
-        return answer == "yes"
+        if answer[-3:].lower() == "yes":
+            return True
+        if answer[-2:].lower() == "no":
+            return False
+
+        logging.error(f"{answer} is not a valid answer")
+        return False
