@@ -12,6 +12,10 @@ from models.embedding.Model import EmbeddingModel
 from models.semantic_validation.Model import SemanticValidationModel
 
 
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+
 class Join(Operator):
     """
     Implementation of NestedLoopJoin that evaluate a criteria.
@@ -232,6 +236,8 @@ class InnerSoftJoin(Join):
         child_left (Operator): Left Relation
         child_right (Operator): Right Relation
         method (threshold, zero-shot-prompting, both): Rely only on threshold/ Zero shot prompting/ combination
+        embedding_comparison (RECORD_WISE, COLUMN_WISE): compare the embeddings for serialized records
+            or for every column separately
         embedding_method (FULL_SERIALIZED, FIELD_SERIALIZED): How the record should be serialized
         serialization_embedding: Callable[[dict], str]: Function for serialization (embeddings)
         vector_store_type (faiss.IndexFlat): vector index (E.g. IndexFlatIP -> Cosine Similarity)
@@ -264,6 +270,7 @@ class InnerSoftJoin(Join):
             child_left: Operator,
             child_right: Operator,
             method: Literal['threshold', 'zero-shot-prompting', 'both'] = "both",
+            embedding_comparison: Literal["RECORD_WISE", "COLUMN_WISE"] = "RECORD_WISE",
             embedding_method: Literal["FULL_SERIALIZED", "FIELD_SERIALIZED"] = "FULL_SERIALIZED",
             serialization_embedding: Callable[[dict], str] = default_serialization_embedding,
             vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
@@ -279,6 +286,7 @@ class InnerSoftJoin(Join):
         self.child_left: Operator = child_left
         self.child_right: Operator = child_left
         self.method: str = method
+        self.embedding_comparison: str = embedding_comparison
 
         if self.method in ("threshold", "both"):
             assert em is not None
@@ -286,8 +294,19 @@ class InnerSoftJoin(Join):
             self.em = em
             self.threshold = threshold
             self.embedding_method: str = embedding_method
-            self.vector_index = vector_store_type(em.get_embedding_size()) # Init Vector Index
             self.serialization_embedding: Callable[[dict], str] = serialization_embedding
+
+            if self.embedding_comparison == "COLUMN_WISE":
+                # store the embeddings for every colum in multiple vector indices
+                assert columns_left is not None and columns_right is not None
+                assert len(columns_left) == len(columns_right)
+
+                # Init n Vector Index
+                self.vector_indices = [vector_store_type(em.get_embedding_size()) for _ in range(len(columns_left))]
+            else:
+                # store the embeddings for every row in the vector index
+                self.vector_index = vector_store_type(em.get_embedding_size()) # Init Vector Index
+
 
         if self.method in ("zero-shot-prompting", "both"):
             assert sv is not None
@@ -296,7 +315,8 @@ class InnerSoftJoin(Join):
             self.zs_template = zs_template
             self.serialization_zero_shot_prompting = serialization_zero_shot_prompting
 
-
+        # For COLUMN_WISE comparison -> shape: (n, #columns, embedding size)
+        # For RECORD_WISE -> shape (n, embedding size)
         self.embeddings: np.array = None
         self.embeddings_map: dict[Any, np.array] = {}
 
@@ -328,14 +348,21 @@ class InnerSoftJoin(Join):
         self.records_left = [self._remap_record("left", row) for row in self.child_left]
 
         if self.method in ("threshold", "both") and len(self.join_columns_left) > 0:
-            self.vector_index.reset()
-
             logging.debug("Embedding records")
             self.embeddings = self._create_left_embeddings() # Serialize and embedd left records
 
             logging.debug("Save to vector store")
-            # noinspection PyArgumentList
-            self.vector_index.add(self.embeddings) # Insert left records in vector store
+
+            if self.embedding_comparison == "COLUMN_WISE":
+                # Store the embeddings for all columns in their respective vector index
+                for i, vi in enumerate(self.vector_indices):
+                    vi.reset()
+                    # noinspection PyArgumentList
+                    vi.add(self.embeddings[:, i, :])
+            else:
+                self.vector_index.reset()
+                # noinspection PyArgumentList
+                self.vector_index.add(self.embeddings) # Insert left records in vector store
 
         self.child_left.close()
         self.child_right.open()
@@ -351,33 +378,60 @@ class InnerSoftJoin(Join):
                 # Fix next right remapped ([y, z] -> [R.y, z]) record
                 self.record_right = self._remap_record("right", next(self.child_right))
 
+                # Embedd fixed (right) record
                 if self.method in ("threshold", "both"):
-                    # Embedd fixed (right) record
+                    if self.embedding_comparison == "COLUMN_WISE":
+                        # Embedd and compare the cosine similarities for all join columns separately
+                        # If mean cosine similarity (for all join columns) > threshold -> consider as match
+                        keys_right = [str(self.record_right[col.column_name]) for col in self.join_columns_right]
+                        embs_right = self.em(keys_right)
 
-                    if self.embedding_method == "FULL_SERIALIZED":
-                        # Embedd entire record
-                        # LLM.embedd(serialize(record))
-                        key = str({col.column_name: self.record_right[col.column_name] for col in self.join_columns_right})
-                        embedding_right = self.em(key)
+                        indices_total = set()
+                        for i, vi in enumerate(self.vector_indices):
+                            # Perform range query on vector Stores for every column embedding
+                            # noinspection PyArgumentList
+                            _, _, indices = vi.range_search(x=np.array([embs_right[i]]), thresh=self.threshold)
+                            for idx in indices:
+                                indices_total.add(idx)
+
+                        self.indices = []
+                        self.distances = []
+
+                        # If any of the join columns is within the threshold,
+                        #   then test if mean of all columns is > threshold
+                        for idx in indices_total:
+                            embs_left = self.embeddings[idx, :, :]
+                            dist = [cosine_similarity(embs_left[i], embs_right[i]) for i in range(len(self.join_columns_right))]
+                            avg_dist = np.mean(dist)
+                            if avg_dist > self.threshold:
+                                self.indices.append(idx)
+                                self.distances.append(avg_dist)
                     else:
-                        # Embedd every column separately -> build average
-                        # AVG(LLM.embedd(serialize(record.column1)), LLM.embedd(serialize(record.column2)), ...)
-                        key_elements = list({str(self.record_right[col.column_name]) for col in self.join_columns_right})
-                        key_elements = list(km for km in key_elements if km not in self.embeddings_map)
-                        if len(key_elements) > 0:
-                            # Fills embedding map {key -> embedding}, so the same data is not embedded multiple times
-                            for km, emb in zip(key_elements, self.em(key_elements)):
-                                self.embeddings_map[km] = emb
+                        # Embedd and compare the pooled record
+                        if self.embedding_method == "FULL_SERIALIZED":
+                            # Embedd entire record
+                            # LLM.embedd(serialize(record))
+                            key = str({col.column_name: self.record_right[col.column_name] for col in self.join_columns_right})
+                            embedding_right = self.em(key)
+                        else:
+                            # Embedd every column separately -> build average (Mean Pooling)
+                            # AVG(LLM.embedd(serialize(record.column1)), LLM.embedd(serialize(record.column2)), ...)
+                            key_elements = list({str(self.record_right[col.column_name]) for col in self.join_columns_right})
+                            key_elements = list(km for km in key_elements if km not in self.embeddings_map)
+                            if len(key_elements) > 0:
+                                # Fills embedding map {key -> embedding}, so the same data is not embedded multiple times
+                                for km, emb in zip(key_elements, self.em(key_elements)):
+                                    self.embeddings_map[km] = emb
 
-                        embedding_right = np.average(
-                            [self.embeddings_map[str(self.record_right[col.column_name])] for col in self.join_columns_right],
-                            axis=0)
+                            embedding_right = np.average(
+                                [self.embeddings_map[str(self.record_right[col.column_name])] for col in self.join_columns_right],
+                                axis=0)
 
-                    # Perform range query on vector Store
-                    # noinspection PyArgumentList
-                    _, distances, indices = self.vector_index.range_search(x=np.array([embedding_right]), thresh=self.threshold)
-                    self.indices = list(indices)
-                    self.distances = list(distances)
+                        # Perform range query on vector Store
+                        # noinspection PyArgumentList
+                        _, distances, indices = self.vector_index.range_search(x=np.array([embedding_right]), thresh=self.threshold)
+                        self.indices = list(indices)
+                        self.distances = list(distances)
                 else:
                     # indices to left records within the range of threshold
                     self.indices = [i for i in range(len(self.join_columns_left))]
@@ -464,18 +518,31 @@ class InnerSoftJoin(Join):
         return join_columns_left, join_columns_right
 
     def _create_left_embeddings(self) -> np.array:
-        if self.embedding_method == "FULL_SERIALIZED":
-            # Embedd entire record
-            # LLM.embedd(serialize(record))
-            keys = [self.serialization_embedding({col.column_name: rec[col.column_name] for col in self.join_columns_left}) for rec in self.records_left]
-            return self.em(keys)
-        else:
-            # Embedd every column separately -> build average
-            # AVG(LLM.embedd(serialize(record.column1)), LLM.embedd(serialize(record.column2)), ...)
-            key_elements_set = list({str(rec[col.column_name]) for col in self.join_columns_left for rec in self.records_left})
-            self.embeddings_map = {key: embedding for key, embedding in zip(key_elements_set, self.em(key_elements_set))}
-            key_elements_embeddings = np.array([
-                [self.embeddings_map[str(rec[col.column_name])] for col in self.join_columns_left]
-                for rec in self.records_left
-            ])
-            return np.average(key_elements_embeddings, axis=1)
+        # Embeds the records from left relation
+        # For column wise comparison return embeddings for all columns,
+        #   for record wise comparison, return embedding for pooled record
+
+        if self.embedding_comparison == "COLUMN_WISE": # Returns array of shape (n, number columns, size embeddings)
+            # Flatten Embeddings List -> shape (n * number columns)
+            keys = [str(rec[col.column_name]) for rec in self.records_left for col in self.join_columns_left]
+            embeddings = self.em(keys)
+            len_cols = len(self.join_columns_left)
+            # reshape to (n, number columns, size embeddings)
+            return embeddings.reshape(embeddings.shape[0] // len_cols, len_cols, embeddings.shape[1])
+
+        else: # Returns array of shape (n, size embeddings)
+            if self.embedding_method == "FULL_SERIALIZED":
+                # Embedd entire record
+                # LLM.embedd(serialize(record))
+                keys = [self.serialization_embedding({col.column_name: rec[col.column_name] for col in self.join_columns_left}) for rec in self.records_left]
+                return self.em(keys)
+            else:
+                # Embedd every column separately -> build average
+                # AVG(LLM.embedd(serialize(record.column1)), LLM.embedd(serialize(record.column2)), ...)
+                key_elements_set = list({str(rec[col.column_name]) for col in self.join_columns_left for rec in self.records_left})
+                self.embeddings_map = {key: embedding for key, embedding in zip(key_elements_set, self.em(key_elements_set))}
+                key_elements_embeddings = np.array([
+                    [self.embeddings_map[str(rec[col.column_name])] for col in self.join_columns_left]
+                    for rec in self.records_left
+                ])
+                return np.average(key_elements_embeddings, axis=1)

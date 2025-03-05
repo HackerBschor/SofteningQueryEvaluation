@@ -418,7 +418,7 @@ class SoftAggregate(Aggregate):
         clusters = pd.concat(clusters)
         rows = np.concatenate(rows)
 
-        tsne = TSNE(n_components=2, perplexity=15, random_state=42, init='random', learning_rate=200)
+        tsne = TSNE(n_components=2, perplexity=min(15, len(rows)-1), random_state=42, init='random', learning_rate=200)
         vis_dims = tsne.fit_transform(rows)
         df = pd.DataFrame({ "x": vis_dims[:, 0], "y": vis_dims[:, 1], "c": clusters })
         sns.lmplot(x='x', y='y', data=df, hue='c', fit_reg=False)
@@ -504,3 +504,4 @@ class SoftAggregateScikit(SoftAggregate):
 
         self.iter = iter(self.clusters.keys())
         return self
+    
