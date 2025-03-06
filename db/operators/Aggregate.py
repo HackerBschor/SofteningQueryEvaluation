@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import Any, Callable, Type
+from typing import Any, Callable, Type, Literal
 
 import faiss
 import numpy as np
@@ -8,6 +8,8 @@ import pandas as pd
 
 from sklearn.base import ClusterMixin, BaseEstimator
 from sklearn.manifold import TSNE
+
+import umap
 
 import seaborn as sns
 
@@ -335,7 +337,9 @@ class HashAggregate(Aggregate):
 
 
 class SoftAggregate(Aggregate):
-
+    @staticmethod
+    def default_serialization(x: dict) -> str:
+        return '{' + ', '.join([f'{k.split(".")[-1]}: \'{v}\'' for k, v in sorted(x.items(), key=lambda x: x[0]) if v is not None]) + '}'
 
     # TODO: Prompt Tuning
     KEY_SUMMARY_SYSTEM_PROMPT: str = "Create a summary for the record input. " +\
@@ -345,11 +349,14 @@ class SoftAggregate(Aggregate):
 
     def __init__(self, child_operator: Operator, columns: list[str], aggregation: list[AggregationFunction],
                  em: EmbeddingModel, create_key_summary: bool = False, tgm: TextGenerationModel = None,
-                 key_summary_sp: str = KEY_SUMMARY_SYSTEM_PROMPT):
+                 key_summary_sp: str = KEY_SUMMARY_SYSTEM_PROMPT,
+                 serialization: Callable[[dict], str] = None):
         self.clusters: dict = {}
         self.iter: iter = None
 
         self.em: EmbeddingModel = em
+
+        self.serialization = self.default_serialization if serialization is None else serialization
 
         self.keys: list[dict] = []
         self.rows: list[dict] = []
@@ -465,12 +472,17 @@ class SoftAggregateFaissKMeans(SoftAggregate):
 
 class SoftAggregateScikit(SoftAggregate):
     def __init__(self, child_operator: Operator, columns: list[str], aggregation: list[AggregationFunction],
-                 em: EmbeddingModel, cluster_class: Type[ClusterMixin and BaseEstimator], cluster_params: dict,
-                 **kwargs):
+                 em: EmbeddingModel,
+                 cluster_class: Type[ClusterMixin and BaseEstimator], cluster_params: dict,
+                 serialization_mode: Literal["FULL_SERIALIZED", "FIELD_SERIALIZED"] = "FULL_SERIALIZED",
+                 reduce_dimensions: int | None = 0,
+                 serialization = None):
 
         self.clustering = cluster_class(**cluster_params)
+        self.serialization_mode = serialization_mode
+        self.reduce_dimensions = reduce_dimensions
 
-        super().__init__(child_operator, columns, aggregation, em, **kwargs)
+        super().__init__(child_operator, columns, aggregation, em, serialization=serialization)
 
     def open(self) -> Operator:
         self.child_operator.open()
@@ -479,13 +491,21 @@ class SoftAggregateScikit(SoftAggregate):
         for row in self.child_operator:
             key = {k: v for k, v in row.items() if k in self.group_by_columns_names}
             value = {k: v for k, v in row.items() if k in self.aggregation_columns_names}
-            embedding = self.em(str(key)) # TODO: Check if string always ordered
+
+            if self.serialization_mode == "FULL_SERIALIZED":
+                embedding = self.em(self.serialization(key))
+            else:
+                embedding = np.concatenate(self.em([str(v) for v in key.values()]))
 
             self.keys.append(key)
             self.rows.append(value)
             embeddings.append(embedding)
 
         self.embeddings = np.array(embeddings)
+
+        if self.reduce_dimensions is not None:
+            umap_model = umap.UMAP(n_components=self.reduce_dimensions)
+            self.embeddings = umap_model.fit_transform(self.embeddings)
 
         self.child_operator.close()
 

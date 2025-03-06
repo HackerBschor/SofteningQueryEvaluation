@@ -127,7 +127,12 @@ We've evaluated the system using different strategies.
 All evaluations can be found in the respective notebooks in [evaluation folder](evaluation).
 
 * [Data Integration](evaluation/EvaluationDataIntegration.ipynb): 
-How effective can the system merge the data from two different sources (e.g. $\text{Company 1 } c_1 \bowtie_{c_1.name \approx c_2.name \land c_1.address \approx c_2.address} \text{Company 2 } c_2$)
+How effective can the system merge the data from two different sources (e.g. $(\text{iTunes Music i}) \bowtie_{a.title \approx i.title \land i.artist \approx i.artist \land ...} (\text{Amazon Music a})$)
+
+* [Data Clustering](evaluation/EvaluateClustering.ipynb):
+How effective can the system determine clusters (groups) in data (e.g. use $(title, artist, ...)\gamma_{Set(id) \rightarrow ids}(Songs)$ to
+determine that `{"title": "Alejandro (Skrillex remix), "artist": "Lady Gaga"}` and `{"title": "004-Alejandro (Skrillex remix)", "artist": "Lady Gaga"}`
+relate to the same song.
 
 
 
