@@ -252,8 +252,8 @@ class InnerSoftJoin(Join):
     """
 
     # TODO: Add Attributes to System Prompt
-    ZERO_SHOT_SYSTEM_PROMPT = ("You are a validator. Validate if Record A is semantically equal to Record B following "
-                               "statement using \"no\" and \"yes\" only!")
+    ZERO_SHOT_SYSTEM_PROMPT = ("You are a validator. Validate if Record A is semantically equal to Record B,"
+                               " using \"no\" and \"yes\" only!")
 
     ZERO_SHOT_PROMPTING_TEMPLATE = "Record A is {a}\nRecord B is {b}"
 
@@ -282,6 +282,8 @@ class InnerSoftJoin(Join):
             zs_system_prompt = ZERO_SHOT_SYSTEM_PROMPT,
             zs_template = ZERO_SHOT_PROMPTING_TEMPLATE,
             serialization_zero_shot_prompting: Callable[[dict], str] = default_serialization_zero_shot_prompting):
+
+        assert method in ['threshold', 'zero-shot-prompting', 'both']
 
         self.child_left: Operator = child_left
         self.child_right: Operator = child_left
@@ -434,7 +436,7 @@ class InnerSoftJoin(Join):
                         self.distances = list(distances)
                 else:
                     # indices to left records within the range of threshold
-                    self.indices = [i for i in range(len(self.join_columns_left))]
+                    self.indices = [i for i in range(len(self.records_left))]
 
                 self.index_left = 0
 
