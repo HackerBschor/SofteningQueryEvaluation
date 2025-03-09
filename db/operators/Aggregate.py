@@ -478,6 +478,8 @@ class SoftAggregateScikit(SoftAggregate):
                  reduce_dimensions: int | None = 0,
                  serialization = None):
 
+        assert serialization_mode in ["FULL_SERIALIZED", "FIELD_SERIALIZED"]
+
         self.clustering = cluster_class(**cluster_params)
         self.serialization_mode = serialization_mode
         self.reduce_dimensions = reduce_dimensions
