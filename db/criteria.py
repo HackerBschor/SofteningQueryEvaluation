@@ -140,15 +140,20 @@ class SoftEqual(Criteria):
     # ZFS_PROMPT = "Do the two entity descriptions match?\nEntity 1: {}\nEntity 2: {}"
     ZFS_PROMPT = "Do the two entity descriptions refer to the same real-world entity?\nEntity 1: {}\nEntity 2: {}"
 
+    @staticmethod
+    def default_serialization_zero_shot_prompting(x: dict) -> str:
+        return ', '.join([str(v) for k, v in x.items() if v is not None])
+
     def __init__(self,
                  left: Column | Constant | list[str] | None,
                  right: Column | Constant | list[str] | None,
                  em: EmbeddingModel, sv: SemanticValidationModel,
                  method: Literal['threshold', 'zero-few-shot', 'both'] = 'both',
-                 serialize: Callable[[dict], str] = lambda x: ", ".join(x.values()),
+                 serialize: Callable[[dict], str] = default_serialization_zero_shot_prompting,
                  measure: Measure = CosineSimilarity(), threshold: float = 0.9,
                  zfs_prompt_template: str = ZFS_PROMPT, zfs_system_prompt: str = None):
 
+        assert method in ('threshold', 'zero-few-shot', 'both')
         self.method = method
 
         if self.method == 'threshold' or self.method == 'both':
@@ -174,19 +179,22 @@ class SoftEqual(Criteria):
         left_str = self._serialize_input(t, self.crit[0])
         right_str = self._serialize_input(t, self.crit[1])
 
-        result_emb, result_zfs = True, True
         if self.method in ('threshold', 'both') :
             # Eval Metric: If distance -> d(v1, v2) < threshold; If Similarity -> s(v1, v2) < threshold
             embeddings = self.em([str(left_str), str(right_str)])
-            _, result_emb = self.measure(embeddings[0], embeddings[1], self.threshold)
-            logging.debug(f"{left_str} ≈ {right_str}: {result_emb}")
+            _, result = self.measure(embeddings[0], embeddings[1], self.threshold)
+            logging.debug(f"{left_str} ≈ {right_str}: {result}")
+            if not result:
+                return False
 
         if self.method in ('zero-few-shot', 'both'):
             prompt = self.zfs_prompt_template.format(left_str, right_str)
-            result_zfs = self.sv(prompt, self.zfs_system_prompt)
-            logging.debug(f"✓{prompt}: {result_zfs}")
+            result = self.sv(prompt, self.zfs_system_prompt)
+            logging.debug(f"✓{prompt}: {result}")
+            if not result:
+                return False
 
-        return result_emb and result_zfs
+        return True
 
     def __str__(self):
         if self.crit[0] is None or self.crit[1] is None:

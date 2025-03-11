@@ -133,6 +133,10 @@ How effective can the system merge the data from two different sources (e.g. $(\
 How effective can the system determine clusters (groups) in data (e.g. use $(title, artist, ...)\gamma_{Set(id) \rightarrow ids}(Songs)$ to
 determine that `{"title": "Alejandro (Skrillex remix), "artist": "Lady Gaga"}` and `{"title": "004-Alejandro (Skrillex remix)", "artist": "Lady Gaga"}`
 relate to the same song.
+ 
+* [Semantic Filtering](evaluation/EvaluateSemanticFiltering.ipynb):
+How effective can the system filter for records using semantic equality (e.g. use $\sigma_{\text{name} \approx \text{'Mobile Phone'}}(Products)$ to
+determine that `{"name": "apple iphone 8 plus 64gb silver"}` relates to a 'Mobile Phone'. 
 
 
 
