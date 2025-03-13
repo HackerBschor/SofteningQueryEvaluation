@@ -25,13 +25,15 @@ class LLaMAValidationModel(SemanticValidationModel):
         self.generation_config = {
             "eos_token_id": tokenizer.eos_token_id,
             "pad_token_id": tokenizer.eos_token_id,
-            "max_new_tokens": 1
+            "max_new_tokens": 1,
+            "top_p": None,
+            "temperature": temperature,
+            "do_sample":  False
         }
 
-        if temperature is not None:
-            self.generation_config["temperature"] = temperature
+        name = model_path.split("/")[-1]
 
-        super().__init__(model_mgr, model, tokenizer)
+        super().__init__(model_mgr, model, tokenizer, name)
 
 
 

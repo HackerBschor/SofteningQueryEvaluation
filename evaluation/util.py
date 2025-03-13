@@ -8,7 +8,7 @@ from nltk.translate.bleu_score import SmoothingFunction
 nltk.download('punkt')
 nltk.download('punkt_tab')
 
-def compute_bleu_representativeness(input_dataset, integrated_dataset, use_n_grams=4, smoothing_function = SmoothingFunction().method1):
+def compute_bleu_representativeness(input_dataset, integrated_dataset, use_n_grams=4, smoothing_function = SmoothingFunction().method1) -> np.floating:
     """
     Compute BLEU-based representativeness score between input and integrated datasets.
 
@@ -33,7 +33,27 @@ def compute_bleu_representativeness(input_dataset, integrated_dataset, use_n_gra
 
     return np.average(bleu_scores)
 
-def calculate_metrics(gt: set[tuple], pred: set[tuple], calc_bleu=False) -> dict:
+def calc_bleu(gt: set[tuple], pred: set[tuple]):
+    serialized_results = [", ".join(str(v) for v in x) for x in pred]
+    serialized_ground_truth = [", ".join(str(v) for v in x) for x in gt]
+
+    scores = {}
+
+    if calc_bleu:
+        for i in range(4):
+            # if Recall == 1.0 -> BLEU is always 1
+            if len(gt - pred) == 0:
+                scores[f"bleu{i + 1}"] = 1.0
+                continue
+
+            try:
+                scores[f"bleu{i+1}"] = compute_bleu_representativeness(serialized_ground_truth, serialized_results, use_n_grams=i+1)
+            except:
+                scores[f"bleu{i+1}"] = -1.0
+
+    return scores
+
+def calculate_metrics(gt: set[tuple], pred: set[tuple], runtime: float) -> dict:
     scores = {}
     tps, fns, fps = gt & pred, gt - pred, pred - gt
     tp, fn, fp = len(tps), len(fns), len(fps)
@@ -42,15 +62,10 @@ def calculate_metrics(gt: set[tuple], pred: set[tuple], calc_bleu=False) -> dict
     scores["Recall"] = tp / (tp + fn) if (tp + fn) > 0 else 0
     scores["F1 Score"] = (2 * scores["Precision"] * scores["Recall"]) / (scores["Precision"] + scores["Recall"]) \
         if (scores["Precision"] + scores["Recall"]) > 0 else 0
-
-    serialized_results = [", ".join(str(v) for v in x) for x in pred]
-    serialized_ground_truth = [", ".join(str(v) for v in x) for x in gt]
-
-    if calc_bleu:
-        for i in range(4):
-            try:
-                scores[f"bleu{i+1}"] = compute_bleu_representativeness(serialized_ground_truth, serialized_results, use_n_grams=i+1)
-            except:
-                scores[f"bleu{i+1}"] = -1
+    scores["tp"] = tp
+    scores["fn"] = fn
+    scores["fp"] = fp
+    scores["runtime"] = runtime
+    scores["pred"] = pred
 
     return scores

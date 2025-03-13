@@ -13,7 +13,9 @@ class SentenceTransformerEmbeddingModel(EmbeddingModel):
         model = AutoModel.from_pretrained(model_path, device_map="cpu")
         tokenizer = AutoTokenizer.from_pretrained(model_path)
 
-        super().__init__(model_mgr, model, tokenizer)
+        name = model_path.split("/")[-1]
+
+        super().__init__(model_mgr, model, tokenizer, name)
 
     def embedd(self, text: str | list[str]) -> np.array:
         self.model_to_cuda()

@@ -266,22 +266,23 @@ class InnerSoftJoin(Join):
         return ', '.join([str(v) for k, v in x.items() if v is not None])
 
     def __init__(
-            self,
-            child_left: Operator,
-            child_right: Operator,
-            method: Literal['threshold', 'zero-shot-prompting', 'both'] = "both",
-            embedding_comparison: Literal["RECORD_WISE", "COLUMN_WISE"] = "RECORD_WISE",
-            embedding_method: Literal["FULL_SERIALIZED", "FIELD_SERIALIZED"] = "FULL_SERIALIZED",
-            serialization_embedding: Callable[[dict], str] = default_serialization_embedding,
-            vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
-            threshold: float = None,
-            columns_left: None | list[str] = None,
-            columns_right: None | list[str] = None,
-            em: EmbeddingModel = None,
-            sv: SemanticValidationModel = None,
-            zs_system_prompt = ZERO_SHOT_SYSTEM_PROMPT,
-            zs_template = ZERO_SHOT_PROMPTING_TEMPLATE,
-            serialization_zero_shot_prompting: Callable[[dict], str] = default_serialization_zero_shot_prompting):
+        self,
+        child_left: Operator,
+        child_right: Operator,
+        method: Literal['threshold', 'zero-shot-prompting', 'both'] = "both",
+        embedding_comparison: Literal["RECORD_WISE", "COLUMN_WISE"] = "RECORD_WISE",
+        embedding_method: Literal["FULL_SERIALIZED", "FIELD_SERIALIZED"] = "FULL_SERIALIZED",
+        serialization_embedding: Callable[[dict], str] = default_serialization_embedding,
+        vector_store_type: Type[faiss.IndexFlat] = faiss.IndexFlatIP,
+        threshold: float = None,
+        columns_left: None | list[str] = None,
+        columns_right: None | list[str] = None,
+        em: EmbeddingModel = None,
+        sv: SemanticValidationModel = None,
+        zs_system_prompt = ZERO_SHOT_SYSTEM_PROMPT,
+        zs_template = None,
+        serialization_zero_shot_prompting: Callable[[dict], str] | Callable[[dict, dict], str] = None
+    ):
 
         assert method in ['threshold', 'zero-shot-prompting', 'both']
 
@@ -315,7 +316,16 @@ class InnerSoftJoin(Join):
             self.sv = sv
             self.zs_system_prompt = zs_system_prompt
             self.zs_template = zs_template
-            self.serialization_zero_shot_prompting = serialization_zero_shot_prompting
+
+            if serialization_zero_shot_prompting is None:
+                self.serialization_zero_shot_prompting = self.default_serialization_zero_shot_prompting
+            else:
+                self.serialization_zero_shot_prompting = serialization_zero_shot_prompting
+
+            if zs_template is None:
+                self.zs_template = self.ZERO_SHOT_PROMPTING_TEMPLATE
+            else:
+                self.zs_template = zs_template
 
         # For COLUMN_WISE comparison -> shape: (n, #columns, embedding size)
         # For RECORD_WISE -> shape (n, embedding size)
@@ -498,20 +508,22 @@ class InnerSoftJoin(Join):
             columns_right = [self.columns_map["right"][col] if col in self.columns_map["right"] else col for col in columns_right]
 
         # search join columns from structure
-        columns_found = set({})
-        for col in self.table.table_structure:
-            if col.column_name in columns_left:
-                join_columns_left.append(col)
-                columns_found.add(col.column_name)
+        table_structure_map = {col.column_name: col for col in self.table.table_structure}
 
-            if col.column_name in columns_right:
-                join_columns_right.append(col)
-                columns_found.add(col.column_name)
+        missing_columns_left, missing_columns_right = [], []
+        for col in columns_left:
+            try:
+                join_columns_left.append(table_structure_map[col])
+            except KeyError:
+                missing_columns_left.append(col)
+
+        for col in columns_right:
+            try:
+                join_columns_right.append(table_structure_map[col])
+            except KeyError:
+                missing_columns_right.append(col)
 
         # Check availability of key-columns
-        missing_columns_left = [col for col in columns_left if col not in columns_found]
-        missing_columns_right = [col for col in columns_left if col not in columns_found]
-
         assert len(missing_columns_left) == 0, \
             f"Columns {missing_columns_left} not found for right relation {self.table.table_structure}"
         assert len(missing_columns_right) == 0, \

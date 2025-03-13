@@ -26,10 +26,11 @@ class ModelMgr:
 
 
 class Model:
-    def __init__(self, model_mgr, model, tokenizer):
+    def __init__(self, model_mgr, model, tokenizer, name):
         self._model = model
         self._tokenizer = tokenizer
         self._model_mgr: ModelMgr = model_mgr
+        self.name = name
 
     def model_to_cpu(self):
         self._model.cpu()
@@ -38,3 +39,7 @@ class Model:
         if torch.cuda.is_available():
             self._model_mgr.get_gpu_resources(self)
             self._model.cuda()
+
+    def __str__(self):
+        model_type = str(type(self))
+        return f"{model_type.split(".")[-1][:-2]}({self.name})"
