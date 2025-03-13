@@ -226,7 +226,7 @@ class CustomMapping(MappingFunction):
 
     def __str__(self) -> str:
         cols = [f"<{x}>" for x in self.input_cols]
-        return f'CUSTOM("{', '.join(self.input_cols)}")→{self.output_col}'
+        return f"CUSTOM(\"{', '.join(self.input_cols)}\")→{self.output_col}"
 
 
 class Project(Operator):

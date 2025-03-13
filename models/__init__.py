@@ -42,4 +42,4 @@ class Model:
 
     def __str__(self):
         model_type = str(type(self))
-        return f"{model_type.split(".")[-1][:-2]}({self.name})"
+        return f"{model_type.split('.')[-1][:-2]}({self.name})"
