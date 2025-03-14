@@ -252,10 +252,10 @@ class InnerSoftJoin(Join):
     """
 
     # TODO: Add Attributes to System Prompt
-    ZERO_SHOT_SYSTEM_PROMPT = ("You are a validator. Validate if Record A is semantically equal to Record B,"
-                               " using \"no\" and \"yes\" only!")
+    ZERO_SHOT_SYSTEM_PROMPT = ("You are a validator. Validate if A describe to the same world entity as B\n"
+                               "Respond with \"no\" and \"yes\" only!")
 
-    ZERO_SHOT_PROMPTING_TEMPLATE = "Record A is {a}\nRecord B is {b}"
+    ZERO_SHOT_PROMPTING_TEMPLATE = "A is {a}\nB is {b}"
 
     @staticmethod
     def default_serialization_embedding(x: dict) -> str:
