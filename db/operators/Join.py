@@ -251,11 +251,7 @@ class InnerSoftJoin(Join):
         serialization_zero_shot_prompting: Function for serialization (zero-shot-prompting)
     """
 
-    # TODO: Add Attributes to System Prompt
-    ZERO_SHOT_SYSTEM_PROMPT = ("You are a validator. Validate if A describe to the same world entity as B\n"
-                               "Respond with \"no\" and \"yes\" only!")
-
-    ZERO_SHOT_PROMPTING_TEMPLATE = "A is {a}\nB is {b}"
+    ZERO_SHOT_PROMPTING_TEMPLATE = 'Does "{a}" describe the same reals world entity as "{b}"'
 
     @staticmethod
     def default_serialization_embedding(x: dict) -> str:
@@ -279,7 +275,7 @@ class InnerSoftJoin(Join):
         columns_right: None | list[str] = None,
         em: EmbeddingModel = None,
         sv: SemanticValidationModel = None,
-        zs_system_prompt = ZERO_SHOT_SYSTEM_PROMPT,
+        zs_system_prompt = None,
         zs_template = None,
         serialization_zero_shot_prompting: Callable[[dict], str] | Callable[[dict, dict], str] = None
     ):
