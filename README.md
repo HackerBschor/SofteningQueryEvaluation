@@ -147,7 +147,7 @@ How effective can the system determine clusters (groups) in data (e.g. use $(tit
 determine that `{"title": "Alejandro (Skrillex remix), "artist": "Lady Gaga"}` and `{"title": "004-Alejandro (Skrillex remix)", "artist": "Lady Gaga"}`
 relate to the same song.
  
-* [Semantic Filtering](evaluation/EvaluateSemanticFiltering.ipynb):
+* [Semantic Filtering](evaluation/SemanticFiltering/EvaluateProducts.ipynb):
 How effective can the system filter for records using semantic equality (e.g. use $\sigma_{\text{name} \approx \text{'Mobile Phone'}}(Products)$ to
 determine that `{"name": "apple iphone 8 plus 64gb silver"}` relates to a 'Mobile Phone'. 
 
