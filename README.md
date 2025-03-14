@@ -109,7 +109,20 @@ So, the algorithm evaluates:
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
+
 ```
+
+### Google Colab, 
+To run the software in Google Colab, insert the following cell at the start : 
+```
+# %%capture
+!git clone https://github.com/HackerBschor/SofteningQueryEvaluation
+%cd SofteningQueryEvaluation
+
+!pip3 install faiss-gpu-cu12
+!pip3 install pgvector
+```
+
 
 ## Usage
 
