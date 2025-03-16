@@ -123,6 +123,11 @@ To run the software in Google Colab, insert the following cell at the start :
 !pip3 install pgvector
 ```
 
+```
+from huggingface_hub import notebook_login
+notebook_login()
+```
+
 
 ## Usage
 
