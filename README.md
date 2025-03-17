@@ -115,7 +115,7 @@ pip3 install -r requirements.txt
 ### Google Colab, 
 To run the software in Google Colab, insert the following cell at the start : 
 ```
-# %%capture
+%%capture
 !git clone https://github.com/HackerBschor/SofteningQueryEvaluation
 %cd SofteningQueryEvaluation
 
