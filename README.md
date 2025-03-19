@@ -116,11 +116,15 @@ pip3 install -r requirements.txt
 To run the software in Google Colab, insert the following cell at the start : 
 ```
 %%capture
+!pip3 install faiss-gpu-cu12
+!pip3 install pgvector 
+```
+If an error occurs for ``import pandas``, the session has to be restarted.
+```
+%%capture
+!rm -rf SofteningQueryEvaluation
 !git clone https://github.com/HackerBschor/SofteningQueryEvaluation
 %cd SofteningQueryEvaluation
-
-!pip3 install faiss-gpu-cu12
-!pip3 install pgvector
 ```
 
 ```
